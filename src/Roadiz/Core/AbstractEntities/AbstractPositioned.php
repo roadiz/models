@@ -29,6 +29,8 @@
 
 namespace RZ\Roadiz\Core\AbstractEntities;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Combined AbstractEntity and PositionedTrait.
  *
