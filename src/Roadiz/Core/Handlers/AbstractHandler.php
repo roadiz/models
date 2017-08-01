@@ -34,34 +34,34 @@ use Doctrine\Common\Persistence\ObjectManager;
 abstract class AbstractHandler
 {
     /** @var ObjectManager */
-    protected $entityManager;
+    protected $objectManager;
 
     /**
      * @return ObjectManager
      */
-    public function getEntityManager()
+    public function getObjectManager()
     {
-        return $this->entityManager;
+        return $this->objectManager;
     }
 
     /**
-     * @param ObjectManager $entityManager
+     * @param ObjectManager $objectManager
      * @return AbstractHandler
      */
-    public function setEntityManager(ObjectManager $entityManager)
+    public function setObjectManager(ObjectManager $objectManager)
     {
-        $this->entityManager = $entityManager;
+        $this->objectManager = $objectManager;
         return $this;
     }
 
     /**
      * AbstractHandler constructor.
      *
-     * @param ObjectManager $entityManager
+     * @param ObjectManager $objectManager
      */
-    public function __construct(ObjectManager $entityManager)
+    public function __construct(ObjectManager $objectManager)
     {
-        $this->entityManager = $entityManager;
+        $this->objectManager = $objectManager;
     }
 
     /**
