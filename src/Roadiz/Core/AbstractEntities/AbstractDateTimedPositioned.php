@@ -45,4 +45,9 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class AbstractDateTimedPositioned extends AbstractDateTimed implements PositionedInterface
 {
     use PositionedTrait;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    protected $position = 0.0;
 }

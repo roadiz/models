@@ -35,16 +35,6 @@ trait LeafTrait
     use PositionedTrait;
 
     /**
-     * @var LeafInterface
-     */
-    protected $parent;
-
-    /**
-     * @var Collection
-     */
-    protected $children;
-
-    /**
      * @return Collection
      */
     public function getChildren()

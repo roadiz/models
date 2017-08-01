@@ -1,12 +1,13 @@
 <?php
 /**
+ * Copyright (c) 2017. Ambroise Maupate and Julien Blanchet
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is furnished
  * to do so, subject to the following conditions:
- *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
  *
@@ -22,37 +23,27 @@
  * be used in advertising or otherwise to promote the sale, use or other dealings
  * in this Software without prior written authorization from Ambroise Maupate and Julien Blanchet.
  *
- * @file PositionedTrait.php
- * @author Ambroise Maupate
+ * @file AbstractPositioned.php
+ * @author Ambroise Maupate <ambroise@rezo-zero.com>
  */
+
 namespace RZ\Roadiz\Core\AbstractEntities;
 
 /**
- * Trait which describe a positioned entity
+ * Combined AbstractEntity and PositionedTrait.
+ *
+ * @ORM\MappedSuperclass
+ * @ORM\HasLifecycleCallbacks
+ * @ORM\Table(indexes={
+ *     @ORM\Index(columns={"position"})
+ * })
  */
-trait PositionedTrait
+abstract class AbstractPositioned extends AbstractEntity implements PositionedInterface
 {
-    /**
-     * @return float
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
+    use PositionedTrait;
 
     /**
-     * Set position as a float to enable increment and decrement by O.5
-     * to insert a node between two others.
-     *
-     * @param float $newPosition
-     * @return $this
+     * @ORM\Column(type="float")
      */
-    public function setPosition($newPosition)
-    {
-        if ($newPosition > -1) {
-            $this->position = (float) $newPosition;
-        }
-
-        return $this;
-    }
+    protected $position = 0.0;
 }

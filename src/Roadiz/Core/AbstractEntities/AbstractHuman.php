@@ -45,6 +45,7 @@ abstract class AbstractHuman extends AbstractDateTimed
      * @ORM\Column(type="string", unique=true)
      */
     protected $email;
+
     /**
      * @return string
      */
