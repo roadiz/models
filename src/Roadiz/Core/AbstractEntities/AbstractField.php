@@ -171,6 +171,14 @@ abstract class AbstractField extends AbstractPositioned
      * «Many to one» join to a custom doctrine entity class.
      */
     const MANY_TO_ONE_T = 28;
+    /**
+     * Array field to reference external objects ID (eg. from an API).
+     */
+    const MULTI_PROVIDER_T = 29;
+    /**
+     * String field to reference an external object ID (eg. from an API).
+     */
+    const SINGLE_PROVIDER_T = 30;
 
     /**
      * Associates abstract field type to a readable string.
@@ -204,6 +212,8 @@ abstract class AbstractField extends AbstractPositioned
         AbstractField::YAML_T => 'yaml.type',
         AbstractField::MANY_TO_MANY_T => 'many-to-many.type',
         AbstractField::MANY_TO_ONE_T => 'many-to-one.type',
+        AbstractField::SINGLE_PROVIDER_T => 'single-provider.type',
+        AbstractField::MULTI_PROVIDER_T => 'multiple-provider.type',
     ];
     /**
      * Associates abstract field type to a Doctrine type.
@@ -236,6 +246,8 @@ abstract class AbstractField extends AbstractPositioned
         AbstractField::YAML_T => 'text',
         AbstractField::MANY_TO_MANY_T => null,
         AbstractField::MANY_TO_ONE_T => null,
+        AbstractField::SINGLE_PROVIDER_T => 'string',
+        AbstractField::MULTI_PROVIDER_T => 'simple_array',
     ];
     /**
      * Associates abstract field type to a Symfony Form type.
@@ -268,6 +280,8 @@ abstract class AbstractField extends AbstractPositioned
         AbstractField::YAML_T => 'yaml_text',
         AbstractField::MANY_TO_MANY_T => 'referenced_entity',
         AbstractField::MANY_TO_ONE_T => 'referenced_entity',
+        AbstractField::SINGLE_PROVIDER_T => 'referenced_provider',
+        AbstractField::MULTI_PROVIDER_T => 'referenced_provider',
     ];
 
     /**
@@ -758,5 +772,29 @@ abstract class AbstractField extends AbstractPositioned
     public function isCountry()
     {
         return $this->getType() === static::COUNTRY_T;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSingleProvider()
+    {
+        return $this->getType() === static::SINGLE_PROVIDER_T;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMultiProvider()
+    {
+        return $this->getType() === static::MULTI_PROVIDER_T;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMultipleProvider()
+    {
+        return $this->isMultiProvider();
     }
 }
