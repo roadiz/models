@@ -263,7 +263,7 @@ abstract class AbstractField extends AbstractPositioned
         AbstractField::MANY_TO_ONE_T => null,
         AbstractField::SINGLE_PROVIDER_T => 'string',
         AbstractField::MULTI_PROVIDER_T => 'simple_array',
-        AbstractField::COLLECTION_T => 'json',
+        AbstractField::COLLECTION_T => 'json_array',
     ];
     /**
      * Associates abstract field type to a Symfony Form type.
