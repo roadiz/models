@@ -814,4 +814,12 @@ abstract class AbstractField extends AbstractPositioned
     {
         return $this->isMultiProvider();
     }
+
+    /**
+     * @return bool
+     */
+    public function isCollection()
+    {
+        return $this->getType() === static::COLLECTION_T;
+    }
 }
