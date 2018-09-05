@@ -8,6 +8,7 @@
 
 # PHPCS report
 report.txt
+.php_cs.cache
 
 # Cloverage build folder
 /build
