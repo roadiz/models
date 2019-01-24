@@ -53,7 +53,7 @@ class StringHandler
     }
 
     /**
-     * Transform to lowercase and remplace every non-alpha character with a dash.
+     * Transform to lowercase and replace every non-alpha character with a dash.
      *
      * @param string $string
      *
@@ -83,11 +83,11 @@ class StringHandler
         return $string;
     }
     /**
-     * Transform to lowercase and remplace every non-alpha character with an underscore.
+     * Transform to lowercase and replace every non-alpha character with an underscore.
      *
      * @param string $string
      *
-     * @return string Slugified string
+     * @return string
      */
     public static function cleanForFilename($string)
     {
@@ -100,11 +100,11 @@ class StringHandler
     }
 
     /**
-     * Transform to lowercase and remplace every non-alpha character with an underscore.
+     * Transform to lowercase and replace every non-alpha character with an underscore.
      *
      * @param string $string
      *
-     * @return string Variablized string
+     * @return string
      */
     public static function variablize($string)
     {
