@@ -30,6 +30,7 @@
 namespace RZ\Roadiz\Core\AbstractEntities;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Base entity implementing PersistableInterface to offer a unique Id.
@@ -42,6 +43,7 @@ abstract class AbstractEntity implements PersistableInterface
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
+     * @Serializer\Groups("id")
      */
     protected $id;
 

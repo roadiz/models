@@ -30,6 +30,7 @@
 namespace RZ\Roadiz\Core\AbstractEntities;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Combined AbstractDateTimed and PositionedTrait.
@@ -48,6 +49,7 @@ abstract class AbstractDateTimedPositioned extends AbstractDateTimed implements 
 
     /**
      * @ORM\Column(type="float")
+     * @Serializer\Groups({"position"})
      */
     protected $position = 0.0;
 }

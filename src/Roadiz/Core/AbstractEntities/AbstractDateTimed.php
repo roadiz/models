@@ -28,6 +28,7 @@
 namespace RZ\Roadiz\Core\AbstractEntities;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * An AbstractEntity with datetime fields to keep track of time with your items.
@@ -44,6 +45,7 @@ abstract class AbstractDateTimed extends AbstractEntity
     /**
      * @ORM\Column(type="datetime", name="created_at")
      * @var \DateTime
+     * @Serializer\Groups("timestamps")
      */
     protected $createdAt;
 
@@ -68,6 +70,7 @@ abstract class AbstractDateTimed extends AbstractEntity
     /**
      * @ORM\Column(type="datetime", name="updated_at")
      * @var \DateTime
+     * @Serializer\Groups("timestamps")
      */
     protected $updatedAt;
 
