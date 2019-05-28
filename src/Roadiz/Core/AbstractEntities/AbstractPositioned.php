@@ -48,6 +48,7 @@ abstract class AbstractPositioned extends AbstractEntity implements PositionedIn
     /**
      * @ORM\Column(type="float")
      * @Serializer\Groups({"position"})
+     * @var float
      */
     protected $position = 0.0;
 }

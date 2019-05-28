@@ -50,6 +50,8 @@ abstract class AbstractDateTimedPositioned extends AbstractDateTimed implements 
     /**
      * @ORM\Column(type="float")
      * @Serializer\Groups({"position"})
+     * @var float
+     * @Serializer\Type("float")
      */
     protected $position = 0.0;
 }
