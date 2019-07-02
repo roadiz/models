@@ -315,6 +315,8 @@ abstract class AbstractField extends AbstractPositioned
         AbstractField::MARKDOWN_T,
     ];
 
+
+
     /**
      * @ORM\Column(type="string")
      * @Serializer\Expose
@@ -323,6 +325,15 @@ abstract class AbstractField extends AbstractPositioned
      * @var string
      */
     private $name;
+
+    /**
+     * AbstractField constructor.
+     */
+    public function __construct()
+    {
+        $this->label = 'Untitled field';
+        $this->name = 'untitled_field';
+    }
 
     /**
      * @return string $name
