@@ -319,6 +319,7 @@ abstract class AbstractField extends AbstractPositioned
      * @ORM\Column(type="string")
      * @Serializer\Expose
      * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
      * @var string
      */
     private $name;
@@ -363,6 +364,7 @@ abstract class AbstractField extends AbstractPositioned
      * @ORM\Column(type="string")
      * @Serializer\Expose
      * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
      * @var string
      */
     private $label;
@@ -391,6 +393,7 @@ abstract class AbstractField extends AbstractPositioned
      * @ORM\Column(type="string", nullable=true)
      * @Serializer\Expose
      * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
      * @var string
      */
     private $placeholder;
@@ -417,6 +420,7 @@ abstract class AbstractField extends AbstractPositioned
      * @ORM\Column(type="text", nullable=true)
      * @Serializer\Expose
      * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
      * @var string
      */
     private $description;
@@ -443,6 +447,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @ORM\Column(name="default_values", type="text", nullable=true)
      * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
      * @Serializer\Expose
      * @var string
      */
@@ -471,6 +476,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @ORM\Column(type="integer")
      * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("int")
      * @Serializer\Expose
      * @var int
      */
@@ -515,16 +521,18 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @ORM\Column(name="group_name", type="string", nullable=true)
      * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
      * @Serializer\Expose
-     * @var string
+     * @var string|null
      */
     protected $groupName;
 
     /**
      * @ORM\Column(name="group_name_canonical", type="string", nullable=true)
      * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
      * @Serializer\Expose
-     * @var string
+     * @var string|null
      */
     protected $groupNameCanonical;
 
@@ -565,8 +573,8 @@ abstract class AbstractField extends AbstractPositioned
      * @var bool
      * @ORM\Column(name="expanded", type="boolean", nullable=false, options={"default" = false})
      * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("bool")
      * @Serializer\Expose
-     * @var bool
      */
     private $expanded = false;
 
