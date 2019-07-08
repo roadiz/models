@@ -35,11 +35,24 @@ trait LeafTrait
     use PositionedTrait;
 
     /**
-     * @return Collection
+     * @return Collection<LeafInterface>
      */
-    public function getChildren()
+    public function getChildren(): Collection
     {
         return $this->children;
+    }
+    /**
+     * @param Collection<LeafInterface> $children
+     * @return Collection
+     */
+    public function setChildren(Collection $children)
+    {
+        $this->children = $children;
+        /** @var LeafInterface $child */
+        foreach ($this->children as $child) {
+            $child->setParent($this);
+        }
+        return $this;
     }
 
     /**
@@ -72,7 +85,7 @@ trait LeafTrait
     /**
      * @return LeafInterface parent
      */
-    public function getParent()
+    public function getParent(): ?LeafInterface
     {
         return $this->parent;
     }
@@ -100,7 +113,7 @@ trait LeafTrait
      *
      * @return LeafInterface[]
      */
-    public function getParents()
+    public function getParents(): array
     {
         $parentsArray = [];
         $parent = $this;
@@ -122,7 +135,7 @@ trait LeafTrait
      *
      * @return int
      */
-    public function getDepth()
+    public function getDepth(): int
     {
         if ($this->getParent() === null) {
             return 0;
@@ -141,7 +154,7 @@ trait LeafTrait
     /**
      * {@inheritdoc}
      */
-    public function count()
+    public function count(): int
     {
         return $this->getChildren()->count();
     }

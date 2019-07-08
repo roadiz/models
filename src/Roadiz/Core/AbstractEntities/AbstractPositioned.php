@@ -30,6 +30,7 @@
 namespace RZ\Roadiz\Core\AbstractEntities;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Combined AbstractEntity and PositionedTrait.
@@ -46,6 +47,9 @@ abstract class AbstractPositioned extends AbstractEntity implements PositionedIn
 
     /**
      * @ORM\Column(type="float")
+     * @Serializer\Groups({"position"})
+     * @Serializer\Type("float")
+     * @var float
      */
     protected $position = 0.0;
 }

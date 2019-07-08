@@ -35,7 +35,7 @@ interface LeafInterface extends \IteratorAggregate, \Countable, PositionedInterf
     /**
      * @return Collection
      */
-    public function getChildren();
+    public function getChildren(): Collection;
 
     /**
      * @param LeafInterface $child
@@ -52,12 +52,12 @@ interface LeafInterface extends \IteratorAggregate, \Countable, PositionedInterf
     /**
      * @return LeafInterface
      */
-    public function getParent();
+    public function getParent(): ?LeafInterface;
 
     /**
      * @return LeafInterface[]
      */
-    public function getParents();
+    public function getParents(): array;
 
     /**
      * @param LeafInterface|null $parent
@@ -70,5 +70,5 @@ interface LeafInterface extends \IteratorAggregate, \Countable, PositionedInterf
      *
      * @return int
      */
-    public function getDepth();
+    public function getDepth(): int;
 }

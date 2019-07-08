@@ -30,6 +30,7 @@
 namespace RZ\Roadiz\Core\AbstractEntities;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Abstract entity for any Human-like objects.
@@ -43,6 +44,7 @@ abstract class AbstractHuman extends AbstractDateTimed
 {
     /**
      * @ORM\Column(type="string", unique=true)
+     * @Serializer\Groups({"user", "human"})
      */
     protected $email;
 
@@ -69,6 +71,7 @@ abstract class AbstractHuman extends AbstractDateTimed
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @Serializer\Groups({"user", "human"})
      */
     protected $firstName;
     /**
@@ -92,6 +95,7 @@ abstract class AbstractHuman extends AbstractDateTimed
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @Serializer\Groups({"user", "human"})
      */
     protected $lastName;
     /**
@@ -115,11 +119,13 @@ abstract class AbstractHuman extends AbstractDateTimed
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @Serializer\Groups({"user", "human"})
      */
     protected $phone;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @Serializer\Groups({"user", "human"})
      */
     protected $company;
 
@@ -144,6 +150,7 @@ abstract class AbstractHuman extends AbstractDateTimed
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @Serializer\Groups({"user", "human"})
      */
     protected $job;
     /**
@@ -168,6 +175,7 @@ abstract class AbstractHuman extends AbstractDateTimed
     /**
      * @var \DateTime
      * @ORM\Column(type="datetime", nullable=true)
+     * @Serializer\Groups({"user", "human"})
      */
     protected $birthday;
     /**

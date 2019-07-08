@@ -41,6 +41,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\MappedSuperclass
@@ -49,6 +50,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
  *     @ORM\Index(columns={"group_name"}),
  *     @ORM\Index(columns={"group_name_canonical"})
  * })
+ * @Serializer\ExclusionPolicy("all")
  */
 abstract class AbstractField extends AbstractPositioned
 {
@@ -313,10 +315,25 @@ abstract class AbstractField extends AbstractPositioned
         AbstractField::MARKDOWN_T,
     ];
 
+
+
     /**
      * @ORM\Column(type="string")
+     * @Serializer\Expose
+     * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
+     * @var string
      */
     private $name;
+
+    /**
+     * AbstractField constructor.
+     */
+    public function __construct()
+    {
+        $this->label = 'Untitled field';
+        $this->name = 'untitled_field';
+    }
 
     /**
      * @return string $name
@@ -356,6 +373,10 @@ abstract class AbstractField extends AbstractPositioned
 
     /**
      * @ORM\Column(type="string")
+     * @Serializer\Expose
+     * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
+     * @var string
      */
     private $label;
 
@@ -381,6 +402,9 @@ abstract class AbstractField extends AbstractPositioned
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @Serializer\Expose
+     * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
      * @var string
      */
     private $placeholder;
@@ -405,6 +429,10 @@ abstract class AbstractField extends AbstractPositioned
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Serializer\Expose
+     * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
+     * @var string
      */
     private $description;
 
@@ -429,6 +457,10 @@ abstract class AbstractField extends AbstractPositioned
     }
     /**
      * @ORM\Column(name="default_values", type="text", nullable=true)
+     * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
+     * @Serializer\Expose
+     * @var string
      */
     private $defaultValues;
 
@@ -454,6 +486,10 @@ abstract class AbstractField extends AbstractPositioned
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("int")
+     * @Serializer\Expose
+     * @var int
      */
     private $type = AbstractField::STRING_T;
 
@@ -495,11 +531,19 @@ abstract class AbstractField extends AbstractPositioned
 
     /**
      * @ORM\Column(name="group_name", type="string", nullable=true)
+     * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
+     * @Serializer\Expose
+     * @var string|null
      */
     protected $groupName;
 
     /**
      * @ORM\Column(name="group_name_canonical", type="string", nullable=true)
+     * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
+     * @Serializer\Expose
+     * @var string|null
      */
     protected $groupNameCanonical;
 
@@ -539,6 +583,9 @@ abstract class AbstractField extends AbstractPositioned
      *
      * @var bool
      * @ORM\Column(name="expanded", type="boolean", nullable=false, options={"default" = false})
+     * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("bool")
+     * @Serializer\Expose
      */
     private $expanded = false;
 

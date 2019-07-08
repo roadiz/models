@@ -30,6 +30,7 @@
 namespace RZ\Roadiz\Core\AbstractEntities;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Base entity implementing PersistableInterface to offer a unique Id.
@@ -42,11 +43,14 @@ abstract class AbstractEntity implements PersistableInterface
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
+     * @Serializer\Groups("id")
+     * @var integer
+     * @Serializer\Type("integer")
      */
     protected $id;
 
     /**
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -54,7 +58,7 @@ abstract class AbstractEntity implements PersistableInterface
     }
 
     /**
-     * @param int $id
+     * @param integer $id
      * @return AbstractEntity
      */
     public function setId($id)
