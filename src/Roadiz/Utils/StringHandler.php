@@ -91,10 +91,10 @@ class StringHandler
      */
     public static function cleanForFilename($string)
     {
-        $string = trim(strtolower($string));
-        $string = static::removeDiacritics($string);
+        $string = static::removeDiacritics(trim($string));
         $string = preg_replace('#([^a-zA-Z0-9\.]+)#', '_', $string);
         $string = trim($string, "_");
+        $string = strtolower($string);
 
         return $string;
     }
