@@ -33,6 +33,43 @@ use RZ\Roadiz\Utils\StringHandler;
  */
 class StringHandlerTest extends PHPUnit_Framework_TestCase
 {
+
+    /**
+     * @dataProvider cleanForFilenameProvider
+     * @param $input
+     * @param $expected
+     */
+    public function testCleanForFilename($input, $expected)
+    {
+        $this->assertEquals($expected, StringHandler::cleanForFilename($input));
+    }
+
+    public function cleanForFilenameProvider()
+    {
+        return [
+            [
+                "Les-Echos_26022015_Les-entrepreneurs-partent-à-lassaut-du-secteur-bancaire.pdf",
+                "les_echos_26022015_les_entrepreneurs_partent_a_lassaut_du_secteur_bancaire.pdf"
+            ],
+            [
+                "Les-entrepreneurs-partent-à-lassaut-du-secteur-bancaire.pdf",
+                "les_entrepreneurs_partent_a_lassaut_du_secteur_bancaire.pdf"
+            ],
+            [
+                "image.jpg",
+                "image.jpg",
+            ],
+            [
+                "image with spaces.jpg",
+                "image_with_spaces.jpg",
+            ],
+            [
+                "image/with/slashes.jpg",
+                "image_with_slashes.jpg",
+            ]
+        ];
+    }
+
     /**
      * @dataProvider endsWithProvider
      * @param $input
@@ -46,20 +83,20 @@ class StringHandlerTest extends PHPUnit_Framework_TestCase
 
     public function endsWithProvider()
     {
-        return array(
-            array("  ", "Locale", false),
-            array("", "Locale", false),
-            array("home", "Locale", false),
-            array("ocale", "Locale", false),
-            array("testPage", "Locale", false),
-            array("localePage", "Locale", false),
-            array("testLocalePage", "Locale", false),
-            array("testPageLocale", "Locale", true),
-            array("testPagelocale", "Locale", false),
-            array("testPageGateau", "Locale", false),
-            array("testPage", "", true),
-            array("LocaletestPage", "Locale", false),
-        );
+        return [
+            ["  ", "Locale", false],
+            ["", "Locale", false],
+            ["home", "Locale", false],
+            ["ocale", "Locale", false],
+            ["testPage", "Locale", false],
+            ["localePage", "Locale", false],
+            ["testLocalePage", "Locale", false],
+            ["testPageLocale", "Locale", true],
+            ["testPagelocale", "Locale", false],
+            ["testPageGateau", "Locale", false],
+            ["testPage", "", true],
+            ["LocaletestPage", "Locale", false],
+        ];
     }
 
     /**
@@ -78,16 +115,16 @@ class StringHandlerTest extends PHPUnit_Framework_TestCase
      */
     public function replaceLastProvider()
     {
-        return array(
-            array("testPage", "Locale", "testPage"),
-            array("localePage", "Locale", "localePage"),
-            array("testLocalePage", "Locale", "testPage"),
-            array("testPageLocale", "Locale", "testPage"),
-            array("testPagelocale", "Locale", "testPagelocale"),
-            array("testPageGateau", "Locale", "testPageGateau"),
-            array("testPage", "", "testPage"),
-            array("LocalePage", "Locale", "Page"),
-        );
+        return [
+            ["testPage", "Locale", "testPage"],
+            ["localePage", "Locale", "localePage"],
+            ["testLocalePage", "Locale", "testPage"],
+            ["testPageLocale", "Locale", "testPage"],
+            ["testPagelocale", "Locale", "testPagelocale"],
+            ["testPageGateau", "Locale", "testPageGateau"],
+            ["testPage", "", "testPage"],
+            ["LocalePage", "Locale", "Page"],
+        ];
     }
 
     /**
@@ -106,16 +143,20 @@ class StringHandlerTest extends PHPUnit_Framework_TestCase
      */
     public function removeDiacriticsProvider()
     {
-        return array(
-            array("à", "a"),
-            array("é", "e"),
-            array("À", "A"),
-            array("É", "E"),
-            array("œ", "oe"),
-            array("ç", "c"),
-            array("__à", "__a"),
-            array("--é", "--e"),
-        );
+        return [
+            ["à", "a"],
+            ["é", "e"],
+            ["À", "A"],
+            ["É", "E"],
+            ["œ", "oe"],
+            ["ç", "c"],
+            ["__à", "__a"],
+            ["--é", "--e"],
+            [
+                "Les-echos_26022015_Les-entrepreneurs-partent-à-lassaut-du-secteur-bancaire.pdf",
+                "Les-echos_26022015_Les-entrepreneurs-partent-a-lassaut-du-secteur-bancaire.pdf"
+            ],
+        ];
     }
 
     /**
@@ -134,16 +175,16 @@ class StringHandlerTest extends PHPUnit_Framework_TestCase
      */
     public function variablizeProvider()
     {
-        return array(
-            array("à", "a"),
-            array("é", "e"),
-            array("À", "a"),
-            array("É", "e"),
-            array("œ", "oe"),
-            array("ç", "c"),
-            array("__à", "_a"),
-            array("--é", "_e"),
-        );
+        return [
+            ["à", "a"],
+            ["é", "e"],
+            ["À", "a"],
+            ["É", "e"],
+            ["œ", "oe"],
+            ["ç", "c"],
+            ["__à", "_a"],
+            ["--é", "_e"],
+        ];
     }
 
     /**
@@ -162,13 +203,13 @@ class StringHandlerTest extends PHPUnit_Framework_TestCase
      */
     public function camelCaseProvider()
     {
-        return array(
-            array("Ligula  $* _--Egestas Mattis Nullam", "ligulaEgestasMattisNullam"),
-            array("Véèsti buœlum Rïsus", "veestiBuoelumRisus"),
-            array("J'aime les sushis", "jAimeLesSushis"),
-            array("header_image", "headerImage"),
-            array("JAime les_sushis", "jAimeLesSushis"),
-        );
+        return [
+            ["Ligula  $* _--Egestas Mattis Nullam", "ligulaEgestasMattisNullam"],
+            ["Véèsti buœlum Rïsus", "veestiBuoelumRisus"],
+            ["J'aime les sushis", "jAimeLesSushis"],
+            ["header_image", "headerImage"],
+            ["JAime les_sushis", "jAimeLesSushis"],
+        ];
     }
 
     /**
@@ -187,17 +228,17 @@ class StringHandlerTest extends PHPUnit_Framework_TestCase
      */
     public function slugifyProvider()
     {
-        return array(
-            array("Ligula  $* _--Egestas Mattis Nullam$* _  ", "ligula-egestas-mattis-nullam"),
-            array("Véèsti buœlum Rïsus+", "veesti-buoelum-risus"),
-            array("J'aime les sushis!", "j-aime-les-sushis"),
-            array("J’aime les sushis!", "j-aime-les-sushis"),
-            array("J'aime les\n sushis!\t\n", "j-aime-les-sushis"),
-            array("?header_image", "header-image"),
-            array("JAime les_sushis", "jaime-les-sushis"),
-            array("Ébène", "ebene"),
-            array("ébène", "ebene"),
-        );
+        return [
+            ["Ligula  $* _--Egestas Mattis Nullam$* _  ", "ligula-egestas-mattis-nullam"],
+            ["Véèsti buœlum Rïsus+", "veesti-buoelum-risus"],
+            ["J'aime les sushis!", "j-aime-les-sushis"],
+            ["J’aime les sushis!", "j-aime-les-sushis"],
+            ["J'aime les\n sushis!\t\n", "j-aime-les-sushis"],
+            ["?header_image", "header-image"],
+            ["JAime les_sushis", "jaime-les-sushis"],
+            ["Ébène", "ebene"],
+            ["ébène", "ebene"],
+        ];
     }
 
     /**
@@ -218,13 +259,13 @@ class StringHandlerTest extends PHPUnit_Framework_TestCase
      */
     public function encodeWithSecretProvider()
     {
-        return array(
-            array("Ligula  $* _--Egestas Mattis Nullam", "Commodo Pellentesque Sem Fusce Quam"),
-            array("Véèsti buœlum Rïsus ", "  change#this#secret#very#important"),
-            array("J'aime les sushis  ", " Fringilla Vulputate Dolor Inceptos"),
-            array("au   " . PHP_EOL . "ietaui.\\eauie@auietsrt.trr", "Sit Vestibulum Dolor Ullamcorper Aenean"),
-            array("JAime les_sushis", "Sit Vestibulum Dolor"),
-        );
+        return [
+            ["Ligula  $* _--Egestas Mattis Nullam", "Commodo Pellentesque Sem Fusce Quam"],
+            ["Véèsti buœlum Rïsus ", "  change#this#secret#very#important"],
+            ["J'aime les sushis  ", " Fringilla Vulputate Dolor Inceptos"],
+            ["au   " . PHP_EOL . "ietaui.\\eauie@auietsrt.trr", "Sit Vestibulum Dolor Ullamcorper Aenean"],
+            ["JAime les_sushis", "Sit Vestibulum Dolor"],
+        ];
     }
 
     /**
@@ -247,11 +288,11 @@ class StringHandlerTest extends PHPUnit_Framework_TestCase
      */
     public function encodeWithSecretNoSaltProvider()
     {
-        return array(
-            array("Ligula  $* _--Egestas Mattis Nullam", ""),
-            array("Véèsti buœlum Rïsus ", "  "),
-            array("J'aime les sushis  ", "  "),
-            array("auietauieauie@auietsrt.trr", PHP_EOL),
-        );
+        return [
+            ["Ligula  $* _--Egestas Mattis Nullam", ""],
+            ["Véèsti buœlum Rïsus ", "  "],
+            ["J'aime les sushis  ", "  "],
+            ["auietauieauie@auietsrt.trr", PHP_EOL],
+        ];
     }
 }
