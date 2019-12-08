@@ -28,7 +28,8 @@
         "phpunit/phpunit": "^5.7.27",
         "satooshi/php-coveralls": "^2.0",
         "squizlabs/php_codesniffer": "@stable",
-        "friendsofphp/php-cs-fixer": "^2.13"
+        "friendsofphp/php-cs-fixer": "^2.13",
+        "phpstan/phpstan": "^0.12.1"
     },
     "autoload": {
         "psr-4": {
