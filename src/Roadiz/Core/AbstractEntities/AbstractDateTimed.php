@@ -43,8 +43,8 @@ use JMS\Serializer\Annotation as Serializer;
 abstract class AbstractDateTimed extends AbstractEntity
 {
     /**
-     * @ORM\Column(type="datetime", name="created_at")
-     * @var \DateTime
+     * @ORM\Column(type="datetime", name="created_at", nullable=true)
+     * @var \DateTime|null
      * @Serializer\Groups("timestamps")
      */
     protected $createdAt;
@@ -68,14 +68,14 @@ abstract class AbstractDateTimed extends AbstractEntity
         return $this;
     }
     /**
-     * @ORM\Column(type="datetime", name="updated_at")
-     * @var \DateTime
+     * @ORM\Column(type="datetime", name="updated_at", nullable=true)
+     * @var \DateTime|null
      * @Serializer\Groups("timestamps")
      */
     protected $updatedAt;
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getUpdatedAt()
     {
