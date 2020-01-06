@@ -29,7 +29,7 @@
 
 namespace RZ\Roadiz\Core\Handlers;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 abstract class AbstractHandler
 {

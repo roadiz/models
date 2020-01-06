@@ -62,7 +62,7 @@ class StringHandler
     public static function slugify($string)
     {
         $string = static::removeDiacritics($string);
-        $string = trim(strtolower($string));
+        $string = trim(mb_strtolower($string));
         $string = preg_replace('#([^a-zA-Z0-9\p{Han}\p{Hiragana}\p{Katakana}\p{Arabic}\p{Cyrillic}\{Hebrew}]+)#u', '-', $string);
         $string = trim($string, "-");
 
@@ -94,7 +94,7 @@ class StringHandler
         $string = static::removeDiacritics(trim($string));
         $string = preg_replace('#([^a-zA-Z0-9\.]+)#', '_', $string);
         $string = trim($string, "_");
-        $string = strtolower($string);
+        $string = mb_strtolower($string);
 
         return $string;
     }
@@ -110,7 +110,7 @@ class StringHandler
     {
         $string = static::removeDiacritics($string);
         $string = preg_replace('#([^a-zA-Z0-9]+)#', '_', $string);
-        $string = strtolower($string);
+        $string = mb_strtolower($string);
         $string = trim($string);
 
         return $string;
@@ -129,7 +129,7 @@ class StringHandler
         $string = preg_replace('#([-_=\.,;:]+)#', ' ', $string);
         $string = preg_replace('#([^a-zA-Z0-9]+)#', '', ucwords($string));
         $string = trim($string);
-        $string[0] = strtolower($string[0]);
+        $string[0] = mb_strtolower($string[0]);
 
         return $string;
     }
