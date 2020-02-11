@@ -356,17 +356,25 @@ abstract class AbstractField extends AbstractPositioned
     }
 
     /**
-     * @return string
+     * @return string Camel case field name
      */
-    public function getGetterName()
+    public function getVarName(): string
+    {
+        return StringHandler::camelCase($this->getName());
+    }
+
+    /**
+     * @return string Camel case getter method name
+     */
+    public function getGetterName(): string
     {
         return StringHandler::camelCase('get ' . $this->getName());
     }
 
     /**
-     * @return string
+     * @return string Camel case setter method name
      */
-    public function getSetterName()
+    public function getSetterName(): string
     {
         return StringHandler::camelCase('set ' . $this->getName());
     }
