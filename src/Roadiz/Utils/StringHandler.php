@@ -64,6 +64,7 @@ class StringHandler
         $string = static::removeDiacritics($string);
         $string = trim(mb_strtolower($string));
         $string = preg_replace('#([^a-zA-Z0-9\p{Han}\p{Hiragana}\p{Katakana}\p{Arabic}\p{Cyrillic}\{Hebrew}]+)#u', '-', $string);
+        $string = str_replace(['{','}'], '-', $string);
         $string = trim($string, "-");
 
         return $string;
