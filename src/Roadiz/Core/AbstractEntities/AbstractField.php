@@ -175,7 +175,7 @@ abstract class AbstractField extends AbstractPositioned
      *
      * These string will be used as translation key.
      *
-     * @var array
+     * @var array<string>
      */
     public static $typeToHuman = [
         AbstractField::STRING_T => 'string.type',
@@ -209,7 +209,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * Associates abstract field type to a Doctrine type.
      *
-     * @var array
+     * @var array<string|null>
      */
     public static $typeToDoctrine = [
         AbstractField::STRING_T => 'string',
@@ -246,7 +246,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * Associates abstract field type to a Symfony Form type.
      *
-     * @var array
+     * @var array<string>
      */
     public static $typeToForm = [
         AbstractField::STRING_T => TextType::class,
@@ -282,7 +282,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * List searchable fields types in a searchEngine such as Solr.
      *
-     * @var array
+     * @var array<int>
      */
     protected static $searchableTypes = [
         AbstractField::STRING_T,
@@ -290,8 +290,6 @@ abstract class AbstractField extends AbstractPositioned
         AbstractField::TEXT_T,
         AbstractField::MARKDOWN_T,
     ];
-
-
 
     /**
      * @ORM\Column(type="string")
@@ -320,13 +318,13 @@ abstract class AbstractField extends AbstractPositioned
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      *
      * @return $this
      */
     public function setName($name)
     {
-        $this->name = StringHandler::variablize($name);
+        $this->name = StringHandler::variablize($name ?? '');
 
         return $this;
     }
@@ -373,13 +371,13 @@ abstract class AbstractField extends AbstractPositioned
     }
 
     /**
-     * @param string $label
+     * @param string|null $label
      *
      * @return $this
      */
     public function setLabel($label)
     {
-        $this->label = $label;
+        $this->label = $label ?? '';
 
         return $this;
     }
@@ -435,7 +433,7 @@ abstract class AbstractField extends AbstractPositioned
      */
     public function setDescription($description)
     {
-        $this->description = $description;
+        $this->description = $description ?? '';
 
         return $this;
     }
@@ -510,7 +508,7 @@ abstract class AbstractField extends AbstractPositioned
      */
     public function isVirtual()
     {
-        return static::$typeToDoctrine[$this->getType()] === null ? true : false;
+        return static::$typeToDoctrine[$this->getType()] === null;
     }
 
     /**
@@ -534,7 +532,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * Gets the value of groupName.
      *
-     * @return string
+     * @return string|null
      */
     public function getGroupName()
     {
@@ -542,7 +540,7 @@ abstract class AbstractField extends AbstractPositioned
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getGroupNameCanonical()
     {
@@ -552,12 +550,12 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * Sets the value of groupName.
      *
-     * @param string $groupName the group name
+     * @param string|null $groupName the group name
      * @return self
      */
     public function setGroupName($groupName)
     {
-        $this->groupName = trim(strip_tags($groupName));
+        $this->groupName = trim(strip_tags($groupName ?? ''));
         $this->groupNameCanonical = StringHandler::slugify($this->getGroupName());
         return $this;
     }

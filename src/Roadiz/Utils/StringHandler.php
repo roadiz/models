@@ -11,12 +11,14 @@ class StringHandler
     /**
      * Remove diacritics characters and replace them with their basic alpha letter.
      *
-     * @param string $string
-     *
+     * @param string|null $string
      * @return string
      */
-    public static function removeDiacritics($string)
+    public static function removeDiacritics(?string $string)
     {
+        if (null === $string) {
+            return '';
+        }
         $string = htmlentities($string, ENT_NOQUOTES, 'utf-8');
         $string = preg_replace('#([\'])#', ' ', $string);
         $string = preg_replace('#&([A-Za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', $string);
@@ -29,12 +31,14 @@ class StringHandler
     /**
      * Transform to lowercase and replace every non-alpha character with a dash.
      *
-     * @param string $string
-     *
+     * @param string|null $string
      * @return string Slugified string
      */
-    public static function slugify($string)
+    public static function slugify(?string $string)
     {
+        if (null === $string) {
+            return '';
+        }
         $string = static::removeDiacritics($string);
         $string = trim(mb_strtolower($string));
         $string = preg_replace('#([^a-zA-Z0-9\p{Han}\p{Hiragana}\p{Katakana}\p{Arabic}\p{Cyrillic}\{Hebrew}]+)#u', '-', $string);
@@ -46,12 +50,15 @@ class StringHandler
     /**
      * Transform a string for use as a classname.
      *
-     * @param string $string
+     * @param string|null $string
      *
      * @return string Classified string
      */
-    public static function classify($string)
+    public static function classify(?string $string)
     {
+        if (null === $string) {
+            return '';
+        }
         $string = static::removeDiacritics($string);
         $string = trim(preg_replace('#([^a-zA-Z])#', '', ucwords($string)));
 
@@ -60,12 +67,15 @@ class StringHandler
     /**
      * Transform to lowercase and replace every non-alpha character with an underscore.
      *
-     * @param string $string
+     * @param string|null $string
      *
      * @return string
      */
-    public static function cleanForFilename($string)
+    public static function cleanForFilename(?string $string)
     {
+        if (null === $string) {
+            return '';
+        }
         $string = static::removeDiacritics(trim($string));
         $string = preg_replace('#([^a-zA-Z0-9\.]+)#', '_', $string);
         $string = trim($string, "_");
@@ -77,12 +87,15 @@ class StringHandler
     /**
      * Transform to lowercase and replace every non-alpha character with an underscore.
      *
-     * @param string $string
+     * @param string|null $string
      *
      * @return string
      */
-    public static function variablize($string)
+    public static function variablize(?string $string)
     {
+        if (null === $string) {
+            return '';
+        }
         $string = static::removeDiacritics($string);
         $string = preg_replace('#([^a-zA-Z0-9]+)#', '_', $string);
         $string = mb_strtolower($string);
@@ -94,12 +107,15 @@ class StringHandler
     /**
      * Transform to camelcase.
      *
-     * @param string $string
+     * @param string|null $string
      *
      * @return string
      */
-    public static function camelCase($string)
+    public static function camelCase(?string $string)
     {
+        if (null === $string) {
+            return '';
+        }
         $string = static::removeDiacritics($string);
         $string = preg_replace('#([-_=\.,;:]+)#', ' ', $string);
         $string = preg_replace('#([^a-zA-Z0-9]+)#', '', ucwords($string));
@@ -113,19 +129,19 @@ class StringHandler
     /**
      * Encode a string using website security secret.
      *
-     * @param string $value String to encode
-     * @param string $secret Secret salt
+     * @param string|null $value String to encode
+     * @param string|null $secret Secret salt
      *
      * @return string
      * @throws \InvalidArgumentException
      */
-    public static function encodeWithSecret($value, $secret)
+    public static function encodeWithSecret(?string $value, ?string $secret)
     {
-        $secret = trim($secret);
+        $secret = trim($secret ?? '');
 
         if (!empty($secret)) {
             $secret = crypt($secret, $secret);
-            return base64_encode($secret . base64_encode(strip_tags($value)));
+            return base64_encode($secret . base64_encode(strip_tags($value ?? '')));
         } else {
             throw new \InvalidArgumentException("You cannot encode with an empty salt. Did you enter a secret security phrase in your conf/config.json file?", 1);
         }
@@ -134,19 +150,19 @@ class StringHandler
     /**
      * Decode a string using website security secret.
      *
-     * @param string $value Salted base64 string
-     * @param string $secret Secret salt
+     * @param string|null $value Salted base64 string
+     * @param string|null $secret Secret salt
      *
      * @return string
      * @throws \InvalidArgumentException
      */
-    public static function decodeWithSecret($value, $secret)
+    public static function decodeWithSecret(?string $value, ?string $secret)
     {
-        $secret = trim($secret);
+        $secret = trim($secret ?? '');
 
         if (!empty($secret)) {
             $secret = crypt($secret, $secret);
-            $salted = base64_decode($value);
+            $salted = base64_decode($value ?? '');
 
             $nonSalted = str_replace($secret, "", $salted);
 
@@ -161,7 +177,7 @@ class StringHandler
      * @param string $needle
      * @return bool
      */
-    public static function endsWith($haystack, $needle)
+    public static function endsWith(string $haystack, string $needle)
     {
         if (strlen($needle) > strlen($haystack)) {
             return false;
@@ -176,7 +192,7 @@ class StringHandler
      * @param string $subject
      * @return string
      */
-    public static function replaceLast($search, $replace, $subject)
+    public static function replaceLast(string $search, string $replace, string $subject)
     {
         $pos = strrpos($subject, $search);
 

@@ -16,9 +16,10 @@ trait LeafTrait
     {
         return $this->children;
     }
+
     /**
      * @param Collection<LeafInterface> $children
-     * @return Collection
+     * @return $this
      */
     public function setChildren(Collection $children)
     {
@@ -119,7 +120,7 @@ trait LeafTrait
     }
 
     /**
-     * {@inheritdoc}
+     * @return mixed
      */
     public function getIterator()
     {
@@ -127,7 +128,7 @@ trait LeafTrait
     }
 
     /**
-     * {@inheritdoc}
+     * @return int
      */
     public function count(): int
     {
