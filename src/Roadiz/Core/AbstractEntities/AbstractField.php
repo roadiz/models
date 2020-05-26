@@ -1,32 +1,6 @@
 <?php
-/**
- * Copyright © 2014, Ambroise Maupate and Julien Blanchet
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is furnished
- * to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
- * IN THE SOFTWARE.
- *
- * Except as contained in this notice, the name of the ROADIZ shall not
- * be used in advertising or otherwise to promote the sale, use or other dealings
- * in this Software without prior written authorization from Ambroise Maupate and Julien Blanchet.
- *
- * @file AbstractField.php
- * @author Maxime Constantinian
- */
+declare(strict_types=1);
+
 namespace RZ\Roadiz\Core\AbstractEntities;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -265,6 +239,8 @@ abstract class AbstractField extends AbstractPositioned
         AbstractField::MANY_TO_ONE_T => null,
         AbstractField::SINGLE_PROVIDER_T => 'string',
         AbstractField::MULTI_PROVIDER_T => 'simple_array',
+        # JSON type is only available since MySQL 5.7,
+        # Use json_array in the mean time
         AbstractField::COLLECTION_T => 'json_array',
     ];
     /**
@@ -356,17 +332,25 @@ abstract class AbstractField extends AbstractPositioned
     }
 
     /**
-     * @return string
+     * @return string Camel case field name
      */
-    public function getGetterName()
+    public function getVarName(): string
+    {
+        return StringHandler::camelCase($this->getName());
+    }
+
+    /**
+     * @return string Camel case getter method name
+     */
+    public function getGetterName(): string
     {
         return StringHandler::camelCase('get ' . $this->getName());
     }
 
     /**
-     * @return string
+     * @return string Camel case setter method name
      */
-    public function getSetterName()
+    public function getSetterName(): string
     {
         return StringHandler::camelCase('set ' . $this->getName());
     }
@@ -460,12 +444,12 @@ abstract class AbstractField extends AbstractPositioned
      * @Serializer\Groups({"node_type"})
      * @Serializer\Type("string")
      * @Serializer\Expose
-     * @var string
+     * @var string|null
      */
     private $defaultValues;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getDefaultValues()
     {
@@ -473,7 +457,7 @@ abstract class AbstractField extends AbstractPositioned
     }
 
     /**
-     * @param string $defaultValues
+     * @param string|null $defaultValues
      *
      * @return $this
      */
