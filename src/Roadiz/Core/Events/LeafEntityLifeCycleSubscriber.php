@@ -43,6 +43,7 @@ class LeafEntityLifeCycleSubscriber implements EventSubscriber
 
     /**
      * @param LifecycleEventArgs $event
+     * @return void
      */
     public function prePersist(LifecycleEventArgs $event)
     {

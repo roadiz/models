@@ -18,13 +18,13 @@ abstract class AbstractEntity implements PersistableInterface
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      * @Serializer\Groups("id")
-     * @var integer
+     * @var int
      * @Serializer\Type("integer")
      */
     protected $id;
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -32,7 +32,7 @@ abstract class AbstractEntity implements PersistableInterface
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      * @return AbstractEntity
      */
     public function setId($id)

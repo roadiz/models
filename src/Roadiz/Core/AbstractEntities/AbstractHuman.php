@@ -19,24 +19,25 @@ abstract class AbstractHuman extends AbstractDateTimed
     /**
      * @ORM\Column(type="string", unique=true)
      * @Serializer\Groups({"user", "human"})
+     * @var string|null
      */
     protected $email;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getEmail()
     {
         return $this->email;
     }
     /**
-     * @param string $email
+     * @param string|null $email
      *
      * @return $this
      */
     public function setEmail($email)
     {
-        if (filter_var($email, FILTER_VALIDATE_EMAIL) !== false) {
+        if (filter_var($email ?? '', FILTER_VALIDATE_EMAIL) !== false) {
             $this->email = $email;
         }
 
@@ -46,17 +47,19 @@ abstract class AbstractHuman extends AbstractDateTimed
     /**
      * @ORM\Column(type="string", nullable=true)
      * @Serializer\Groups({"user", "human"})
+     * @var string|null
      */
     protected $firstName;
+
     /**
-     * @return string
+     * @return string|null
      */
     public function getFirstName()
     {
         return $this->firstName;
     }
     /**
-     * @param string $firstName
+     * @param string|null $firstName
      *
      * @return $this
      */
@@ -70,17 +73,18 @@ abstract class AbstractHuman extends AbstractDateTimed
     /**
      * @ORM\Column(type="string", nullable=true)
      * @Serializer\Groups({"user", "human"})
+     * @var string|null
      */
     protected $lastName;
     /**
-     * @return string
+     * @return string|null
      */
     public function getLastName()
     {
         return $this->lastName;
     }
     /**
-     * @param string $lastName
+     * @param string|null $lastName
      *
      * @return $this
      */
@@ -92,26 +96,28 @@ abstract class AbstractHuman extends AbstractDateTimed
     }
 
     /**
+     * @var string|null
      * @ORM\Column(type="string", nullable=true)
      * @Serializer\Groups({"user", "human"})
      */
     protected $phone;
 
     /**
+     * @var string|null
      * @ORM\Column(type="string", nullable=true)
      * @Serializer\Groups({"user", "human"})
      */
     protected $company;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getCompany()
     {
         return $this->company;
     }
     /**
-     * @param string $company
+     * @param string|null $company
      *
      * @return $this
      */
@@ -123,19 +129,20 @@ abstract class AbstractHuman extends AbstractDateTimed
     }
 
     /**
+     * @var string|null
      * @ORM\Column(type="string", nullable=true)
      * @Serializer\Groups({"user", "human"})
      */
     protected $job;
     /**
-     * @return string
+     * @return string|null
      */
     public function getJob()
     {
         return $this->job;
     }
     /**
-     * @param string $job
+     * @param string|null $job
      *
      * @return $this
      */
@@ -147,13 +154,13 @@ abstract class AbstractHuman extends AbstractDateTimed
     }
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      * @ORM\Column(type="datetime", nullable=true)
      * @Serializer\Groups({"user", "human"})
      */
     protected $birthday;
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getBirthday()
     {
@@ -164,7 +171,7 @@ abstract class AbstractHuman extends AbstractDateTimed
      *
      * @return $this
      */
-    public function setBirthday(\DateTime $birthday = null)
+    public function setBirthday(?\DateTime $birthday = null)
     {
         $this->birthday = $birthday;
 
@@ -174,7 +181,7 @@ abstract class AbstractHuman extends AbstractDateTimed
     /**
      * Gets the value of phone.
      *
-     * @return mixed
+     * @return string|null
      */
     public function getPhone()
     {
@@ -184,7 +191,7 @@ abstract class AbstractHuman extends AbstractDateTimed
     /**
      * Sets the value of phone.
      *
-     * @param mixed $phone the phone
+     * @param string|null $phone the phone
      *
      * @return self
      */
