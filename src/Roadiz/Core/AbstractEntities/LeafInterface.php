@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 interface LeafInterface extends \IteratorAggregate, \Countable, PositionedInterface
 {
     /**
-     * @return Collection
+     * @return Collection<LeafInterface>
      */
     public function getChildren(): Collection;
 

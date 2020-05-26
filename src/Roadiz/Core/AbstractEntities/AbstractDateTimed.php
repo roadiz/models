@@ -26,7 +26,7 @@ abstract class AbstractDateTimed extends AbstractEntity
     protected $createdAt;
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getCreatedAt()
     {
@@ -34,10 +34,10 @@ abstract class AbstractDateTimed extends AbstractEntity
     }
 
     /**
-     * @param \DateTime $createdAt
+     * @param \DateTime|null $createdAt
      * @return AbstractDateTimed
      */
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt(?\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
 
@@ -59,10 +59,10 @@ abstract class AbstractDateTimed extends AbstractEntity
     }
 
     /**
-     * @param \DateTime $updatedAt
+     * @param \DateTime|null $updatedAt
      * @return AbstractDateTimed
      */
-    public function setUpdatedAt(\DateTime $updatedAt)
+    public function setUpdatedAt(?\DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
 
@@ -71,6 +71,7 @@ abstract class AbstractDateTimed extends AbstractEntity
 
     /**
      * @ORM\PreUpdate
+     * @return void
      */
     public function preUpdate()
     {
@@ -78,6 +79,7 @@ abstract class AbstractDateTimed extends AbstractEntity
     }
     /**
      * @ORM\PrePersist
+     * @return void
      */
     public function prePersist()
     {
