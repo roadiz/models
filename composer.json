@@ -19,9 +19,8 @@
     ],
     "require": {
         "php": ">=7.2",
-        "doctrine/orm": "^2.6.3",
+        "doctrine/orm": "^2.7",
         "pimple/pimple": "^3.2.3",
-        "symfony/form": "~4.4.1",
         "jms/serializer": "^2.3.0 || ^3.1.1"
     },
     "require-dev": {

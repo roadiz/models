@@ -5,16 +5,6 @@ namespace RZ\Roadiz\Core\AbstractEntities;
 
 use Doctrine\ORM\Mapping as ORM;
 use RZ\Roadiz\Utils\StringHandler;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\CountryType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
@@ -242,41 +232,6 @@ abstract class AbstractField extends AbstractPositioned
         # JSON type is only available since MySQL 5.7,
         # Use json_array in the mean time
         AbstractField::COLLECTION_T => 'json_array',
-    ];
-    /**
-     * Associates abstract field type to a Symfony Form type.
-     *
-     * @var array<string>
-     */
-    public static $typeToForm = [
-        AbstractField::STRING_T => TextType::class,
-        AbstractField::DATETIME_T => DateTimeType::class,
-        AbstractField::DATE_T => DateType::class,
-        AbstractField::RICHTEXT_T => TextareaType::class,
-        AbstractField::TEXT_T => TextareaType::class,
-        AbstractField::MARKDOWN_T => 'markdown',
-        AbstractField::BOOLEAN_T => CheckboxType::class,
-        AbstractField::INTEGER_T => IntegerType::class,
-        AbstractField::DECIMAL_T => NumberType::class,
-        AbstractField::EMAIL_T => EmailType::class,
-        AbstractField::ENUM_T => 'enumeration',
-        AbstractField::MULTIPLE_T => 'multiple_enumeration',
-        AbstractField::DOCUMENTS_T => 'documents',
-        AbstractField::NODES_T => 'referenced_nodes',
-        AbstractField::CHILDREN_T => 'children_nodes',
-        AbstractField::COLOUR_T => TextType::class,
-        AbstractField::GEOTAG_T => TextType::class,
-        AbstractField::MULTI_GEOTAG_T => TextType::class,
-        AbstractField::CUSTOM_FORMS_T => 'custom_forms',
-        AbstractField::JSON_T => 'json_text',
-        AbstractField::CSS_T => 'css_text',
-        AbstractField::COUNTRY_T => CountryType::class,
-        AbstractField::YAML_T => 'yaml_text',
-        AbstractField::MANY_TO_MANY_T => 'referenced_entity',
-        AbstractField::MANY_TO_ONE_T => 'referenced_entity',
-        AbstractField::SINGLE_PROVIDER_T => 'referenced_provider',
-        AbstractField::MULTI_PROVIDER_T => 'referenced_provider',
-        AbstractField::COLLECTION_T => CollectionType::class,
     ];
 
     /**
