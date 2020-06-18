@@ -229,9 +229,8 @@ abstract class AbstractField extends AbstractPositioned
         AbstractField::MANY_TO_ONE_T => null,
         AbstractField::SINGLE_PROVIDER_T => 'string',
         AbstractField::MULTI_PROVIDER_T => 'simple_array',
-        # JSON type is only available since MySQL 5.7,
-        # Use json_array in the mean time
-        AbstractField::COLLECTION_T => 'json_array',
+        # JSON type is only available since MySQL 5.7 / MariaDB 10.2.7
+        AbstractField::COLLECTION_T => 'json',
     ];
 
     /**
