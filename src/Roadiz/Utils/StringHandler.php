@@ -21,11 +21,11 @@ class StringHandler
         }
         $string = htmlentities($string, ENT_NOQUOTES, 'utf-8');
         $string = preg_replace('#([\'])#', ' ', $string);
-        $string = preg_replace('#&([A-Za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', $string);
-        $string = preg_replace('#&([A-Za-z]{2})(?:lig);#', '\1', $string);
-        $string = preg_replace('#&[^;]+;#', ' ', $string);
+        $string = preg_replace('#&([A-Za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', (string) $string);
+        $string = preg_replace('#&([A-Za-z]{2})(?:lig);#', '\1', (string) $string);
+        $string = preg_replace('#&[^;]+;#', ' ', (string) $string);
 
-        return $string;
+        return (string) $string;
     }
 
     /**
@@ -42,7 +42,7 @@ class StringHandler
         $string = static::removeDiacritics($string);
         $string = trim(mb_strtolower($string));
         $string = preg_replace('#([^a-zA-Z0-9\p{Han}\p{Hiragana}\p{Katakana}\p{Arabic}\p{Cyrillic}\{Hebrew}]+)#u', '-', $string);
-        $string = str_replace(['{','}'], '-', $string);
+        $string = str_replace(['{','}'], '-', (string) $string);
         $string = trim($string, "-");
 
         return $string;
@@ -60,7 +60,7 @@ class StringHandler
             return '';
         }
         $string = static::removeDiacritics($string);
-        $string = trim(preg_replace('#([^a-zA-Z])#', '', ucwords($string)));
+        $string = trim((string) preg_replace('#([^a-zA-Z])#', '', ucwords($string)));
 
         return $string;
     }
@@ -78,7 +78,7 @@ class StringHandler
         }
         $string = static::removeDiacritics(trim($string));
         $string = preg_replace('#([^a-zA-Z0-9\.]+)#', '_', $string);
-        $string = trim($string, "_");
+        $string = trim((string) $string, "_");
         $string = mb_strtolower($string);
 
         return $string;
@@ -98,7 +98,7 @@ class StringHandler
         }
         $string = static::removeDiacritics($string);
         $string = preg_replace('#([^a-zA-Z0-9]+)#', '_', $string);
-        $string = mb_strtolower($string);
+        $string = mb_strtolower((string) $string);
         $string = trim($string);
 
         return $string;
@@ -118,8 +118,8 @@ class StringHandler
         }
         $string = static::removeDiacritics($string);
         $string = preg_replace('#([-_=\.,;:]+)#', ' ', $string);
-        $string = preg_replace('#([^a-zA-Z0-9]+)#', '', ucwords($string));
-        $string = trim($string);
+        $string = preg_replace('#([^a-zA-Z0-9]+)#', '', ucwords((string) $string));
+        $string = trim((string) $string);
         $string[0] = mb_strtolower($string[0]);
 
         return $string;
