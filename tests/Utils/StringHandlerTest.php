@@ -26,12 +26,14 @@
  * @file StringHandlerTest.php
  * @author Ambroise Maupate <ambroise@rezo-zero.com>
  */
+
+use PHPUnit\Framework\TestCase;
 use RZ\Roadiz\Utils\StringHandler;
 
 /**
  * Class StringHandlerTest
  */
-class StringHandlerTest extends PHPUnit_Framework_TestCase
+class StringHandlerTest extends TestCase
 {
 
     /**
@@ -275,7 +277,7 @@ class StringHandlerTest extends PHPUnit_Framework_TestCase
      */
     public function testEncodeWithSecretNoSalt($input, $secret)
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException('\\InvalidArgumentException');
 
         $code = StringHandler::encodeWithSecret($input, $secret);
 
