@@ -5,7 +5,7 @@ namespace RZ\Roadiz\Core\AbstractEntities;
 
 use Doctrine\Common\Collections\Collection;
 
-interface LeafInterface extends \IteratorAggregate, \Countable, PositionedInterface
+interface LeafInterface extends PositionedInterface
 {
     /**
      * @return Collection<LeafInterface>
