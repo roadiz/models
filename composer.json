@@ -12,8 +12,8 @@
     "authors": [
         {
             "name": "Ambroise Maupate",
-            "email": "ambroise@rezo-zero.com",
-            "homepage": "http://www.rezo-zero.com",
+            "email": "ambroise@roadiz.io",
+            "homepage": "http://www.roadiz.io",
             "role": "Lead developer"
         }
     ],
@@ -21,7 +21,8 @@
         "php": ">=7.4",
         "doctrine/orm": "~2.7.5 || ~2.8.1",
         "pimple/pimple": "^3.3.1",
-        "jms/serializer": "^2.3.0 || ^3.9.0"
+        "jms/serializer": "^2.3.0 || ^3.9.0",
+        "symfony/string": "^5.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.4.3",

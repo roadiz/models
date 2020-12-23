@@ -184,8 +184,17 @@ class StringHandlerTest extends TestCase
             ["É", "e"],
             ["œ", "oe"],
             ["ç", "c"],
-            ["__à", "_a"],
-            ["--é", "_e"],
+            ["__à", "a"],
+            ["--é", "e"],
+            ["Ligula  $* _--Egestas Mattis Nullam$* _  ", "ligula_egestas_mattis_nullam"],
+            ["Véèsti buœlum Rïsus+", "veesti_buoelum_risus"],
+            ["J'aime les sushis!", "j_aime_les_sushis"],
+            ["J’aime les sushis!", "j_aime_les_sushis"],
+            ["J'aime les\n sushis!\t\n", "j_aime_les_sushis"],
+            ["?header_image", "header_image"],
+            ["JAime les_sushis", "j_aime_les_sushis"],
+            ["Ébène", "ebene"],
+            ["ébène", "ebene"],
         ];
     }
 
