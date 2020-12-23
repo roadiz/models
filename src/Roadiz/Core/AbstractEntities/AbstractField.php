@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace RZ\Roadiz\Core\AbstractEntities;
 
 use Doctrine\ORM\Mapping as ORM;
+use RZ\Roadiz\Core\Entities\NodeTypeField;
 use RZ\Roadiz\Utils\StringHandler;
 use JMS\Serializer\Annotation as Serializer;
 
@@ -266,7 +267,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return string $name
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -312,16 +313,16 @@ abstract class AbstractField extends AbstractPositioned
      * @Serializer\Expose
      * @Serializer\Groups({"node_type"})
      * @Serializer\Type("string")
-     * @var string
+     * @var string|null
      */
     private $label;
 
     /**
      * @return string
      */
-    public function getLabel()
+    public function getLabel(): string
     {
-        return $this->label;
+        return $this->label ?? '';
     }
 
     /**
@@ -341,14 +342,14 @@ abstract class AbstractField extends AbstractPositioned
      * @Serializer\Expose
      * @Serializer\Groups({"node_type"})
      * @Serializer\Type("string")
-     * @var string
+     * @var string|null
      */
     private $placeholder;
 
     /**
      * @return mixed
      */
-    public function getPlaceholder()
+    public function getPlaceholder(): ?string
     {
         return $this->placeholder;
     }
@@ -373,9 +374,9 @@ abstract class AbstractField extends AbstractPositioned
     private $description;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -403,7 +404,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return string|null
      */
-    public function getDefaultValues()
+    public function getDefaultValues(): ?string
     {
         return $this->defaultValues;
     }
@@ -440,9 +441,23 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return string
      */
-    public function getTypeName()
+    public function getTypeName(): string
     {
+        if (!key_exists($this->getType(), static::$typeToHuman)) {
+            throw new \InvalidArgumentException($this->getType() . ' cannot be mapped to human label.');
+        }
         return static::$typeToHuman[$this->type];
+    }
+
+    /**
+     * @return string
+     */
+    public function getDoctrineType(): string
+    {
+        if (!key_exists($this->getType(), static::$typeToDoctrine)) {
+            throw new \InvalidArgumentException($this->getType() . ' cannot be mapped to Doctrine.');
+        }
+        return static::$typeToDoctrine[$this->getType()];
     }
 
     /**
@@ -458,9 +473,9 @@ abstract class AbstractField extends AbstractPositioned
     }
 
     /**
-     * @return boolean Is node type field virtual, it's just an association, no doctrine field created
+     * @return bool Is node type field virtual, it's just an association, no doctrine field created
      */
-    public function isVirtual()
+    public function isVirtual(): bool
     {
         return static::$typeToDoctrine[$this->getType()] === null;
     }
@@ -488,7 +503,7 @@ abstract class AbstractField extends AbstractPositioned
      *
      * @return string|null
      */
-    public function getGroupName()
+    public function getGroupName(): ?string
     {
         return $this->groupName;
     }
@@ -496,7 +511,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return string|null
      */
-    public function getGroupNameCanonical()
+    public function getGroupNameCanonical(): ?string
     {
         return $this->groupNameCanonical;
     }
@@ -528,7 +543,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isExpanded()
+    public function isExpanded(): bool
     {
         return $this->expanded;
     }
@@ -546,7 +561,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isString()
+    public function isString(): bool
     {
         return $this->getType() === static::STRING_T;
     }
@@ -554,7 +569,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isText()
+    public function isText(): bool
     {
         return $this->getType() === static::TEXT_T;
     }
@@ -562,7 +577,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isDate()
+    public function isDate(): bool
     {
         return $this->getType() === static::DATE_T;
     }
@@ -570,7 +585,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isDateTime()
+    public function isDateTime(): bool
     {
         return $this->getType() === static::DATETIME_T;
     }
@@ -578,7 +593,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isRichText()
+    public function isRichText(): bool
     {
         return $this->getType() === static::RICHTEXT_T;
     }
@@ -586,7 +601,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isMarkdown()
+    public function isMarkdown(): bool
     {
         return $this->getType() === static::MARKDOWN_T;
     }
@@ -594,7 +609,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isBoolean()
+    public function isBoolean(): bool
     {
         return $this->getType() === static::BOOLEAN_T;
     }
@@ -602,7 +617,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isBool()
+    public function isBool(): bool
     {
         return $this->isBoolean();
     }
@@ -610,7 +625,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isInteger()
+    public function isInteger(): bool
     {
         return $this->getType() === static::INTEGER_T;
     }
@@ -618,7 +633,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isDecimal()
+    public function isDecimal(): bool
     {
         return $this->getType() === static::DECIMAL_T;
     }
@@ -626,7 +641,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isEmail()
+    public function isEmail(): bool
     {
         return $this->getType() === static::EMAIL_T;
     }
@@ -634,7 +649,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isDocuments()
+    public function isDocuments(): bool
     {
         return $this->getType() === static::DOCUMENTS_T;
     }
@@ -642,7 +657,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isPassword()
+    public function isPassword(): bool
     {
         return $this->getType() === static::PASSWORD_T;
     }
@@ -650,14 +665,15 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isColour()
+    public function isColour(): bool
     {
         return $this->getType() === static::COLOUR_T;
     }
+
     /**
      * @return bool
      */
-    public function isColor()
+    public function isColor(): bool
     {
         return $this->isColour();
     }
@@ -665,7 +681,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isGeoTag()
+    public function isGeoTag(): bool
     {
         return $this->getType() === static::GEOTAG_T;
     }
@@ -673,7 +689,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isNodes()
+    public function isNodes(): bool
     {
         return $this->getType() === static::NODES_T;
     }
@@ -681,7 +697,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isUser()
+    public function isUser(): bool
     {
         return $this->getType() === static::USER_T;
     }
@@ -689,7 +705,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isEnum()
+    public function isEnum(): bool
     {
         return $this->getType() === static::ENUM_T;
     }
@@ -697,7 +713,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isChildrenNodes()
+    public function isChildrenNodes(): bool
     {
         return $this->getType() === static::CHILDREN_T;
     }
@@ -705,7 +721,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isCustomForms()
+    public function isCustomForms(): bool
     {
         return $this->getType() === static::CUSTOM_FORMS_T;
     }
@@ -713,7 +729,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isMultiple()
+    public function isMultiple(): bool
     {
         return $this->getType() === static::MULTIPLE_T;
     }
@@ -721,7 +737,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isMultiGeoTag()
+    public function isMultiGeoTag(): bool
     {
         return $this->getType() === static::MULTI_GEOTAG_T;
     }
@@ -729,7 +745,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isJson()
+    public function isJson(): bool
     {
         return $this->getType() === static::JSON_T;
     }
@@ -737,7 +753,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isYaml()
+    public function isYaml(): bool
     {
         return $this->getType() === static::YAML_T;
     }
@@ -745,7 +761,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isCss()
+    public function isCss(): bool
     {
         return $this->getType() === static::CSS_T;
     }
@@ -753,7 +769,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isManyToMany()
+    public function isManyToMany(): bool
     {
         return $this->getType() === static::MANY_TO_MANY_T;
     }
@@ -761,7 +777,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isManyToOne()
+    public function isManyToOne(): bool
     {
         return $this->getType() === static::MANY_TO_ONE_T;
     }
@@ -769,7 +785,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isCountry()
+    public function isCountry(): bool
     {
         return $this->getType() === static::COUNTRY_T;
     }
@@ -777,7 +793,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isSingleProvider()
+    public function isSingleProvider(): bool
     {
         return $this->getType() === static::SINGLE_PROVIDER_T;
     }
@@ -785,7 +801,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isMultiProvider()
+    public function isMultiProvider(): bool
     {
         return $this->getType() === static::MULTI_PROVIDER_T;
     }
@@ -793,7 +809,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isMultipleProvider()
+    public function isMultipleProvider(): bool
     {
         return $this->isMultiProvider();
     }
@@ -801,7 +817,7 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isCollection()
+    public function isCollection(): bool
     {
         return $this->getType() === static::COLLECTION_T;
     }

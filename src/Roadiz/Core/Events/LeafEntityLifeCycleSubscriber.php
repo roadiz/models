@@ -11,8 +11,6 @@ use RZ\Roadiz\Core\AbstractEntities\LeafInterface;
 use RZ\Roadiz\Core\Handlers\HandlerFactoryInterface;
 
 /**
- * Class LeafEntityLifeCycleSubscriber.
- *
  * @package RZ\Roadiz\Core\Events
  */
 class LeafEntityLifeCycleSubscriber implements EventSubscriber
