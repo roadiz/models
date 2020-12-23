@@ -192,7 +192,7 @@ class StringHandler
         if ($needle === '') {
             return true;
         }
-        
+
         return (new UnicodeString($haystack))
             ->endsWith($needle)
         ;

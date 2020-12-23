@@ -328,9 +328,9 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @param string|null $label
      *
-     * @return $this
+     * @return self
      */
-    public function setLabel($label)
+    public function setLabel(?string $label)
     {
         $this->label = $label ?? '';
 
@@ -347,7 +347,7 @@ abstract class AbstractField extends AbstractPositioned
     private $placeholder;
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getPlaceholder(): ?string
     {
@@ -457,7 +457,7 @@ abstract class AbstractField extends AbstractPositioned
         if (!key_exists($this->getType(), static::$typeToDoctrine)) {
             throw new \InvalidArgumentException($this->getType() . ' cannot be mapped to Doctrine.');
         }
-        return static::$typeToDoctrine[$this->getType()];
+        return static::$typeToDoctrine[$this->getType()] ?? '';
     }
 
     /**
