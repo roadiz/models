@@ -62,6 +62,7 @@ class StringHandler
         return (new UnicodeString($string))
             ->ascii()
             ->camel()
+            ->title()
             ->toString()
         ;
     }

@@ -199,6 +199,31 @@ class StringHandlerTest extends TestCase
     }
 
     /**
+     * @dataProvider classifyProvider
+     * @param $input
+     * @param $expected
+     */
+    public function testClassify($input, $expected)
+    {
+        // Assert
+        $this->assertEquals($expected, StringHandler::classify($input));
+    }
+
+    /**
+     * @return array
+     */
+    public function classifyProvider()
+    {
+        return [
+            ["Ligula  $* _--Egestas Mattis Nullam", "LigulaEgestasMattisNullam"],
+            ["Véèsti buœlum Rïsus", "VeestiBuoelumRisus"],
+            ["J'aime les sushis", "JAimeLesSushis"],
+            ["header_image", "HeaderImage"],
+            ["JAime les_sushis", "JAimeLesSushis"],
+        ];
+    }
+
+    /**
      * @dataProvider camelCaseProvider
      * @param $input
      * @param $expected
