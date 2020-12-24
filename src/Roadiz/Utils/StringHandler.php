@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace RZ\Roadiz\Utils;
 
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\String\UnicodeString;
 
 class StringHandler
@@ -37,14 +38,8 @@ class StringHandler
         if (null === $string) {
             return '';
         }
-
-        return (new UnicodeString($string))
-            ->ascii()
-            ->lower()
-            ->snake()
-            ->replace('_', '-')
-            ->toString()
-        ;
+        $slugger = new AsciiSlugger();
+        return $slugger->slug($string)->lower()->toString();
     }
     /**
      * Transform a string for use as a classname.

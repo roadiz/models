@@ -267,6 +267,7 @@ class StringHandlerTest extends TestCase
         return [
             ["Ligula  $* _--Egestas Mattis Nullam$* _  ", "ligula-egestas-mattis-nullam"],
             ["Véèsti buœlum Rïsus+", "veesti-buoelum-risus"],
+            ["veesti-buoelum-risus", "veesti-buoelum-risus"],
             ["J'aime les sushis!", "j-aime-les-sushis"],
             ["J’aime les sushis!", "j-aime-les-sushis"],
             ["J'aime les\n sushis!\t\n", "j-aime-les-sushis"],
@@ -274,6 +275,12 @@ class StringHandlerTest extends TestCase
             ["JAime les_sushis", "jaime-les-sushis"],
             ["Ébène", "ebene"],
             ["ébène", "ebene"],
+            ["Page1 1", "page1-1"],
+            ["Page3", "page3"],
+            ["Page 3", "page-3"],
+            ["Page 3 3", "page-3-3"],
+            ["12 Page 3 3", "12-page-3-3"],
+            ["straßburg", "strassburg"]
         ];
     }
 
