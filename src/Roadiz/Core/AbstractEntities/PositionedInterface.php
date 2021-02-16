@@ -8,7 +8,7 @@ interface PositionedInterface
     /**
      * @return float
      */
-    public function getPosition();
+    public function getPosition(): float;
 
     /**
      * Set position as a float to enable increment and decrement by O.5
@@ -17,5 +17,5 @@ interface PositionedInterface
      * @param float $newPosition
      * @return PositionedInterface
      */
-    public function setPosition($newPosition);
+    public function setPosition(float $newPosition);
 }

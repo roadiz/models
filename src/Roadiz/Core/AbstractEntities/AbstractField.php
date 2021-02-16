@@ -34,7 +34,7 @@ abstract class AbstractField extends AbstractPositioned
      */
     const TEXT_T = 2;
     /**
-     * Richtext field is an HTML text using a WYSIWYG editor.
+     * Rich-text field is an HTML text using a WYSIWYG editor.
      *
      * Use Markdown type instead. WYSIWYG is evil.
      */
@@ -125,11 +125,11 @@ abstract class AbstractField extends AbstractPositioned
      */
     const DATE_T = 22;
     /**
-     * Textarea to write Json syntaxed code
+     * Textarea to write Json syntax code
      */
     const JSON_T = 23;
     /**
-     * Textarea to write CSS syntaxed code
+     * Textarea to write CSS syntax code
      */
     const CSS_T = 24;
     /**
@@ -137,7 +137,7 @@ abstract class AbstractField extends AbstractPositioned
      */
     const COUNTRY_T = 25;
     /**
-     * Textarea to write YAML syntaxed text
+     * Textarea to write YAML syntax text
      */
     const YAML_T = 26;
     /**
@@ -167,6 +167,7 @@ abstract class AbstractField extends AbstractPositioned
      * These string will be used as translation key.
      *
      * @var array<string>
+     * @internal
      */
     public static $typeToHuman = [
         AbstractField::STRING_T => 'string.type',
@@ -201,6 +202,7 @@ abstract class AbstractField extends AbstractPositioned
      * Associates abstract field type to a Doctrine type.
      *
      * @var array<string|null>
+     * @internal
      */
     public static $typeToDoctrine = [
         AbstractField::STRING_T => 'string',
@@ -238,6 +240,7 @@ abstract class AbstractField extends AbstractPositioned
      * List searchable fields types in a searchEngine such as Solr.
      *
      * @var array<int>
+     * @internal
      */
     protected static $searchableTypes = [
         AbstractField::STRING_T,
@@ -245,7 +248,22 @@ abstract class AbstractField extends AbstractPositioned
         AbstractField::TEXT_T,
         AbstractField::MARKDOWN_T,
     ];
-
+    /**
+     * @ORM\Column(name="group_name", type="string", nullable=true)
+     * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
+     * @Serializer\Expose
+     * @var string|null
+     */
+    protected ?string $groupName = null;
+    /**
+     * @ORM\Column(name="group_name_canonical", type="string", nullable=true)
+     * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
+     * @Serializer\Expose
+     * @var string|null
+     */
+    protected ?string $groupNameCanonical = null;
     /**
      * @ORM\Column(type="string")
      * @Serializer\Expose
@@ -253,15 +271,70 @@ abstract class AbstractField extends AbstractPositioned
      * @Serializer\Type("string")
      * @var string
      */
-    private $name;
-
+    private string $name;
     /**
-     * AbstractField constructor.
+     * @ORM\Column(type="string")
+     * @Serializer\Expose
+     * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
+     * @var string|null
      */
+    private ?string $label;
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @Serializer\Expose
+     * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
+     * @var string|null
+     */
+    private ?string $placeholder = null;
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @Serializer\Expose
+     * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
+     * @var string|null
+     */
+    private ?string $description = null;
+    /**
+     * @ORM\Column(name="default_values", type="text", nullable=true)
+     * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("string")
+     * @Serializer\Expose
+     * @var string|null
+     */
+    private ?string $defaultValues = null;
+    /**
+     * @ORM\Column(type="integer")
+     * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("int")
+     * @Serializer\Expose
+     * @var int
+     */
+    private int $type = AbstractField::STRING_T;
+    /**
+     * If current field data should be expanded (for choices and country types).
+     *
+     * @var bool
+     * @ORM\Column(name="expanded", type="boolean", nullable=false, options={"default" = false})
+     * @Serializer\Groups({"node_type"})
+     * @Serializer\Type("bool")
+     * @Serializer\Expose
+     */
+    private bool $expanded = false;
+
     public function __construct()
     {
         $this->label = 'Untitled field';
         $this->name = 'untitled_field';
+    }
+
+    /**
+     * @return string Camel case field name
+     */
+    public function getVarName(): string
+    {
+        return StringHandler::camelCase($this->getName());
     }
 
     /**
@@ -277,19 +350,10 @@ abstract class AbstractField extends AbstractPositioned
      *
      * @return $this
      */
-    public function setName($name)
+    public function setName(?string $name)
     {
         $this->name = StringHandler::variablize($name ?? '');
-
         return $this;
-    }
-
-    /**
-     * @return string Camel case field name
-     */
-    public function getVarName(): string
-    {
-        return StringHandler::camelCase($this->getName());
     }
 
     /**
@@ -309,15 +373,6 @@ abstract class AbstractField extends AbstractPositioned
     }
 
     /**
-     * @ORM\Column(type="string")
-     * @Serializer\Expose
-     * @Serializer\Groups({"node_type"})
-     * @Serializer\Type("string")
-     * @var string|null
-     */
-    private $label;
-
-    /**
      * @return string
      */
     public function getLabel(): string
@@ -333,18 +388,8 @@ abstract class AbstractField extends AbstractPositioned
     public function setLabel(?string $label)
     {
         $this->label = $label ?? '';
-
         return $this;
     }
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     * @Serializer\Expose
-     * @Serializer\Groups({"node_type"})
-     * @Serializer\Type("string")
-     * @var string|null
-     */
-    private $placeholder;
 
     /**
      * @return string|null
@@ -355,23 +400,14 @@ abstract class AbstractField extends AbstractPositioned
     }
 
     /**
-     * @param mixed $placeholder
+     * @param string|null $placeholder
      * @return AbstractField
      */
-    public function setPlaceholder($placeholder)
+    public function setPlaceholder(?string $placeholder)
     {
         $this->placeholder = $placeholder;
         return $this;
     }
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Serializer\Expose
-     * @Serializer\Groups({"node_type"})
-     * @Serializer\Type("string")
-     * @var string
-     */
-    private $description;
 
     /**
      * @return string|null
@@ -382,24 +418,15 @@ abstract class AbstractField extends AbstractPositioned
     }
 
     /**
-     * @param string $description
+     * @param string|null $description
      *
      * @return $this
      */
-    public function setDescription($description)
+    public function setDescription(?string $description)
     {
-        $this->description = $description ?? '';
-
+        $this->description = $description;
         return $this;
     }
-    /**
-     * @ORM\Column(name="default_values", type="text", nullable=true)
-     * @Serializer\Groups({"node_type"})
-     * @Serializer\Type("string")
-     * @Serializer\Expose
-     * @var string|null
-     */
-    private $defaultValues;
 
     /**
      * @return string|null
@@ -414,28 +441,10 @@ abstract class AbstractField extends AbstractPositioned
      *
      * @return $this
      */
-    public function setDefaultValues($defaultValues)
+    public function setDefaultValues(?string $defaultValues)
     {
         $this->defaultValues = $defaultValues;
-
         return $this;
-    }
-
-    /**
-     * @ORM\Column(type="integer")
-     * @Serializer\Groups({"node_type"})
-     * @Serializer\Type("int")
-     * @Serializer\Expose
-     * @var int
-     */
-    private $type = AbstractField::STRING_T;
-
-    /**
-     * @return integer
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**
@@ -450,6 +459,25 @@ abstract class AbstractField extends AbstractPositioned
     }
 
     /**
+     * @return int
+     */
+    public function getType(): int
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param int $type
+     *
+     * @return $this
+     */
+    public function setType(int $type)
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getDoctrineType(): string
@@ -461,18 +489,6 @@ abstract class AbstractField extends AbstractPositioned
     }
 
     /**
-     * @param integer $type
-     *
-     * @return $this
-     */
-    public function setType($type)
-    {
-        $this->type = (int) $type;
-
-        return $this;
-    }
-
-    /**
      * @return bool Is node type field virtual, it's just an association, no doctrine field created
      */
     public function isVirtual(): bool
@@ -481,22 +497,12 @@ abstract class AbstractField extends AbstractPositioned
     }
 
     /**
-     * @ORM\Column(name="group_name", type="string", nullable=true)
-     * @Serializer\Groups({"node_type"})
-     * @Serializer\Type("string")
-     * @Serializer\Expose
-     * @var string|null
+     * @return bool Is node type field searchable
      */
-    protected $groupName;
-
-    /**
-     * @ORM\Column(name="group_name_canonical", type="string", nullable=true)
-     * @Serializer\Groups({"node_type"})
-     * @Serializer\Type("string")
-     * @Serializer\Expose
-     * @var string|null
-     */
-    protected $groupNameCanonical;
+    public function isSearchable(): bool
+    {
+        return in_array($this->getType(), static::$searchableTypes);
+    }
 
     /**
      * Gets the value of groupName.
@@ -509,36 +515,30 @@ abstract class AbstractField extends AbstractPositioned
     }
 
     /**
+     * Sets the value of groupName.
+     *
+     * @param string|null $groupName the group name
+     * @return self
+     */
+    public function setGroupName(?string $groupName)
+    {
+        if (null === $groupName) {
+            $this->groupName = null;
+            $this->groupNameCanonical = null;
+        } else {
+            $this->groupName = trim(strip_tags($groupName ?? ''));
+            $this->groupNameCanonical = StringHandler::slugify($this->getGroupName());
+        }
+        return $this;
+    }
+
+    /**
      * @return string|null
      */
     public function getGroupNameCanonical(): ?string
     {
         return $this->groupNameCanonical;
     }
-
-    /**
-     * Sets the value of groupName.
-     *
-     * @param string|null $groupName the group name
-     * @return self
-     */
-    public function setGroupName($groupName)
-    {
-        $this->groupName = trim(strip_tags($groupName ?? ''));
-        $this->groupNameCanonical = StringHandler::slugify($this->getGroupName());
-        return $this;
-    }
-
-    /**
-     * If current field data should be expanded (for choices and country types).
-     *
-     * @var bool
-     * @ORM\Column(name="expanded", type="boolean", nullable=false, options={"default" = false})
-     * @Serializer\Groups({"node_type"})
-     * @Serializer\Type("bool")
-     * @Serializer\Expose
-     */
-    private $expanded = false;
 
     /**
      * @return bool
@@ -552,7 +552,7 @@ abstract class AbstractField extends AbstractPositioned
      * @param bool $expanded
      * @return AbstractField
      */
-    public function setExpanded($expanded)
+    public function setExpanded(bool $expanded)
     {
         $this->expanded = $expanded;
         return $this;
@@ -609,17 +609,17 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isBoolean(): bool
+    public function isBool(): bool
     {
-        return $this->getType() === static::BOOLEAN_T;
+        return $this->isBoolean();
     }
 
     /**
      * @return bool
      */
-    public function isBool(): bool
+    public function isBoolean(): bool
     {
-        return $this->isBoolean();
+        return $this->getType() === static::BOOLEAN_T;
     }
 
     /**
@@ -665,17 +665,17 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isColour(): bool
+    public function isColor(): bool
     {
-        return $this->getType() === static::COLOUR_T;
+        return $this->isColour();
     }
 
     /**
      * @return bool
      */
-    public function isColor(): bool
+    public function isColour(): bool
     {
-        return $this->isColour();
+        return $this->getType() === static::COLOUR_T;
     }
 
     /**
@@ -801,17 +801,17 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @return bool
      */
-    public function isMultiProvider(): bool
+    public function isMultipleProvider(): bool
     {
-        return $this->getType() === static::MULTI_PROVIDER_T;
+        return $this->isMultiProvider();
     }
 
     /**
      * @return bool
      */
-    public function isMultipleProvider(): bool
+    public function isMultiProvider(): bool
     {
-        return $this->isMultiProvider();
+        return $this->getType() === static::MULTI_PROVIDER_T;
     }
 
     /**

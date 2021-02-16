@@ -15,13 +15,9 @@ use RZ\Roadiz\Core\Handlers\HandlerFactoryInterface;
  */
 class LeafEntityLifeCycleSubscriber implements EventSubscriber
 {
+    private HandlerFactoryInterface $handlerFactory;
+
     /**
-     * @var HandlerFactoryInterface
-     */
-    private $handlerFactory;
-    /**
-     * UserLifeCycleSubscriber constructor.
-     *
      * @param HandlerFactoryInterface $handlerFactory
      */
     public function __construct(HandlerFactoryInterface $handlerFactory)
