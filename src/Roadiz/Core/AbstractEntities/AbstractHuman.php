@@ -22,43 +22,43 @@ abstract class AbstractHuman extends AbstractDateTimed
      * @Serializer\Groups({"user", "human"})
      * @var string|null
      */
-    protected ?string $email;
+    protected ?string $email = null;
     /**
      * @ORM\Column(type="string", nullable=true)
      * @Serializer\Groups({"user", "human"})
      * @var string|null
      */
-    protected ?string $firstName;
+    protected ?string $firstName = null;
     /**
      * @ORM\Column(type="string", nullable=true)
      * @Serializer\Groups({"user", "human"})
      * @var string|null
      */
-    protected ?string $lastName;
+    protected ?string $lastName = null;
     /**
      * @var string|null
      * @ORM\Column(type="string", nullable=true)
      * @Serializer\Groups({"user", "human"})
      */
-    protected ?string $phone;
+    protected ?string $phone = null;
     /**
      * @var string|null
      * @ORM\Column(type="string", nullable=true)
      * @Serializer\Groups({"user", "human"})
      */
-    protected ?string $company;
+    protected ?string $company = null;
     /**
      * @var string|null
      * @ORM\Column(type="string", nullable=true)
      * @Serializer\Groups({"user", "human"})
      */
-    protected ?string $job;
+    protected ?string $job = null;
     /**
      * @var DateTime|null
      * @ORM\Column(type="datetime", nullable=true)
      * @Serializer\Groups({"user", "human"})
      */
-    protected ?DateTime $birthday;
+    protected ?DateTime $birthday = null;
 
     /**
      * @return string|null

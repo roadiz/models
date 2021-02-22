@@ -24,7 +24,7 @@ abstract class AbstractDateTimed extends AbstractEntity
      * @var DateTime|null
      * @Serializer\Groups("timestamps")
      */
-    protected ?DateTime $createdAt;
+    protected ?DateTime $createdAt = null;
 
     /**
      * @return DateTime|null
@@ -48,7 +48,7 @@ abstract class AbstractDateTimed extends AbstractEntity
      * @var DateTime|null
      * @Serializer\Groups("timestamps")
      */
-    protected ?DateTime $updatedAt;
+    protected ?DateTime $updatedAt = null;
 
     /**
      * @return DateTime|null
@@ -65,8 +65,13 @@ abstract class AbstractDateTimed extends AbstractEntity
     public function setUpdatedAt(?DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
-
         return $this;
+    }
+
+    protected function initAbstractDateTimed(): void
+    {
+        $this->setUpdatedAt(new DateTime("now"));
+        $this->setCreatedAt(new DateTime("now"));
     }
 
     /**
