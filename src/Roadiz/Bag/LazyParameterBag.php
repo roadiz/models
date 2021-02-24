@@ -9,7 +9,7 @@ abstract class LazyParameterBag extends ParameterBag
 {
     protected bool $ready;
 
-    abstract protected function populateParameters();
+    abstract protected function populateParameters(): void;
 
     public function __construct()
     {
