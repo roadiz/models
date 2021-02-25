@@ -11,5 +11,5 @@ interface HandlerFactoryInterface
      * @param AbstractEntity $entity
      * @return AbstractHandler
      */
-    public function getHandler(AbstractEntity $entity);
+    public function getHandler(AbstractEntity $entity): AbstractHandler;
 }

@@ -13,7 +13,7 @@ interface PersistableInterface
     /**
      * Get entity unique identifier.
      *
-     * @return int|null
+     * @return int|string|null
      */
     public function getId();
 }

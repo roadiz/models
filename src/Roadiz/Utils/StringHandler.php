@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace RZ\Roadiz\Utils;
 
-/**
- * String handling methods.
- */
+use Symfony\Component\String\Slugger\AsciiSlugger;
+use Symfony\Component\String\UnicodeString;
+
 class StringHandler
 {
     /**
@@ -13,39 +13,33 @@ class StringHandler
      *
      * @param string|null $string
      * @return string
+     * @deprecated Use Symfony\Component\String\UnicodeString::ascii()
      */
-    public static function removeDiacritics(?string $string)
+    public static function removeDiacritics(?string $string): string
     {
         if (null === $string) {
             return '';
         }
-        $string = htmlentities($string, ENT_NOQUOTES, 'utf-8');
-        $string = preg_replace('#([\'])#', ' ', $string);
-        $string = preg_replace('#&([A-Za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', (string) $string);
-        $string = preg_replace('#&([A-Za-z]{2})(?:lig);#', '\1', (string) $string);
-        $string = preg_replace('#&[^;]+;#', ' ', (string) $string);
 
-        return (string) $string;
+        return (new UnicodeString($string))
+            ->ascii()
+            ->toString()
+        ;
     }
 
     /**
      * Transform to lowercase and replace every non-alpha character with a dash.
      *
      * @param string|null $string
-     * @return string Slugified string
+     * @return string
      */
-    public static function slugify(?string $string)
+    public static function slugify(?string $string): string
     {
         if (null === $string) {
             return '';
         }
-        $string = static::removeDiacritics($string);
-        $string = trim(mb_strtolower($string));
-        $string = preg_replace('#([^a-zA-Z0-9\p{Han}\p{Hiragana}\p{Katakana}\p{Arabic}\p{Cyrillic}\{Hebrew}]+)#u', '-', $string);
-        $string = str_replace(['{','}'], '-', (string) $string);
-        $string = trim($string, "-");
-
-        return $string;
+        $slugger = new AsciiSlugger();
+        return $slugger->slug($string)->lower()->toString();
     }
     /**
      * Transform a string for use as a classname.
@@ -54,15 +48,18 @@ class StringHandler
      *
      * @return string Classified string
      */
-    public static function classify(?string $string)
+    public static function classify(?string $string): string
     {
         if (null === $string) {
             return '';
         }
-        $string = static::removeDiacritics($string);
-        $string = trim((string) preg_replace('#([^a-zA-Z])#', '', ucwords($string)));
 
-        return $string;
+        return (new UnicodeString($string))
+            ->ascii()
+            ->camel()
+            ->title()
+            ->toString()
+        ;
     }
     /**
      * Transform to lowercase and replace every non-alpha character with an underscore.
@@ -71,17 +68,19 @@ class StringHandler
      *
      * @return string
      */
-    public static function cleanForFilename(?string $string)
+    public static function cleanForFilename(?string $string): string
     {
         if (null === $string) {
             return '';
         }
-        $string = static::removeDiacritics(trim($string));
-        $string = preg_replace('#([^a-zA-Z0-9\.]+)#', '_', $string);
-        $string = trim((string) $string, "_");
-        $string = mb_strtolower($string);
 
-        return $string;
+        return (new UnicodeString($string))
+            ->ascii()
+            ->trim()
+            ->replaceMatches('#([^a-zA-Z0-9\.]+)#', '_')
+            ->lower()
+            ->toString()
+        ;
     }
 
     /**
@@ -91,17 +90,21 @@ class StringHandler
      *
      * @return string
      */
-    public static function variablize(?string $string)
+    public static function variablize(?string $string): string
     {
         if (null === $string) {
             return '';
         }
-        $string = static::removeDiacritics($string);
-        $string = preg_replace('#([^a-zA-Z0-9]+)#', '_', $string);
-        $string = mb_strtolower((string) $string);
-        $string = trim($string);
 
-        return $string;
+        return (new UnicodeString($string))
+            ->ascii()
+            ->snake()
+            ->lower()
+            ->trim('-')
+            ->trim('_')
+            ->trim()
+            ->toString()
+        ;
     }
 
     /**
@@ -111,18 +114,20 @@ class StringHandler
      *
      * @return string
      */
-    public static function camelCase(?string $string)
+    public static function camelCase(?string $string): string
     {
         if (null === $string) {
             return '';
         }
-        $string = static::removeDiacritics($string);
-        $string = preg_replace('#([-_=\.,;:]+)#', ' ', $string);
-        $string = preg_replace('#([^a-zA-Z0-9]+)#', '', ucwords((string) $string));
-        $string = trim((string) $string);
-        $string[0] = mb_strtolower($string[0]);
 
-        return $string;
+        return (new UnicodeString($string))
+            ->ascii()
+            ->camel()
+            ->trim('-')
+            ->trim('_')
+            ->trim()
+            ->toString()
+        ;
     }
 
 
@@ -135,7 +140,7 @@ class StringHandler
      * @return string
      * @throws \InvalidArgumentException
      */
-    public static function encodeWithSecret(?string $value, ?string $secret)
+    public static function encodeWithSecret(?string $value, ?string $secret): string
     {
         $secret = trim($secret ?? '');
 
@@ -156,7 +161,7 @@ class StringHandler
      * @return string
      * @throws \InvalidArgumentException
      */
-    public static function decodeWithSecret(?string $value, ?string $secret)
+    public static function decodeWithSecret(?string $value, ?string $secret): string
     {
         $secret = trim($secret ?? '');
 
@@ -176,14 +181,17 @@ class StringHandler
      * @param string $haystack
      * @param string $needle
      * @return bool
+     * @deprecated Use UnicodeString::endsWith($needle)
      */
-    public static function endsWith(string $haystack, string $needle)
+    public static function endsWith(string $haystack, string $needle): bool
     {
-        if (strlen($needle) > strlen($haystack)) {
-            return false;
+        if ($needle === '') {
+            return true;
         }
-        // search forward starting from end minus needle length characters
-        return $needle === "" || strpos($haystack, $needle, strlen($haystack) - strlen($needle)) !== false;
+
+        return (new UnicodeString($haystack))
+            ->endsWith($needle)
+        ;
     }
 
     /**
@@ -192,7 +200,7 @@ class StringHandler
      * @param string $subject
      * @return string
      */
-    public static function replaceLast(string $search, string $replace, string $subject)
+    public static function replaceLast(string $search, string $replace, string $subject): string
     {
         $pos = strrpos($subject, $search);
 

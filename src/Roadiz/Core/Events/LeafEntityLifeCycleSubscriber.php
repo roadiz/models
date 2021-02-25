@@ -11,19 +11,13 @@ use RZ\Roadiz\Core\AbstractEntities\LeafInterface;
 use RZ\Roadiz\Core\Handlers\HandlerFactoryInterface;
 
 /**
- * Class LeafEntityLifeCycleSubscriber.
- *
  * @package RZ\Roadiz\Core\Events
  */
 class LeafEntityLifeCycleSubscriber implements EventSubscriber
 {
+    private HandlerFactoryInterface $handlerFactory;
+
     /**
-     * @var HandlerFactoryInterface
-     */
-    private $handlerFactory;
-    /**
-     * UserLifeCycleSubscriber constructor.
-     *
      * @param HandlerFactoryInterface $handlerFactory
      */
     public function __construct(HandlerFactoryInterface $handlerFactory)

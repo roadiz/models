@@ -7,13 +7,12 @@ use Doctrine\Persistence\ObjectManager;
 
 abstract class AbstractHandler
 {
-    /** @var ObjectManager */
-    protected $objectManager;
+    protected ObjectManager $objectManager;
 
     /**
      * @return ObjectManager
      */
-    public function getObjectManager()
+    public function getObjectManager(): ObjectManager
     {
         return $this->objectManager;
     }
@@ -29,8 +28,6 @@ abstract class AbstractHandler
     }
 
     /**
-     * AbstractHandler constructor.
-     *
      * @param ObjectManager $objectManager
      */
     public function __construct(ObjectManager $objectManager)
@@ -42,9 +39,9 @@ abstract class AbstractHandler
      * Clean positions for current entity siblings.
      *
      * @param bool $setPositions
-     * @return int Return the next position after the **last** entity
+     * @return float Return the next position after the **last** entity
      */
-    public function cleanPositions($setPositions = true)
+    public function cleanPositions(bool $setPositions = true): float
     {
         return 1;
     }

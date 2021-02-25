@@ -26,12 +26,14 @@
  * @file StringHandlerTest.php
  * @author Ambroise Maupate <ambroise@rezo-zero.com>
  */
+
+use PHPUnit\Framework\TestCase;
 use RZ\Roadiz\Utils\StringHandler;
 
 /**
  * Class StringHandlerTest
  */
-class StringHandlerTest extends PHPUnit_Framework_TestCase
+class StringHandlerTest extends TestCase
 {
 
     /**
@@ -182,8 +184,42 @@ class StringHandlerTest extends PHPUnit_Framework_TestCase
             ["É", "e"],
             ["œ", "oe"],
             ["ç", "c"],
-            ["__à", "_a"],
-            ["--é", "_e"],
+            ["__à", "a"],
+            ["--é", "e"],
+            ["Ligula  $* _--Egestas Mattis Nullam$* _  ", "ligula_egestas_mattis_nullam"],
+            ["Véèsti buœlum Rïsus+", "veesti_buoelum_risus"],
+            ["J'aime les sushis!", "j_aime_les_sushis"],
+            ["J’aime les sushis!", "j_aime_les_sushis"],
+            ["J'aime les\n sushis!\t\n", "j_aime_les_sushis"],
+            ["?header_image", "header_image"],
+            ["JAime les_sushis", "j_aime_les_sushis"],
+            ["Ébène", "ebene"],
+            ["ébène", "ebene"],
+        ];
+    }
+
+    /**
+     * @dataProvider classifyProvider
+     * @param $input
+     * @param $expected
+     */
+    public function testClassify($input, $expected)
+    {
+        // Assert
+        $this->assertEquals($expected, StringHandler::classify($input));
+    }
+
+    /**
+     * @return array
+     */
+    public function classifyProvider()
+    {
+        return [
+            ["Ligula  $* _--Egestas Mattis Nullam", "LigulaEgestasMattisNullam"],
+            ["Véèsti buœlum Rïsus", "VeestiBuoelumRisus"],
+            ["J'aime les sushis", "JAimeLesSushis"],
+            ["header_image", "HeaderImage"],
+            ["JAime les_sushis", "JAimeLesSushis"],
         ];
     }
 
@@ -231,6 +267,7 @@ class StringHandlerTest extends PHPUnit_Framework_TestCase
         return [
             ["Ligula  $* _--Egestas Mattis Nullam$* _  ", "ligula-egestas-mattis-nullam"],
             ["Véèsti buœlum Rïsus+", "veesti-buoelum-risus"],
+            ["veesti-buoelum-risus", "veesti-buoelum-risus"],
             ["J'aime les sushis!", "j-aime-les-sushis"],
             ["J’aime les sushis!", "j-aime-les-sushis"],
             ["J'aime les\n sushis!\t\n", "j-aime-les-sushis"],
@@ -238,6 +275,12 @@ class StringHandlerTest extends PHPUnit_Framework_TestCase
             ["JAime les_sushis", "jaime-les-sushis"],
             ["Ébène", "ebene"],
             ["ébène", "ebene"],
+            ["Page1 1", "page1-1"],
+            ["Page3", "page3"],
+            ["Page 3", "page-3"],
+            ["Page 3 3", "page-3-3"],
+            ["12 Page 3 3", "12-page-3-3"],
+            ["straßburg", "strassburg"]
         ];
     }
 
@@ -275,7 +318,7 @@ class StringHandlerTest extends PHPUnit_Framework_TestCase
      */
     public function testEncodeWithSecretNoSalt($input, $secret)
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException('\\InvalidArgumentException');
 
         $code = StringHandler::encodeWithSecret($input, $secret);
 

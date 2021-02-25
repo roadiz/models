@@ -59,7 +59,7 @@ trait LeafTrait
     }
 
     /**
-     * @return LeafInterface parent
+     * @return LeafInterface|null parent
      */
     public function getParent(): ?LeafInterface
     {
@@ -67,7 +67,7 @@ trait LeafTrait
     }
 
     /**
-     * @param LeafInterface $parent
+     * @param LeafInterface|null $parent
      * @return $this
      */
     public function setParent(LeafInterface $parent = null)
@@ -117,21 +117,5 @@ trait LeafTrait
             return 0;
         }
         return $this->getParent()->getDepth() + 1;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIterator()
-    {
-        return $this->getChildren()->getIterator();
-    }
-
-    /**
-     * @return int
-     */
-    public function count(): int
-    {
-        return $this->getChildren()->count();
     }
 }

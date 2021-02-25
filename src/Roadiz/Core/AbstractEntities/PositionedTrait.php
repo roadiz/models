@@ -11,7 +11,7 @@ trait PositionedTrait
     /**
      * @return float
      */
-    public function getPosition()
+    public function getPosition(): float
     {
         return $this->position;
     }
@@ -23,10 +23,10 @@ trait PositionedTrait
      * @param float $newPosition
      * @return $this
      */
-    public function setPosition($newPosition)
+    public function setPosition(float $newPosition)
     {
         if ($newPosition > -1) {
-            $this->position = (float) $newPosition;
+            $this->position = $newPosition;
         }
 
         return $this;

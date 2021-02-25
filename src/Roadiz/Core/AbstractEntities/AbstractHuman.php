@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace RZ\Roadiz\Core\AbstractEntities;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 
@@ -21,21 +22,58 @@ abstract class AbstractHuman extends AbstractDateTimed
      * @Serializer\Groups({"user", "human"})
      * @var string|null
      */
-    protected $email;
+    protected ?string $email = null;
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @Serializer\Groups({"user", "human"})
+     * @var string|null
+     */
+    protected ?string $firstName = null;
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @Serializer\Groups({"user", "human"})
+     * @var string|null
+     */
+    protected ?string $lastName = null;
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", nullable=true)
+     * @Serializer\Groups({"user", "human"})
+     */
+    protected ?string $phone = null;
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", nullable=true)
+     * @Serializer\Groups({"user", "human"})
+     */
+    protected ?string $company = null;
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", nullable=true)
+     * @Serializer\Groups({"user", "human"})
+     */
+    protected ?string $job = null;
+    /**
+     * @var DateTime|null
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Serializer\Groups({"user", "human"})
+     */
+    protected ?DateTime $birthday = null;
 
     /**
      * @return string|null
      */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
+
     /**
      * @param string|null $email
      *
      * @return $this
      */
-    public function setEmail($email)
+    public function setEmail(?string $email)
     {
         if (filter_var($email ?? '', FILTER_VALIDATE_EMAIL) !== false) {
             $this->email = $email;
@@ -45,160 +83,115 @@ abstract class AbstractHuman extends AbstractDateTimed
     }
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @Serializer\Groups({"user", "human"})
-     * @var string|null
-     */
-    protected $firstName;
-
-    /**
      * @return string|null
      */
-    public function getFirstName()
+    public function getFirstName(): ?string
     {
         return $this->firstName;
     }
+
     /**
      * @param string|null $firstName
      *
      * @return $this
      */
-    public function setFirstName($firstName)
+    public function setFirstName(?string $firstName)
     {
         $this->firstName = $firstName;
-
         return $this;
     }
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @Serializer\Groups({"user", "human"})
-     * @var string|null
-     */
-    protected $lastName;
-    /**
      * @return string|null
      */
-    public function getLastName()
+    public function getLastName(): ?string
     {
         return $this->lastName;
     }
+
     /**
      * @param string|null $lastName
      *
      * @return $this
      */
-    public function setLastName($lastName)
+    public function setLastName(?string $lastName)
     {
         $this->lastName = $lastName;
-
         return $this;
     }
 
     /**
-     * @var string|null
-     * @ORM\Column(type="string", nullable=true)
-     * @Serializer\Groups({"user", "human"})
-     */
-    protected $phone;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", nullable=true)
-     * @Serializer\Groups({"user", "human"})
-     */
-    protected $company;
-
-    /**
      * @return string|null
      */
-    public function getCompany()
+    public function getCompany(): ?string
     {
         return $this->company;
     }
+
     /**
      * @param string|null $company
      *
      * @return $this
      */
-    public function setCompany($company)
+    public function setCompany(?string $company)
     {
         $this->company = $company;
-
         return $this;
     }
 
     /**
-     * @var string|null
-     * @ORM\Column(type="string", nullable=true)
-     * @Serializer\Groups({"user", "human"})
-     */
-    protected $job;
-    /**
      * @return string|null
      */
-    public function getJob()
+    public function getJob(): ?string
     {
         return $this->job;
     }
+
     /**
      * @param string|null $job
      *
      * @return $this
      */
-    public function setJob($job)
+    public function setJob(?string $job)
     {
         $this->job = $job;
-
         return $this;
     }
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
-     * @Serializer\Groups({"user", "human"})
+     * @return DateTime|null
      */
-    protected $birthday;
-    /**
-     * @return \DateTime|null
-     */
-    public function getBirthday()
+    public function getBirthday(): ?DateTime
     {
         return $this->birthday;
     }
     /**
-     * @param \DateTime|null $birthday
+     * @param DateTime|null $birthday
      *
      * @return $this
      */
-    public function setBirthday(?\DateTime $birthday = null)
+    public function setBirthday(?DateTime $birthday = null)
     {
         $this->birthday = $birthday;
-
         return $this;
     }
 
     /**
-     * Gets the value of phone.
-     *
      * @return string|null
      */
-    public function getPhone()
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
 
     /**
-     * Sets the value of phone.
-     *
-     * @param string|null $phone the phone
+     * @param string|null $phone
      *
      * @return self
      */
-    public function setPhone($phone)
+    public function setPhone(?string $phone)
     {
         $this->phone = $phone;
-
         return $this;
     }
 }
