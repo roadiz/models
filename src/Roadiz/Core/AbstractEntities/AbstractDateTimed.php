@@ -22,7 +22,7 @@ abstract class AbstractDateTimed extends AbstractEntity
     /**
      * @ORM\Column(type="datetime", name="created_at", nullable=true)
      * @var DateTime|null
-     * @Serializer\Groups("timestamps")
+     * @Serializer\Groups({"timestamps"})
      */
     protected ?DateTime $createdAt = null;
 
@@ -46,7 +46,7 @@ abstract class AbstractDateTimed extends AbstractEntity
     /**
      * @ORM\Column(type="datetime", name="updated_at", nullable=true)
      * @var DateTime|null
-     * @Serializer\Groups("timestamps")
+     * @Serializer\Groups({"timestamps"})
      */
     protected ?DateTime $updatedAt = null;
 
