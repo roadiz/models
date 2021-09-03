@@ -65,7 +65,7 @@ class LeafEntityLifeCycleSubscriber implements EventSubscriber
                     }
                 } elseif ($entity->getPosition() === 0.5) {
                     /*
-                     * Position is set to 0.5 so we need to
+                     * Position is set to 0.5, so we need to
                      * shift all tags to the bottom.
                      */
                     $handler->cleanPositions(true);
