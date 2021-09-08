@@ -24,13 +24,13 @@ abstract class AbstractHuman extends AbstractDateTimed
      */
     protected ?string $email = null;
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(name="firstName", type="string", nullable=true)
      * @Serializer\Groups({"user", "human"})
      * @var string|null
      */
     protected ?string $firstName = null;
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(name="lastName", type="string", nullable=true)
      * @Serializer\Groups({"user", "human"})
      * @var string|null
      */
