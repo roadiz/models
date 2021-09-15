@@ -17,7 +17,7 @@ abstract class AbstractEntity implements PersistableInterface
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
-     * @Serializer\Groups("id")
+     * @Serializer\Groups({"id"})
      * @var int|null
      * @Serializer\Type("integer")
      */
