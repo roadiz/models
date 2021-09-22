@@ -73,7 +73,7 @@ interface TranslationInterface
     public function getPreferredLocale(): string;
 
     /**
-     * @return bool
+     * @return bool Is right-to-left language based
      */
     public function isRtl(): bool;
 }

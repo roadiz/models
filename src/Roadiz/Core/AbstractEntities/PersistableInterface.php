@@ -6,7 +6,7 @@ namespace RZ\Roadiz\Core\AbstractEntities;
 /**
  * Base entity interface which deals with identifier.
  *
- * Every database entity should implements that interface.
+ * Every database entity should implement that interface.
  */
 interface PersistableInterface
 {
