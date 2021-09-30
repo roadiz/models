@@ -6,6 +6,7 @@ namespace RZ\Roadiz\Core\AbstractEntities;
 use Doctrine\ORM\Mapping as ORM;
 use RZ\Roadiz\Utils\StringHandler;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Serializer\Annotation as SymfonySerializer;
 
 /**
  * @ORM\MappedSuperclass
@@ -166,6 +167,7 @@ abstract class AbstractField extends AbstractPositioned
      * These string will be used as translation key.
      *
      * @var array<string>
+     * @SymfonySerializer\Ignore()
      * @internal
      */
     public static $typeToHuman = [
@@ -200,7 +202,8 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * Associates abstract field type to a Doctrine type.
      *
-     * @var array<string|null>
+     * @var array<string|null
+     * @SymfonySerializer\Ignore()
      * @internal
      */
     public static $typeToDoctrine = [
@@ -239,6 +242,7 @@ abstract class AbstractField extends AbstractPositioned
      * List searchable fields types in a searchEngine such as Solr.
      *
      * @var array<int>
+     * @SymfonySerializer\Ignore()
      * @internal
      */
     protected static $searchableTypes = [
@@ -249,7 +253,8 @@ abstract class AbstractField extends AbstractPositioned
     ];
     /**
      * @ORM\Column(name="group_name", type="string", nullable=true)
-     * @Serializer\Groups({"node_type"})
+     * @Serializer\Groups({"node_type", "setting"})
+     * @SymfonySerializer\Groups({"node_type", "setting"})
      * @Serializer\Type("string")
      * @Serializer\Expose
      * @var string|null
@@ -257,7 +262,8 @@ abstract class AbstractField extends AbstractPositioned
     protected ?string $groupName = null;
     /**
      * @ORM\Column(name="group_name_canonical", type="string", nullable=true)
-     * @Serializer\Groups({"node_type"})
+     * @Serializer\Groups({"node_type", "setting"})
+     * @SymfonySerializer\Groups({"node_type", "setting"})
      * @Serializer\Type("string")
      * @Serializer\Expose
      * @var string|null
@@ -266,7 +272,8 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @ORM\Column(type="string")
      * @Serializer\Expose
-     * @Serializer\Groups({"node_type"})
+     * @Serializer\Groups({"node_type", "setting"})
+     * @SymfonySerializer\Groups({"node_type", "setting"})
      * @Serializer\Type("string")
      * @var string
      */
@@ -274,7 +281,8 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @ORM\Column(type="string")
      * @Serializer\Expose
-     * @Serializer\Groups({"node_type"})
+     * @Serializer\Groups({"node_type", "setting"})
+     * @SymfonySerializer\Groups({"node_type", "setting"})
      * @Serializer\Type("string")
      * @var string|null
      */
@@ -282,7 +290,8 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @ORM\Column(type="string", nullable=true)
      * @Serializer\Expose
-     * @Serializer\Groups({"node_type"})
+     * @Serializer\Groups({"node_type", "setting"})
+     * @SymfonySerializer\Groups({"node_type", "setting"})
      * @Serializer\Type("string")
      * @var string|null
      */
@@ -290,14 +299,16 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Serializer\Expose
-     * @Serializer\Groups({"node_type"})
+     * @Serializer\Groups({"node_type", "setting"})
+     * @SymfonySerializer\Groups({"node_type", "setting"})
      * @Serializer\Type("string")
      * @var string|null
      */
     private ?string $description = null;
     /**
      * @ORM\Column(name="default_values", type="text", nullable=true)
-     * @Serializer\Groups({"node_type"})
+     * @Serializer\Groups({"node_type", "setting"})
+     * @SymfonySerializer\Groups({"node_type", "setting"})
      * @Serializer\Type("string")
      * @Serializer\Expose
      * @var string|null
@@ -305,7 +316,8 @@ abstract class AbstractField extends AbstractPositioned
     private ?string $defaultValues = null;
     /**
      * @ORM\Column(type="integer")
-     * @Serializer\Groups({"node_type"})
+     * @Serializer\Groups({"node_type", "setting"})
+     * @SymfonySerializer\Groups({"node_type", "setting"})
      * @Serializer\Type("int")
      * @Serializer\Expose
      * @var int
@@ -316,7 +328,8 @@ abstract class AbstractField extends AbstractPositioned
      *
      * @var bool
      * @ORM\Column(name="expanded", type="boolean", nullable=false, options={"default" = false})
-     * @Serializer\Groups({"node_type"})
+     * @Serializer\Groups({"node_type", "setting"})
+     * @SymfonySerializer\Groups({"node_type", "setting"})
      * @Serializer\Type("bool")
      * @Serializer\Expose
      */

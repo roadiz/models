@@ -6,6 +6,7 @@ namespace RZ\Roadiz\Core\AbstractEntities;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Serializer\Annotation as SymfonySerializer;
 
 /**
  * Abstract entity for any Human-like objects.
@@ -20,18 +21,21 @@ abstract class AbstractHuman extends AbstractDateTimed
     /**
      * @ORM\Column(type="string", unique=true)
      * @Serializer\Groups({"user", "human"})
+     * @SymfonySerializer\Groups({"user", "human"})
      * @var string|null
      */
     protected ?string $email = null;
     /**
      * @ORM\Column(name="firstName", type="string", nullable=true)
      * @Serializer\Groups({"user", "human"})
+     * @SymfonySerializer\Groups({"user", "human"})
      * @var string|null
      */
     protected ?string $firstName = null;
     /**
      * @ORM\Column(name="lastName", type="string", nullable=true)
      * @Serializer\Groups({"user", "human"})
+     * @SymfonySerializer\Groups({"user", "human"})
      * @var string|null
      */
     protected ?string $lastName = null;
@@ -39,24 +43,28 @@ abstract class AbstractHuman extends AbstractDateTimed
      * @var string|null
      * @ORM\Column(type="string", nullable=true)
      * @Serializer\Groups({"user", "human"})
+     * @SymfonySerializer\Groups({"user", "human"})
      */
     protected ?string $phone = null;
     /**
      * @var string|null
      * @ORM\Column(type="string", nullable=true)
      * @Serializer\Groups({"user", "human"})
+     * @SymfonySerializer\Groups({"user", "human"})
      */
     protected ?string $company = null;
     /**
      * @var string|null
      * @ORM\Column(type="string", nullable=true)
      * @Serializer\Groups({"user", "human"})
+     * @SymfonySerializer\Groups({"user", "human"})
      */
     protected ?string $job = null;
     /**
      * @var DateTime|null
      * @ORM\Column(type="datetime", nullable=true)
      * @Serializer\Groups({"user", "human"})
+     * @SymfonySerializer\Groups({"user", "human"})
      */
     protected ?DateTime $birthday = null;
 

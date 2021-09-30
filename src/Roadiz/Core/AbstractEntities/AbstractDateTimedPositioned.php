@@ -5,6 +5,7 @@ namespace RZ\Roadiz\Core\AbstractEntities;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Serializer\Annotation as SymfonySerializer;
 
 /**
  * Combined AbstractDateTimed and PositionedTrait.
@@ -24,8 +25,9 @@ abstract class AbstractDateTimedPositioned extends AbstractDateTimed implements 
     /**
      * @ORM\Column(type="float")
      * @Serializer\Groups({"position"})
+     * @SymfonySerializer\Groups({"position"})
      * @var float
      * @Serializer\Type("float")
      */
-    protected $position = 0.0;
+    protected float $position = 0.0;
 }
