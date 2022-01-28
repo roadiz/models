@@ -31,4 +31,12 @@ trait PositionedTrait
 
         return $this;
     }
+
+    public function compareTo($other)
+    {
+        if ($other instanceof PositionedInterface) {
+            return $this->getPosition() <=> $other->getPosition();
+        }
+        throw new \LogicException('Cannot compare object which does not implement ' . PositionedInterface::class);
+    }
 }

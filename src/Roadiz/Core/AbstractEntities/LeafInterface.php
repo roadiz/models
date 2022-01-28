@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace RZ\Roadiz\Core\AbstractEntities;
 
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Comparable;
 
-interface LeafInterface extends PositionedInterface
+interface LeafInterface extends PositionedInterface, Comparable
 {
     /**
      * @return Collection<LeafInterface>

@@ -170,7 +170,7 @@ abstract class AbstractField extends AbstractPositioned
      * @SymfonySerializer\Ignore()
      * @internal
      */
-    public static $typeToHuman = [
+    public static array $typeToHuman = [
         AbstractField::STRING_T => 'string.type',
         AbstractField::DATETIME_T => 'date-time.type',
         AbstractField::DATE_T => 'date.type',
@@ -202,11 +202,11 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * Associates abstract field type to a Doctrine type.
      *
-     * @var array<string|null
+     * @var array<string|null>
      * @SymfonySerializer\Ignore()
      * @internal
      */
-    public static $typeToDoctrine = [
+    public static array $typeToDoctrine = [
         AbstractField::STRING_T => 'string',
         AbstractField::DATETIME_T => 'datetime',
         AbstractField::DATE_T => 'datetime',
@@ -245,7 +245,7 @@ abstract class AbstractField extends AbstractPositioned
      * @SymfonySerializer\Ignore()
      * @internal
      */
-    protected static $searchableTypes = [
+    protected static array $searchableTypes = [
         AbstractField::STRING_T,
         AbstractField::RICHTEXT_T,
         AbstractField::TEXT_T,

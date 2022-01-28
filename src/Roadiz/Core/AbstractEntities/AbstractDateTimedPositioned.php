@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace RZ\Roadiz\Core\AbstractEntities;
 
+use Doctrine\Common\Comparable;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Serializer\Annotation as SymfonySerializer;
@@ -18,7 +19,7 @@ use Symfony\Component\Serializer\Annotation as SymfonySerializer;
  *     @ORM\Index(columns={"updated_at"})
  * })
  */
-abstract class AbstractDateTimedPositioned extends AbstractDateTimed implements PositionedInterface
+abstract class AbstractDateTimedPositioned extends AbstractDateTimed implements PositionedInterface, Comparable
 {
     use PositionedTrait;
 
