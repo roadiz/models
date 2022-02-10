@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace RZ\Roadiz\Bag;
@@ -32,9 +33,10 @@ abstract class LazyParameterBag extends ParameterBag
     }
 
     /**
+     * @param string|null $key
      * @return array
      */
-    public function all(): array
+    public function all(string $key = null): array
     {
         if (!$this->ready) {
             $this->populateParameters();
