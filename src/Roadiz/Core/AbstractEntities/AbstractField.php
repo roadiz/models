@@ -219,7 +219,7 @@ abstract class AbstractField extends AbstractPositioned
         AbstractField::DECIMAL_T => 'decimal',
         AbstractField::EMAIL_T => 'string',
         AbstractField::ENUM_T => 'string',
-        AbstractField::MULTIPLE_T => 'simple_array',
+        AbstractField::MULTIPLE_T => 'json',
         AbstractField::DOCUMENTS_T => null,
         AbstractField::NODES_T => null,
         AbstractField::CHILDREN_T => null,
@@ -234,8 +234,7 @@ abstract class AbstractField extends AbstractPositioned
         AbstractField::MANY_TO_MANY_T => null,
         AbstractField::MANY_TO_ONE_T => null,
         AbstractField::SINGLE_PROVIDER_T => 'string',
-        AbstractField::MULTI_PROVIDER_T => 'simple_array',
-        # JSON type is only available since MySQL 5.7 / MariaDB 10.2.7
+        AbstractField::MULTI_PROVIDER_T => 'json',
         AbstractField::COLLECTION_T => 'json',
     ];
 
