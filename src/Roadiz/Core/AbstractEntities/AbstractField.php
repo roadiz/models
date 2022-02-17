@@ -240,7 +240,7 @@ abstract class AbstractField extends AbstractPositioned
         AbstractField::SINGLE_PROVIDER_T => 'string',
         AbstractField::MULTI_PROVIDER_T => 'simple_array',
         # JSON type is only available since MySQL 5.7,
-        # Use json_array in the mean time
+        # Use json_array in the meantime
         AbstractField::COLLECTION_T => 'json_array',
     ];
     /**
