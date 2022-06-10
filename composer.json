@@ -19,12 +19,12 @@
     ],
     "require": {
         "php": ">=7.4",
-        "doctrine/orm": "~2.7.5 || ~2.8.1",
+        "doctrine/orm": "~2.8.5 || ~2.12.2",
         "pimple/pimple": "^3.3.1",
         "jms/serializer": "^2.3.0 || ^3.9.0",
         "symfony/string": "^5.0",
         "symfony/translation-contracts": "^2.3",
-        "symfony/http-foundation": "^5.0.7",
+        "symfony/http-foundation": "~5.0.7 || ~5.3",
         "symfony/serializer": "^5.0.7"
     },
     "require-dev": {
