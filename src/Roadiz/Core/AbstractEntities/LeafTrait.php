@@ -11,7 +11,7 @@ trait LeafTrait
     use PositionedTrait;
 
     /**
-     * @return Collection<LeafInterface>
+     * @return Collection<static>
      */
     public function getChildren(): Collection
     {
@@ -19,13 +19,13 @@ trait LeafTrait
     }
 
     /**
-     * @param Collection<LeafInterface> $children
+     * @param Collection<static> $children
      * @return $this
      */
     public function setChildren(Collection $children)
     {
         $this->children = $children;
-        /** @var LeafInterface $child */
+        /** @var static $child */
         foreach ($this->children as $child) {
             $child->setParent($this);
         }
@@ -33,7 +33,7 @@ trait LeafTrait
     }
 
     /**
-     * @param LeafInterface $child
+     * @param static $child
      * @return $this
      */
     public function addChild(LeafInterface $child)
@@ -46,7 +46,7 @@ trait LeafTrait
         return $this;
     }
     /**
-     * @param LeafInterface $child
+     * @param static $child
      * @return $this
      */
     public function removeChild(LeafInterface $child)
@@ -60,7 +60,7 @@ trait LeafTrait
     }
 
     /**
-     * @return LeafInterface|null parent
+     * @return static|null parent
      */
     public function getParent(): ?LeafInterface
     {
@@ -68,7 +68,7 @@ trait LeafTrait
     }
 
     /**
-     * @param LeafInterface|null $parent
+     * @param static|null $parent
      * @return $this
      */
     public function setParent(LeafInterface $parent = null)
@@ -88,7 +88,7 @@ trait LeafTrait
     /**
      * Return every tag’s parents.
      *
-     * @return LeafInterface[]
+     * @return static[]
      */
     public function getParents(): array
     {

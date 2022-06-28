@@ -74,6 +74,7 @@ abstract class LazyParameterBag extends ParameterBag
     /**
      * @return \ArrayIterator
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         if (!$this->ready) {
@@ -86,6 +87,7 @@ abstract class LazyParameterBag extends ParameterBag
     /**
      * @return int
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         if (!$this->ready) {
@@ -103,7 +105,7 @@ abstract class LazyParameterBag extends ParameterBag
      *
      * @return mixed
      */
-    public function filter(string $key, $default = null, $filter = FILTER_DEFAULT, $options = [])
+    public function filter(string $key, $default = null, int $filter = \FILTER_DEFAULT, $options = [])
     {
         if (!$this->ready) {
             $this->populateParameters();

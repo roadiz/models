@@ -10,35 +10,35 @@ use Doctrine\Common\Comparable;
 interface LeafInterface extends PositionedInterface, Comparable
 {
     /**
-     * @return Collection<LeafInterface>
+     * @return Collection<static>
      */
     public function getChildren(): Collection;
 
     /**
-     * @param LeafInterface $child
-     * @return LeafInterface
+     * @param static $child
+     * @return static
      */
     public function addChild(LeafInterface $child);
 
     /**
-     * @param LeafInterface $child
-     * @return LeafInterface
+     * @param static $child
+     * @return static
      */
     public function removeChild(LeafInterface $child);
 
     /**
-     * @return LeafInterface
+     * @return static
      */
     public function getParent(): ?LeafInterface;
 
     /**
-     * @return LeafInterface[]
+     * @return static[]
      */
     public function getParents(): array;
 
     /**
-     * @param LeafInterface|null $parent
-     * @return LeafInterface
+     * @param static|null $parent
+     * @return static
      */
     public function setParent(LeafInterface $parent = null);
 

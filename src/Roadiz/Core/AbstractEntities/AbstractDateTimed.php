@@ -30,6 +30,14 @@ abstract class AbstractDateTimed extends AbstractEntity
     protected ?DateTime $createdAt = null;
 
     /**
+     * @ORM\Column(type="datetime", name="updated_at", nullable=true)
+     * @var DateTime|null
+     * @Serializer\Groups({"timestamps"})
+     * @SymfonySerializer\Groups({"timestamps"})
+     */
+    protected ?DateTime $updatedAt = null;
+
+    /**
      * @return DateTime|null
      */
     public function getCreatedAt(): ?DateTime
@@ -46,13 +54,6 @@ abstract class AbstractDateTimed extends AbstractEntity
         $this->createdAt = $createdAt;
         return $this;
     }
-    /**
-     * @ORM\Column(type="datetime", name="updated_at", nullable=true)
-     * @var DateTime|null
-     * @Serializer\Groups({"timestamps"})
-     * @SymfonySerializer\Groups({"timestamps"})
-     */
-    protected ?DateTime $updatedAt = null;
 
     /**
      * @return DateTime|null

@@ -33,7 +33,11 @@ trait PositionedTrait
         return $this;
     }
 
-    public function compareTo($other)
+    /**
+     * @param mixed $other
+     * @return int
+     */
+    public function compareTo($other): int
     {
         if ($other instanceof PositionedInterface) {
             return $this->getPosition() <=> $other->getPosition();

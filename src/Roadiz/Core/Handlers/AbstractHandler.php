@@ -20,7 +20,7 @@ abstract class AbstractHandler
 
     /**
      * @param ObjectManager $objectManager
-     * @return AbstractHandler
+     * @return static
      */
     public function setObjectManager(ObjectManager $objectManager)
     {

@@ -23,144 +23,146 @@ abstract class AbstractField extends AbstractPositioned
     /**
      * String field is a simple 255 characters long text.
      */
-    const STRING_T = 0;
+    public const STRING_T = 0;
     /**
      * DateTime field is a combined Date and Time.
      *
      * @see \DateTime
      */
-    const DATETIME_T = 1;
+    public const DATETIME_T = 1;
     /**
      * Text field is a 65000 characters long text.
      */
-    const TEXT_T = 2;
+    public const TEXT_T = 2;
     /**
      * Rich-text field is an HTML text using a WYSIWYG editor.
      *
      * Use Markdown type instead. WYSIWYG is evil.
      */
-    const RICHTEXT_T = 3;
+    public const RICHTEXT_T = 3;
     /**
      * Markdown field is a pseudo-coded text which is render
      * with a simple editor.
      */
-    const MARKDOWN_T = 4;
+    public const MARKDOWN_T = 4;
     /**
      * Boolean field is a simple switch between 0 and 1.
      */
-    const BOOLEAN_T = 5;
+    public const BOOLEAN_T = 5;
     /**
      * Integer field is a non-floating number.
      */
-    const INTEGER_T = 6;
+    public const INTEGER_T = 6;
     /**
      * Decimal field is a floating number.
      */
-    const DECIMAL_T = 7;
+    public const DECIMAL_T = 7;
     /**
      * Email field is a short text which must
      * comply with email rules.
      */
-    const EMAIL_T = 8;
+    public const EMAIL_T = 8;
     /**
      * Documents field helps linking NodesSources with Documents.
      */
-    const DOCUMENTS_T = 9;
+    public const DOCUMENTS_T = 9;
     /**
      * Password field is a simple text data rendered
      * as a password input with a confirmation.
      */
-    const PASSWORD_T = 10;
+    public const PASSWORD_T = 10;
     /**
      * Colour field is an hexadecimal string which is rendered
      * with a colour chooser.
      */
-    const COLOUR_T = 11;
+    public const COLOUR_T = 11;
     /**
      * Geotag field is a Map widget which stores
      * a Latitude and Longitude as an array.
      */
-    const GEOTAG_T = 12;
+    public const GEOTAG_T = 12;
     /**
      * Nodes field helps linking Nodes with other Nodes entities.
      */
-    const NODES_T = 13;
+    public const NODES_T = 13;
     /**
      * Nodes field helps linking NodesSources with Users entities.
      */
-    const USER_T = 14;
+    public const USER_T = 14;
     /**
      * Enum field is a simple select box with default values.
      */
-    const ENUM_T = 15;
+    public const ENUM_T = 15;
     /**
      * Children field is a virtual field, it will only display a
      * NodeTreeWidget to show current Node children.
      */
-    const CHILDREN_T = 16;
+    public const CHILDREN_T = 16;
     /**
      * Nodes field helps linking Nodes with CustomForms entities.
      */
-    const CUSTOM_FORMS_T = 17;
+    public const CUSTOM_FORMS_T = 17;
     /**
      * Multiple field is a simple select box with multiple choices.
      */
-    const MULTIPLE_T = 18;
+    public const MULTIPLE_T = 18;
     /**
      * Radio group field is like ENUM_T but rendered as a radio
      * button group.
+     * @deprecated This option does not mean any data type, just presentation
      */
-    const RADIO_GROUP_T = 19;
+    public const RADIO_GROUP_T = 19;
     /**
      * Check group field is like MULTIPLE_T but rendered as
      * a checkbox group.
+     * @deprecated This option does not mean any data type, just presentation
      */
-    const CHECK_GROUP_T = 20;
+    public const CHECK_GROUP_T = 20;
     /**
      * Multi-Geotag field is a Map widget which stores
      * multiple Latitude and Longitude with names and icon options.
      */
-    const MULTI_GEOTAG_T = 21;
+    public const MULTI_GEOTAG_T = 21;
     /**
      * @see \DateTime
      */
-    const DATE_T = 22;
+    public const DATE_T = 22;
     /**
      * Textarea to write Json syntax code
      */
-    const JSON_T = 23;
+    public const JSON_T = 23;
     /**
      * Textarea to write CSS syntax code
      */
-    const CSS_T = 24;
+    public const CSS_T = 24;
     /**
      * Selectbox to choose ISO Country
      */
-    const COUNTRY_T = 25;
+    public const COUNTRY_T = 25;
     /**
      * Textarea to write YAML syntax text
      */
-    const YAML_T = 26;
+    public const YAML_T = 26;
     /**
      * «Many to many» join to a custom doctrine entity class.
      */
-    const MANY_TO_MANY_T = 27;
+    public const MANY_TO_MANY_T = 27;
     /**
      * «Many to one» join to a custom doctrine entity class.
      */
-    const MANY_TO_ONE_T = 28;
+    public const MANY_TO_ONE_T = 28;
     /**
      * Array field to reference external objects ID (eg. from an API).
      */
-    const MULTI_PROVIDER_T = 29;
+    public const MULTI_PROVIDER_T = 29;
     /**
      * String field to reference an external object ID (eg. from an API).
      */
-    const SINGLE_PROVIDER_T = 30;
+    public const SINGLE_PROVIDER_T = 30;
     /**
      * Collection field
      */
-    const COLLECTION_T = 31;
+    public const COLLECTION_T = 31;
 
     /**
      * Associates abstract field type to a readable string.
@@ -530,7 +532,7 @@ abstract class AbstractField extends AbstractPositioned
      * Sets the value of groupName.
      *
      * @param string|null $groupName the group name
-     * @return self
+     * @return static
      */
     public function setGroupName(?string $groupName)
     {
@@ -538,7 +540,7 @@ abstract class AbstractField extends AbstractPositioned
             $this->groupName = null;
             $this->groupNameCanonical = null;
         } else {
-            $this->groupName = trim(strip_tags($groupName ?? ''));
+            $this->groupName = trim(strip_tags($groupName));
             $this->groupNameCanonical = StringHandler::slugify($this->getGroupName());
         }
         return $this;
