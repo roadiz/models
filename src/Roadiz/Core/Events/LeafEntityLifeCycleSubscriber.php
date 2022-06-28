@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace RZ\Roadiz\Core\Events;
@@ -17,9 +18,6 @@ class LeafEntityLifeCycleSubscriber implements EventSubscriber
 {
     private HandlerFactoryInterface $handlerFactory;
 
-    /**
-     * @param HandlerFactoryInterface $handlerFactory
-     */
     public function __construct(HandlerFactoryInterface $handlerFactory)
     {
         $this->handlerFactory = $handlerFactory;
@@ -28,7 +26,7 @@ class LeafEntityLifeCycleSubscriber implements EventSubscriber
     /**
      * {@inheritdoc}
      */
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return [
             Events::prePersist,

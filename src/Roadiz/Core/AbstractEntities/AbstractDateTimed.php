@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace RZ\Roadiz\Core\AbstractEntities;
@@ -6,6 +7,7 @@ namespace RZ\Roadiz\Core\AbstractEntities;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Serializer\Annotation as SymfonySerializer;
 
 /**
  * An AbstractEntity with datetime fields to keep track of time with your items.
@@ -23,8 +25,17 @@ abstract class AbstractDateTimed extends AbstractEntity
      * @ORM\Column(type="datetime", name="created_at", nullable=true)
      * @var DateTime|null
      * @Serializer\Groups({"timestamps"})
+     * @SymfonySerializer\Groups({"timestamps"})
      */
     protected ?DateTime $createdAt = null;
+
+    /**
+     * @ORM\Column(type="datetime", name="updated_at", nullable=true)
+     * @var DateTime|null
+     * @Serializer\Groups({"timestamps"})
+     * @SymfonySerializer\Groups({"timestamps"})
+     */
+    protected ?DateTime $updatedAt = null;
 
     /**
      * @return DateTime|null
@@ -43,12 +54,6 @@ abstract class AbstractDateTimed extends AbstractEntity
         $this->createdAt = $createdAt;
         return $this;
     }
-    /**
-     * @ORM\Column(type="datetime", name="updated_at", nullable=true)
-     * @var DateTime|null
-     * @Serializer\Groups({"timestamps"})
-     */
-    protected ?DateTime $updatedAt = null;
 
     /**
      * @return DateTime|null
