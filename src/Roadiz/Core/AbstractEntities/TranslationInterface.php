@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace RZ\Roadiz\Core\AbstractEntities;
 
-interface TranslationInterface
+interface TranslationInterface extends PersistableInterface
 {
     /**
      * @return string
