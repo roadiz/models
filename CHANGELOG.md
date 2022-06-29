@@ -1,3 +1,9 @@
+## 2.0.1 (2022-06-29)
+
+### Bug Fixes
+
+* TranslationInterface must extend PersistableInterface ([9b397c1](https://github.com/roadiz/models/commit/9b397c1870706bfdc75758c45ee19c854a5a7726))
+
 ## 2.0.0 (2022-06-28)
 
 ### Features
