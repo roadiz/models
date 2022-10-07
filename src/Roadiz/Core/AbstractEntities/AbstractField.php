@@ -281,6 +281,8 @@ abstract class AbstractField extends AbstractPositioned
      * @SymfonySerializer\Groups({"node_type", "setting"})
      * @Assert\Length(max=250)
      * @Serializer\Type("string")
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      * @var string
      */
     private string $name;
@@ -291,6 +293,8 @@ abstract class AbstractField extends AbstractPositioned
      * @SymfonySerializer\Groups({"node_type", "setting"})
      * @Assert\Length(max=250)
      * @Serializer\Type("string")
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      * @var string|null
      */
     private ?string $label;
