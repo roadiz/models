@@ -285,7 +285,7 @@ abstract class AbstractField extends AbstractPositioned
      * @Assert\NotNull()
      * @var string
      */
-    private string $name;
+    protected string $name;
     /**
      * @ORM\Column(type="string")
      * @Serializer\Expose
@@ -297,7 +297,7 @@ abstract class AbstractField extends AbstractPositioned
      * @Assert\NotNull()
      * @var string|null
      */
-    private ?string $label;
+    protected ?string $label;
     /**
      * @ORM\Column(type="string", nullable=true)
      * @Serializer\Expose
@@ -307,7 +307,7 @@ abstract class AbstractField extends AbstractPositioned
      * @Serializer\Type("string")
      * @var string|null
      */
-    private ?string $placeholder = null;
+    protected ?string $placeholder = null;
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Serializer\Expose
@@ -316,7 +316,7 @@ abstract class AbstractField extends AbstractPositioned
      * @Serializer\Type("string")
      * @var string|null
      */
-    private ?string $description = null;
+    protected ?string $description = null;
     /**
      * @ORM\Column(name="default_values", type="text", nullable=true)
      * @Serializer\Groups({"node_type", "setting"})
@@ -325,7 +325,7 @@ abstract class AbstractField extends AbstractPositioned
      * @Serializer\Expose
      * @var string|null
      */
-    private ?string $defaultValues = null;
+    protected ?string $defaultValues = null;
     /**
      * @ORM\Column(type="integer")
      * @Serializer\Groups({"node_type", "setting"})
@@ -334,7 +334,7 @@ abstract class AbstractField extends AbstractPositioned
      * @Serializer\Expose
      * @var int
      */
-    private int $type = AbstractField::STRING_T;
+    protected int $type = AbstractField::STRING_T;
     /**
      * If current field data should be expanded (for choices and country types).
      *
@@ -345,7 +345,7 @@ abstract class AbstractField extends AbstractPositioned
      * @Serializer\Type("bool")
      * @Serializer\Expose
      */
-    private bool $expanded = false;
+    protected bool $expanded = false;
 
     public function __construct()
     {
