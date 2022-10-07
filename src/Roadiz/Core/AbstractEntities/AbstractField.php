@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use RZ\Roadiz\Utils\StringHandler;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Serializer\Annotation as SymfonySerializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\MappedSuperclass
@@ -31,7 +32,7 @@ abstract class AbstractField extends AbstractPositioned
      */
     public const DATETIME_T = 1;
     /**
-     * Text field is a 65000 characters long text.
+     * Text field is 65000 characters long text.
      */
     public const TEXT_T = 2;
     /**
@@ -63,7 +64,7 @@ abstract class AbstractField extends AbstractPositioned
      */
     public const EMAIL_T = 8;
     /**
-     * Documents field helps linking NodesSources with Documents.
+     * Documents field helps to link NodesSources with Documents.
      */
     public const DOCUMENTS_T = 9;
     /**
@@ -72,7 +73,7 @@ abstract class AbstractField extends AbstractPositioned
      */
     public const PASSWORD_T = 10;
     /**
-     * Colour field is an hexadecimal string which is rendered
+     * Colour field is a hexadecimal string which is rendered
      * with a colour chooser.
      */
     public const COLOUR_T = 11;
@@ -82,11 +83,11 @@ abstract class AbstractField extends AbstractPositioned
      */
     public const GEOTAG_T = 12;
     /**
-     * Nodes field helps linking Nodes with other Nodes entities.
+     * Nodes field helps to link Nodes with other Nodes entities.
      */
     public const NODES_T = 13;
     /**
-     * Nodes field helps linking NodesSources with Users entities.
+     * Nodes field helps to link NodesSources with Users entities.
      */
     public const USER_T = 14;
     /**
@@ -99,7 +100,7 @@ abstract class AbstractField extends AbstractPositioned
      */
     public const CHILDREN_T = 16;
     /**
-     * Nodes field helps linking Nodes with CustomForms entities.
+     * Nodes field helps to link Nodes with CustomForms entities.
      */
     public const CUSTOM_FORMS_T = 17;
     /**
@@ -136,7 +137,7 @@ abstract class AbstractField extends AbstractPositioned
      */
     public const CSS_T = 24;
     /**
-     * Selectbox to choose ISO Country
+     * Select-box to choose ISO Country
      */
     public const COUNTRY_T = 25;
     /**
@@ -257,6 +258,7 @@ abstract class AbstractField extends AbstractPositioned
      * @ORM\Column(name="group_name", type="string", nullable=true)
      * @Serializer\Groups({"node_type", "setting"})
      * @SymfonySerializer\Groups({"node_type", "setting"})
+     * @Assert\Length(max=250)
      * @Serializer\Type("string")
      * @Serializer\Expose
      * @var string|null
@@ -266,6 +268,7 @@ abstract class AbstractField extends AbstractPositioned
      * @ORM\Column(name="group_name_canonical", type="string", nullable=true)
      * @Serializer\Groups({"node_type", "setting"})
      * @SymfonySerializer\Groups({"node_type", "setting"})
+     * @Assert\Length(max=250)
      * @Serializer\Type("string")
      * @Serializer\Expose
      * @var string|null
@@ -276,6 +279,7 @@ abstract class AbstractField extends AbstractPositioned
      * @Serializer\Expose
      * @Serializer\Groups({"node_type", "setting"})
      * @SymfonySerializer\Groups({"node_type", "setting"})
+     * @Assert\Length(max=250)
      * @Serializer\Type("string")
      * @var string
      */
@@ -285,6 +289,7 @@ abstract class AbstractField extends AbstractPositioned
      * @Serializer\Expose
      * @Serializer\Groups({"node_type", "setting"})
      * @SymfonySerializer\Groups({"node_type", "setting"})
+     * @Assert\Length(max=250)
      * @Serializer\Type("string")
      * @var string|null
      */
@@ -294,6 +299,7 @@ abstract class AbstractField extends AbstractPositioned
      * @Serializer\Expose
      * @Serializer\Groups({"node_type", "setting"})
      * @SymfonySerializer\Groups({"node_type", "setting"})
+     * @Assert\Length(max=250)
      * @Serializer\Type("string")
      * @var string|null
      */

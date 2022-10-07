@@ -8,6 +8,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Serializer\Annotation as SymfonySerializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Abstract entity for any Human-like objects.
@@ -24,6 +25,10 @@ abstract class AbstractHuman extends AbstractDateTimed
      * @Serializer\Groups({"user_personal", "human"})
      * @SymfonySerializer\Groups({"user_personal", "human"})
      * @var string|null
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     * @Assert\Length(max=200)
+     * @Assert\Email()
      */
     protected ?string $email = null;
     /**
@@ -32,6 +37,7 @@ abstract class AbstractHuman extends AbstractDateTimed
      * @ORM\Column(name="publicName", type="string", nullable=true)
      * @Serializer\Groups({"user_public", "human"})
      * @SymfonySerializer\Groups({"user_public", "human"})
+     * @Assert\Length(max=250)
      * @var string|null
      */
     protected ?string $publicName = null;
@@ -39,6 +45,7 @@ abstract class AbstractHuman extends AbstractDateTimed
      * @ORM\Column(name="firstName", type="string", nullable=true)
      * @Serializer\Groups({"user_personal", "human"})
      * @SymfonySerializer\Groups({"user_personal", "human"})
+     * @Assert\Length(max=250)
      * @var string|null
      */
     protected ?string $firstName = null;
@@ -46,6 +53,7 @@ abstract class AbstractHuman extends AbstractDateTimed
      * @ORM\Column(name="lastName", type="string", nullable=true)
      * @Serializer\Groups({"user_personal", "human"})
      * @SymfonySerializer\Groups({"user_personal", "human"})
+     * @Assert\Length(max=250)
      * @var string|null
      */
     protected ?string $lastName = null;
@@ -54,6 +62,7 @@ abstract class AbstractHuman extends AbstractDateTimed
      * @ORM\Column(type="string", nullable=true)
      * @Serializer\Groups({"user_personal", "human"})
      * @SymfonySerializer\Groups({"user_personal", "human"})
+     * @Assert\Length(max=20)
      */
     protected ?string $phone = null;
     /**
@@ -61,6 +70,7 @@ abstract class AbstractHuman extends AbstractDateTimed
      * @ORM\Column(type="string", nullable=true)
      * @Serializer\Groups({"user_personal", "human"})
      * @SymfonySerializer\Groups({"user_personal", "human"})
+     * @Assert\Length(max=250)
      */
     protected ?string $company = null;
     /**
@@ -68,6 +78,7 @@ abstract class AbstractHuman extends AbstractDateTimed
      * @ORM\Column(type="string", nullable=true)
      * @Serializer\Groups({"user_personal", "human"})
      * @SymfonySerializer\Groups({"user_personal", "human"})
+     * @Assert\Length(max=250)
      */
     protected ?string $job = null;
     /**
