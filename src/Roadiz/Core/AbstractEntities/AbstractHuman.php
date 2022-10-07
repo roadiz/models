@@ -21,51 +21,60 @@ abstract class AbstractHuman extends AbstractDateTimed
 {
     /**
      * @ORM\Column(type="string", unique=true)
-     * @Serializer\Groups({"user", "human"})
-     * @SymfonySerializer\Groups({"user", "human"})
+     * @Serializer\Groups({"user_personal", "human"})
+     * @SymfonySerializer\Groups({"user_personal", "human"})
      * @var string|null
      */
     protected ?string $email = null;
     /**
+     * Public name (pseudonyme) that can be displayed to a public audience.
+     *
+     * @ORM\Column(name="publicName", type="string", nullable=true)
+     * @Serializer\Groups({"user_public", "human"})
+     * @SymfonySerializer\Groups({"user_public", "human"})
+     * @var string|null
+     */
+    protected ?string $publicName = null;
+    /**
      * @ORM\Column(name="firstName", type="string", nullable=true)
-     * @Serializer\Groups({"user", "human"})
-     * @SymfonySerializer\Groups({"user", "human"})
+     * @Serializer\Groups({"user_personal", "human"})
+     * @SymfonySerializer\Groups({"user_personal", "human"})
      * @var string|null
      */
     protected ?string $firstName = null;
     /**
      * @ORM\Column(name="lastName", type="string", nullable=true)
-     * @Serializer\Groups({"user", "human"})
-     * @SymfonySerializer\Groups({"user", "human"})
+     * @Serializer\Groups({"user_personal", "human"})
+     * @SymfonySerializer\Groups({"user_personal", "human"})
      * @var string|null
      */
     protected ?string $lastName = null;
     /**
      * @var string|null
      * @ORM\Column(type="string", nullable=true)
-     * @Serializer\Groups({"user", "human"})
-     * @SymfonySerializer\Groups({"user", "human"})
+     * @Serializer\Groups({"user_personal", "human"})
+     * @SymfonySerializer\Groups({"user_personal", "human"})
      */
     protected ?string $phone = null;
     /**
      * @var string|null
      * @ORM\Column(type="string", nullable=true)
-     * @Serializer\Groups({"user", "human"})
-     * @SymfonySerializer\Groups({"user", "human"})
+     * @Serializer\Groups({"user_personal", "human"})
+     * @SymfonySerializer\Groups({"user_personal", "human"})
      */
     protected ?string $company = null;
     /**
      * @var string|null
      * @ORM\Column(type="string", nullable=true)
-     * @Serializer\Groups({"user", "human"})
-     * @SymfonySerializer\Groups({"user", "human"})
+     * @Serializer\Groups({"user_personal", "human"})
+     * @SymfonySerializer\Groups({"user_personal", "human"})
      */
     protected ?string $job = null;
     /**
      * @var DateTime|null
      * @ORM\Column(type="datetime", nullable=true)
-     * @Serializer\Groups({"user", "human"})
-     * @SymfonySerializer\Groups({"user", "human"})
+     * @Serializer\Groups({"user_personal", "human"})
+     * @SymfonySerializer\Groups({"user_personal", "human"})
      */
     protected ?DateTime $birthday = null;
 
@@ -202,5 +211,21 @@ abstract class AbstractHuman extends AbstractDateTimed
     {
         $this->phone = $phone;
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPublicName(): ?string
+    {
+        return $this->publicName;
+    }
+
+    /**
+     * @param string|null $publicName
+     */
+    public function setPublicName(?string $publicName): void
+    {
+        $this->publicName = $publicName;
     }
 }
