@@ -108,7 +108,7 @@ trait LeafTrait
     }
 
     /**
-     * Gets the nodes depth.
+     * Gets the nodes' depth.
      *
      * @return int
      */
