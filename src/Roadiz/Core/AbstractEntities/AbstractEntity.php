@@ -11,7 +11,10 @@ use Symfony\Component\Serializer\Annotation as SymfonySerializer;
 /**
  * Base entity implementing PersistableInterface to offer a unique ID.
  */
-#[ORM\MappedSuperclass]
+#[
+    ORM\MappedSuperclass,
+    ORM\Table
+]
 abstract class AbstractEntity implements PersistableInterface
 {
     /**

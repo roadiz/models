@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 #[
     ORM\MappedSuperclass,
+    ORM\Table,
     ORM\HasLifecycleCallbacks
 ]
 abstract class AbstractHuman extends AbstractDateTimed
