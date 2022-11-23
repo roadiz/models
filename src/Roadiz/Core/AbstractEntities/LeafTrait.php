@@ -22,7 +22,7 @@ trait LeafTrait
      * @param Collection<static> $children
      * @return $this
      */
-    public function setChildren(Collection $children)
+    public function setChildren(Collection $children): static
     {
         $this->children = $children;
         /** @var static $child */
@@ -33,10 +33,10 @@ trait LeafTrait
     }
 
     /**
-     * @param static $child
+     * @param LeafInterface $child
      * @return $this
      */
-    public function addChild(LeafInterface $child)
+    public function addChild(LeafInterface $child): static
     {
         if (!$this->getChildren()->contains($child)) {
             $this->getChildren()->add($child);
@@ -46,10 +46,10 @@ trait LeafTrait
         return $this;
     }
     /**
-     * @param static $child
+     * @param LeafInterface $child
      * @return $this
      */
-    public function removeChild(LeafInterface $child)
+    public function removeChild(LeafInterface $child): static
     {
         if ($this->getChildren()->contains($child)) {
             $this->getChildren()->removeElement($child);
@@ -60,9 +60,9 @@ trait LeafTrait
     }
 
     /**
-     * @return static|null parent
+     * @return static|null
      */
-    public function getParent(): ?LeafInterface
+    public function getParent(): ?static
     {
         return $this->parent;
     }
@@ -71,16 +71,14 @@ trait LeafTrait
      * @param static|null $parent
      * @return $this
      */
-    public function setParent(LeafInterface $parent = null)
+    public function setParent($parent = null): static
     {
         if ($parent === $this) {
             throw new \InvalidArgumentException('An entity cannot have itself as a parent.');
         }
 
         $this->parent = $parent;
-        if (null !== $this->parent) {
-            $this->parent->addChild($this);
-        }
+        $this->parent?->addChild($this);
 
         return $this;
     }
@@ -99,8 +97,6 @@ trait LeafTrait
             $parent = $parent->getParent();
             if ($parent !== null) {
                 $parentsArray[] = $parent;
-            } else {
-                break;
             }
         } while ($parent !== null);
 
