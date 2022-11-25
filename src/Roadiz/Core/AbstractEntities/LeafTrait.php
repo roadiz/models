@@ -60,9 +60,11 @@ trait LeafTrait
     }
 
     /**
+     * Do not add static return type because of Doctrine Proxy.
+     *
      * @return static|null
      */
-    public function getParent(): ?static
+    public function getParent()
     {
         return $this->parent;
     }

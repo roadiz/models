@@ -27,9 +27,11 @@ interface LeafInterface extends PositionedInterface, Comparable
     public function removeChild(LeafInterface $child): static;
 
     /**
+     * Do not add static return type because of Doctrine Proxy.
+     *
      * @return static|null
      */
-    public function getParent(): ?static;
+    public function getParent();
 
     /**
      * @return static[]
