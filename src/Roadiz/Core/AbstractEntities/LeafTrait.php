@@ -10,16 +10,13 @@ trait LeafTrait
 {
     use PositionedTrait;
 
-    /**
-     * @return Collection<static>
-     */
     public function getChildren(): Collection
     {
         return $this->children;
     }
 
     /**
-     * @param Collection<static> $children
+     * @param Collection<int, static> $children
      * @return $this
      */
     public function setChildren(Collection $children): static
@@ -33,7 +30,7 @@ trait LeafTrait
     }
 
     /**
-     * @param LeafInterface $child
+     * @param static $child
      * @return $this
      */
     public function addChild(LeafInterface $child): static
@@ -46,7 +43,7 @@ trait LeafTrait
         return $this;
     }
     /**
-     * @param LeafInterface $child
+     * @param static $child
      * @return $this
      */
     public function removeChild(LeafInterface $child): static
@@ -59,12 +56,10 @@ trait LeafTrait
         return $this;
     }
 
-    /**
+    /*
      * Do not add static return type because of Doctrine Proxy.
-     *
-     * @return static|null
      */
-    public function getParent()
+    public function getParent(): ?LeafInterface
     {
         return $this->parent;
     }
@@ -73,7 +68,7 @@ trait LeafTrait
      * @param static|null $parent
      * @return $this
      */
-    public function setParent($parent = null): static
+    public function setParent(?LeafInterface $parent = null): static
     {
         if ($parent === $this) {
             throw new \InvalidArgumentException('An entity cannot have itself as a parent.');
@@ -85,11 +80,6 @@ trait LeafTrait
         return $this;
     }
 
-    /**
-     * Return every tag’s parents.
-     *
-     * @return static[]
-     */
     public function getParents(): array
     {
         $parentsArray = [];
