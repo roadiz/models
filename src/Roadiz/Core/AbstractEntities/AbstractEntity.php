@@ -28,12 +28,12 @@ abstract class AbstractEntity implements PersistableInterface
         Serializer\Type("integer"),
         SymfonySerializer\Groups(["id"])
     ]
-    protected $id;
+    protected int|string|null $id = null;
 
     /**
      * @return int|string|null
      */
-    public function getId()
+    public function getId(): int|string|null
     {
         return $this->id;
     }
@@ -42,7 +42,7 @@ abstract class AbstractEntity implements PersistableInterface
      * @param int|string|null $id
      * @return AbstractEntity
      */
-    public function setId($id)
+    public function setId(int|string|null $id): self
     {
         $this->id = $id;
         return $this;

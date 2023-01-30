@@ -16,13 +16,13 @@ interface LeafInterface extends PositionedInterface, Comparable
 
     /**
      * @param static $child
-     * @return static
+     * @return $this
      */
     public function addChild(LeafInterface $child): static;
 
     /**
      * @param static $child
-     * @return static
+     * @return $this
      */
     public function removeChild(LeafInterface $child): static;
 
@@ -40,7 +40,7 @@ interface LeafInterface extends PositionedInterface, Comparable
 
     /**
      * @param static|null $parent
-     * @return static
+     * @return $this
      */
     public function setParent(?LeafInterface $parent = null): static;
 
