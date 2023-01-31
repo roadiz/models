@@ -19,7 +19,7 @@
     ],
     "require": {
         "php": ">=8.0",
-        "doctrine/orm": "~2.8.5 || ~2.12.2",
+        "doctrine/orm": "^2.14.1",
         "jms/serializer": "^2.3.0 || ^3.9.0",
         "symfony/string": "^5.0",
         "symfony/translation-contracts": "^2.3",
