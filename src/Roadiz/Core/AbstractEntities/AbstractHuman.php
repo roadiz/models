@@ -8,65 +8,87 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Serializer\Annotation as SymfonySerializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Abstract entity for any Human-like objects.
  *
  * This class can be extended for *Users*, *Subscribers*, etc.
- *
- * @ORM\MappedSuperclass
- * @ORM\HasLifecycleCallbacks
  */
+#[
+    ORM\MappedSuperclass,
+    ORM\Table,
+    ORM\HasLifecycleCallbacks
+]
 abstract class AbstractHuman extends AbstractDateTimed
 {
-    /**
-     * @ORM\Column(type="string", unique=true)
-     * @Serializer\Groups({"user", "human"})
-     * @SymfonySerializer\Groups({"user", "human"})
-     * @var string|null
-     */
+    #[
+        ORM\Column(type: "string", unique: true),
+        Serializer\Groups(["user_personal", "human"]),
+        SymfonySerializer\Groups(["user_personal", "human"]),
+        Assert\NotNull(),
+        Assert\NotBlank(),
+        Assert\Length(max: 200),
+        Assert\Email()
+    ]
     protected ?string $email = null;
+
     /**
-     * @ORM\Column(name="firstName", type="string", nullable=true)
-     * @Serializer\Groups({"user", "human"})
-     * @SymfonySerializer\Groups({"user", "human"})
-     * @var string|null
+     * Public name (pseudonyme) that can be displayed to a public audience.
      */
+    #[
+        ORM\Column(name: "publicName", type: "string", nullable: true),
+        Serializer\Groups(["user_public", "human"]),
+        SymfonySerializer\Groups(["user_public", "human"]),
+        Assert\Length(max: 250)
+    ]
+    protected ?string $publicName = null;
+
+    #[
+        ORM\Column(name: "firstName", type: "string", nullable: true),
+        Serializer\Groups(["user_personal", "human"]),
+        SymfonySerializer\Groups(["user_personal", "human"]),
+        Assert\Length(max: 250)
+    ]
     protected ?string $firstName = null;
-    /**
-     * @ORM\Column(name="lastName", type="string", nullable=true)
-     * @Serializer\Groups({"user", "human"})
-     * @SymfonySerializer\Groups({"user", "human"})
-     * @var string|null
-     */
+
+    #[
+        ORM\Column(name: "lastName", type: "string", nullable: true),
+        Serializer\Groups(["user_personal", "human"]),
+        SymfonySerializer\Groups(["user_personal", "human"]),
+        Assert\Length(max: 250)
+    ]
     protected ?string $lastName = null;
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", nullable=true)
-     * @Serializer\Groups({"user", "human"})
-     * @SymfonySerializer\Groups({"user", "human"})
-     */
+
+    #[
+        ORM\Column(type: "string", nullable: true),
+        Serializer\Groups(["user_personal", "human"]),
+        SymfonySerializer\Groups(["user_personal", "human"]),
+        Assert\Length(max: 20)
+    ]
     protected ?string $phone = null;
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", nullable=true)
-     * @Serializer\Groups({"user", "human"})
-     * @SymfonySerializer\Groups({"user", "human"})
-     */
+
+    #[
+        ORM\Column(type: "string", nullable: true),
+        Serializer\Groups(["user_personal", "human"]),
+        SymfonySerializer\Groups(["user_personal", "human"]),
+        Assert\Length(max: 250)
+    ]
     protected ?string $company = null;
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", nullable=true)
-     * @Serializer\Groups({"user", "human"})
-     * @SymfonySerializer\Groups({"user", "human"})
-     */
+
+    #[
+        ORM\Column(type: "string", nullable: true),
+        Serializer\Groups(["user_personal", "human"]),
+        SymfonySerializer\Groups(["user_personal", "human"]),
+        Assert\Length(max: 250)
+    ]
     protected ?string $job = null;
-    /**
-     * @var DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
-     * @Serializer\Groups({"user", "human"})
-     * @SymfonySerializer\Groups({"user", "human"})
-     */
+
+    #[
+        ORM\Column(type: "datetime", nullable: true),
+        Serializer\Groups(["user_personal", "human"]),
+        SymfonySerializer\Groups(["user_personal", "human"])
+    ]
     protected ?DateTime $birthday = null;
 
     /**
@@ -202,5 +224,21 @@ abstract class AbstractHuman extends AbstractDateTimed
     {
         $this->phone = $phone;
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPublicName(): ?string
+    {
+        return $this->publicName;
+    }
+
+    /**
+     * @param string|null $publicName
+     */
+    public function setPublicName(?string $publicName): void
+    {
+        $this->publicName = $publicName;
     }
 }

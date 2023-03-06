@@ -8,16 +8,16 @@ use Doctrine\ORM\Mapping as ORM;
 use RZ\Roadiz\Utils\StringHandler;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Serializer\Annotation as SymfonySerializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\MappedSuperclass
- * @ORM\Table(indexes={
- *     @ORM\Index(columns={"position"}),
- *     @ORM\Index(columns={"group_name"}),
- *     @ORM\Index(columns={"group_name_canonical"})
- * })
- * @Serializer\ExclusionPolicy("all")
- */
+#[
+    ORM\MappedSuperclass,
+    ORM\Table,
+    ORM\Index(columns: ["position"]),
+    ORM\Index(columns: ["group_name"]),
+    ORM\Index(columns: ["group_name_canonical"]),
+    Serializer\ExclusionPolicy("all")
+]
 abstract class AbstractField extends AbstractPositioned
 {
     /**
@@ -31,7 +31,7 @@ abstract class AbstractField extends AbstractPositioned
      */
     public const DATETIME_T = 1;
     /**
-     * Text field is a 65000 characters long text.
+     * Text field is 65000 characters long text.
      */
     public const TEXT_T = 2;
     /**
@@ -63,7 +63,7 @@ abstract class AbstractField extends AbstractPositioned
      */
     public const EMAIL_T = 8;
     /**
-     * Documents field helps linking NodesSources with Documents.
+     * Documents field helps to link NodesSources with Documents.
      */
     public const DOCUMENTS_T = 9;
     /**
@@ -72,7 +72,7 @@ abstract class AbstractField extends AbstractPositioned
      */
     public const PASSWORD_T = 10;
     /**
-     * Colour field is an hexadecimal string which is rendered
+     * Colour field is a hexadecimal string which is rendered
      * with a colour chooser.
      */
     public const COLOUR_T = 11;
@@ -82,11 +82,11 @@ abstract class AbstractField extends AbstractPositioned
      */
     public const GEOTAG_T = 12;
     /**
-     * Nodes field helps linking Nodes with other Nodes entities.
+     * Nodes field helps to link Nodes with other Nodes entities.
      */
     public const NODES_T = 13;
     /**
-     * Nodes field helps linking NodesSources with Users entities.
+     * Nodes field helps to link NodesSources with Users entities.
      */
     public const USER_T = 14;
     /**
@@ -99,7 +99,7 @@ abstract class AbstractField extends AbstractPositioned
      */
     public const CHILDREN_T = 16;
     /**
-     * Nodes field helps linking Nodes with CustomForms entities.
+     * Nodes field helps to link Nodes with CustomForms entities.
      */
     public const CUSTOM_FORMS_T = 17;
     /**
@@ -136,7 +136,7 @@ abstract class AbstractField extends AbstractPositioned
      */
     public const CSS_T = 24;
     /**
-     * Selectbox to choose ISO Country
+     * Select-box to choose ISO Country
      */
     public const COUNTRY_T = 25;
     /**
@@ -170,9 +170,9 @@ abstract class AbstractField extends AbstractPositioned
      * These string will be used as translation key.
      *
      * @var array<string>
-     * @SymfonySerializer\Ignore()
      * @internal
      */
+    #[SymfonySerializer\Ignore]
     public static array $typeToHuman = [
         AbstractField::STRING_T => 'string.type',
         AbstractField::DATETIME_T => 'date-time.type',
@@ -206,9 +206,9 @@ abstract class AbstractField extends AbstractPositioned
      * Associates abstract field type to a Doctrine type.
      *
      * @var array<string|null>
-     * @SymfonySerializer\Ignore()
      * @internal
      */
+    #[SymfonySerializer\Ignore]
     public static array $typeToDoctrine = [
         AbstractField::STRING_T => 'string',
         AbstractField::DATETIME_T => 'datetime',
@@ -226,9 +226,9 @@ abstract class AbstractField extends AbstractPositioned
         AbstractField::NODES_T => null,
         AbstractField::CHILDREN_T => null,
         AbstractField::COLOUR_T => 'string',
-        AbstractField::GEOTAG_T => 'string',
+        AbstractField::GEOTAG_T => 'json',
         AbstractField::CUSTOM_FORMS_T => null,
-        AbstractField::MULTI_GEOTAG_T => 'text',
+        AbstractField::MULTI_GEOTAG_T => 'json',
         AbstractField::JSON_T => 'text',
         AbstractField::CSS_T => 'text',
         AbstractField::COUNTRY_T => 'string',
@@ -244,98 +244,108 @@ abstract class AbstractField extends AbstractPositioned
      * List searchable fields types in a searchEngine such as Solr.
      *
      * @var array<int>
-     * @SymfonySerializer\Ignore()
      * @internal
      */
+    #[SymfonySerializer\Ignore]
     protected static array $searchableTypes = [
         AbstractField::STRING_T,
         AbstractField::RICHTEXT_T,
         AbstractField::TEXT_T,
         AbstractField::MARKDOWN_T,
     ];
-    /**
-     * @ORM\Column(name="group_name", type="string", nullable=true)
-     * @Serializer\Groups({"node_type", "setting"})
-     * @SymfonySerializer\Groups({"node_type", "setting"})
-     * @Serializer\Type("string")
-     * @Serializer\Expose
-     * @var string|null
-     */
+
+    #[
+        ORM\Column(name: "group_name", type: "string", nullable: true),
+        Assert\Length(max: 250),
+        SymfonySerializer\Groups(["node_type", "setting"]),
+        Serializer\Groups(["node_type", "setting"]),
+        Serializer\Type("string"),
+        Serializer\Expose
+    ]
     protected ?string $groupName = null;
-    /**
-     * @ORM\Column(name="group_name_canonical", type="string", nullable=true)
-     * @Serializer\Groups({"node_type", "setting"})
-     * @SymfonySerializer\Groups({"node_type", "setting"})
-     * @Serializer\Type("string")
-     * @Serializer\Expose
-     * @var string|null
-     */
+
+    #[
+        ORM\Column(name: "group_name_canonical", type: "string", nullable: true),
+        Serializer\Groups(["node_type", "setting"]),
+        SymfonySerializer\Groups(["node_type", "setting"]),
+        Assert\Length(max: 250),
+        Serializer\Type("string"),
+        Serializer\Expose
+    ]
     protected ?string $groupNameCanonical = null;
-    /**
-     * @ORM\Column(type="string")
-     * @Serializer\Expose
-     * @Serializer\Groups({"node_type", "setting"})
-     * @SymfonySerializer\Groups({"node_type", "setting"})
-     * @Serializer\Type("string")
-     * @var string
-     */
-    private string $name;
-    /**
-     * @ORM\Column(type="string")
-     * @Serializer\Expose
-     * @Serializer\Groups({"node_type", "setting"})
-     * @SymfonySerializer\Groups({"node_type", "setting"})
-     * @Serializer\Type("string")
-     * @var string|null
-     */
-    private ?string $label;
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     * @Serializer\Expose
-     * @Serializer\Groups({"node_type", "setting"})
-     * @SymfonySerializer\Groups({"node_type", "setting"})
-     * @Serializer\Type("string")
-     * @var string|null
-     */
-    private ?string $placeholder = null;
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Serializer\Expose
-     * @Serializer\Groups({"node_type", "setting"})
-     * @SymfonySerializer\Groups({"node_type", "setting"})
-     * @Serializer\Type("string")
-     * @var string|null
-     */
-    private ?string $description = null;
-    /**
-     * @ORM\Column(name="default_values", type="text", nullable=true)
-     * @Serializer\Groups({"node_type", "setting"})
-     * @SymfonySerializer\Groups({"node_type", "setting"})
-     * @Serializer\Type("string")
-     * @Serializer\Expose
-     * @var string|null
-     */
-    private ?string $defaultValues = null;
-    /**
-     * @ORM\Column(type="integer")
-     * @Serializer\Groups({"node_type", "setting"})
-     * @SymfonySerializer\Groups({"node_type", "setting"})
-     * @Serializer\Type("int")
-     * @Serializer\Expose
-     * @var int
-     */
-    private int $type = AbstractField::STRING_T;
+
+    #[
+        ORM\Column(type: "string"),
+        Serializer\Expose,
+        Serializer\Groups(["node_type", "setting"]),
+        SymfonySerializer\Groups(["node_type", "setting"]),
+        Assert\Length(max: 250),
+        Serializer\Type("string"),
+        Assert\NotBlank(),
+        Assert\NotNull()
+    ]
+    protected string $name;
+
+    #[
+        ORM\Column(type: "string"),
+        Serializer\Expose,
+        Serializer\Groups(["node_type", "setting"]),
+        Serializer\Type("string"),
+        SymfonySerializer\Groups(["node_type", "setting"]),
+        Assert\Length(max: 250),
+        Assert\NotBlank(),
+        Assert\NotNull()
+    ]
+    protected ?string $label;
+
+    #[
+        ORM\Column(type: "string", nullable: true),
+        Serializer\Expose,
+        Serializer\Groups(["node_type", "setting"]),
+        SymfonySerializer\Groups(["node_type", "setting"]),
+        Assert\Length(max: 250),
+        Serializer\Type("string")
+    ]
+    protected ?string $placeholder = null;
+
+    #[
+        ORM\Column(type: "text", nullable: true),
+        Serializer\Expose,
+        Serializer\Groups(["node_type", "setting"]),
+        SymfonySerializer\Groups(["node_type", "setting"]),
+        Serializer\Type("string")
+    ]
+    protected ?string $description = null;
+
+    #[
+        ORM\Column(name: "default_values", type: "text", nullable: true),
+        Serializer\Groups(["node_type", "setting"]),
+        SymfonySerializer\Groups(["node_type", "setting"]),
+        Serializer\Type("string"),
+        Serializer\Expose
+    ]
+    protected ?string $defaultValues = null;
+
+    #[
+        ORM\Column(type: "integer"),
+        Serializer\Groups(["node_type", "setting"]),
+        SymfonySerializer\Groups(["node_type", "setting"]),
+        Serializer\Type("int"),
+        Serializer\Expose
+    ]
+    protected int $type = AbstractField::STRING_T;
+
     /**
      * If current field data should be expanded (for choices and country types).
-     *
-     * @var bool
-     * @ORM\Column(name="expanded", type="boolean", nullable=false, options={"default" = false})
-     * @Serializer\Groups({"node_type", "setting"})
-     * @SymfonySerializer\Groups({"node_type", "setting"})
-     * @Serializer\Type("bool")
-     * @Serializer\Expose
      */
-    private bool $expanded = false;
+    #[
+        ORM\Column(name: "expanded", type: "boolean", nullable: false, options: ["default" => false]),
+        Serializer\Groups(["node_type", "setting"]),
+        SymfonySerializer\Groups(["node_type", "setting"]),
+        Serializer\Type("bool"),
+        Serializer\Expose
+    ]
+    protected bool $expanded = false;
 
     public function __construct()
     {

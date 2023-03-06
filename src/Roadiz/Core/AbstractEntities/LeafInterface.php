@@ -10,24 +10,26 @@ use Doctrine\Common\Comparable;
 interface LeafInterface extends PositionedInterface, Comparable
 {
     /**
-     * @return Collection<static>
+     * @return Collection<int, static>
      */
     public function getChildren(): Collection;
 
     /**
      * @param static $child
-     * @return static
+     * @return $this
      */
-    public function addChild(LeafInterface $child);
+    public function addChild(LeafInterface $child): static;
 
     /**
      * @param static $child
-     * @return static
+     * @return $this
      */
-    public function removeChild(LeafInterface $child);
+    public function removeChild(LeafInterface $child): static;
 
     /**
-     * @return static
+     * Do not add static return type because of Doctrine Proxy.
+     *
+     * @return static|null
      */
     public function getParent(): ?LeafInterface;
 
@@ -38,9 +40,9 @@ interface LeafInterface extends PositionedInterface, Comparable
 
     /**
      * @param static|null $parent
-     * @return static
+     * @return $this
      */
-    public function setParent(LeafInterface $parent = null);
+    public function setParent(?LeafInterface $parent = null): static;
 
     /**
      * Gets the leaf depth.

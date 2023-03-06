@@ -11,30 +11,35 @@ use Symfony\Component\Serializer\Annotation as SymfonySerializer;
 
 /**
  * An AbstractEntity with datetime fields to keep track of time with your items.
- *
- * @ORM\MappedSuperclass
- * @ORM\HasLifecycleCallbacks
- * @ORM\Table(indexes={
- *     @ORM\Index(columns={"created_at"}),
- *     @ORM\Index(columns={"updated_at"})
- * })
  */
+
+#[
+    ORM\MappedSuperclass,
+    ORM\HasLifecycleCallbacks,
+    ORM\Table,
+    ORM\Index(columns: ["created_at"]),
+    ORM\Index(columns: ["updated_at"]),
+]
 abstract class AbstractDateTimed extends AbstractEntity
 {
     /**
-     * @ORM\Column(type="datetime", name="created_at", nullable=true)
      * @var DateTime|null
-     * @Serializer\Groups({"timestamps"})
-     * @SymfonySerializer\Groups({"timestamps"})
      */
+    #[
+        ORM\Column(name: "created_at", type: "datetime", nullable: true),
+        Serializer\Groups(["timestamps"]),
+        SymfonySerializer\Groups(["timestamps"]),
+    ]
     protected ?DateTime $createdAt = null;
 
     /**
-     * @ORM\Column(type="datetime", name="updated_at", nullable=true)
      * @var DateTime|null
-     * @Serializer\Groups({"timestamps"})
-     * @SymfonySerializer\Groups({"timestamps"})
      */
+    #[
+        ORM\Column(name: "updated_at", type: "datetime", nullable: true),
+        Serializer\Groups(["timestamps"]),
+        SymfonySerializer\Groups(["timestamps"]),
+    ]
     protected ?DateTime $updatedAt = null;
 
     /**
@@ -80,17 +85,17 @@ abstract class AbstractDateTimed extends AbstractEntity
     }
 
     /**
-     * @ORM\PreUpdate
      * @return void
      */
+    #[ORM\PreUpdate]
     public function preUpdate()
     {
         $this->setUpdatedAt(new DateTime("now"));
     }
     /**
-     * @ORM\PrePersist
      * @return void
      */
+    #[ORM\PrePersist]
     public function prePersist()
     {
         $this->setUpdatedAt(new DateTime("now"));

@@ -9,27 +9,31 @@ use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Serializer\Annotation as SymfonySerializer;
 
 /**
- * Base entity implementing PersistableInterface to offer a unique Id.
- *
- * @ORM\MappedSuperclass
+ * Base entity implementing PersistableInterface to offer a unique ID.
  */
+#[
+    ORM\MappedSuperclass,
+    ORM\Table
+]
 abstract class AbstractEntity implements PersistableInterface
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     * @Serializer\Groups({"id"})
-     * @SymfonySerializer\Groups({"id"})
      * @var int|string|null
-     * @Serializer\Type("integer")
      */
-    protected $id;
+    #[
+        ORM\Id,
+        ORM\Column(type: "integer"),
+        ORM\GeneratedValue,
+        Serializer\Groups(["id"]),
+        Serializer\Type("integer"),
+        SymfonySerializer\Groups(["id"])
+    ]
+    protected int|string|null $id = null;
 
     /**
      * @return int|string|null
      */
-    public function getId()
+    public function getId(): int|string|null
     {
         return $this->id;
     }
@@ -38,7 +42,7 @@ abstract class AbstractEntity implements PersistableInterface
      * @param int|string|null $id
      * @return AbstractEntity
      */
-    public function setId($id)
+    public function setId(int|string|null $id): self
     {
         $this->id = $id;
         return $this;

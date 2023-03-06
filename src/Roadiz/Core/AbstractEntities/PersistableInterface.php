@@ -16,5 +16,5 @@ interface PersistableInterface
      *
      * @return int|string|null
      */
-    public function getId();
+    public function getId(): int|string|null;
 }

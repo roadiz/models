@@ -10,19 +10,16 @@ trait LeafTrait
 {
     use PositionedTrait;
 
-    /**
-     * @return Collection<static>
-     */
     public function getChildren(): Collection
     {
         return $this->children;
     }
 
     /**
-     * @param Collection<static> $children
+     * @param Collection<int, static> $children
      * @return $this
      */
-    public function setChildren(Collection $children)
+    public function setChildren(Collection $children): static
     {
         $this->children = $children;
         /** @var static $child */
@@ -36,7 +33,7 @@ trait LeafTrait
      * @param static $child
      * @return $this
      */
-    public function addChild(LeafInterface $child)
+    public function addChild(LeafInterface $child): static
     {
         if (!$this->getChildren()->contains($child)) {
             $this->getChildren()->add($child);
@@ -49,7 +46,7 @@ trait LeafTrait
      * @param static $child
      * @return $this
      */
-    public function removeChild(LeafInterface $child)
+    public function removeChild(LeafInterface $child): static
     {
         if ($this->getChildren()->contains($child)) {
             $this->getChildren()->removeElement($child);
@@ -59,11 +56,15 @@ trait LeafTrait
         return $this;
     }
 
+    /*
+     * Do not add static return type because of Doctrine Proxy.
+     */
     /**
-     * @return static|null parent
+     * @return static|null
      */
     public function getParent(): ?LeafInterface
     {
+        /** @phpstan-ignore-next-line */
         return $this->parent;
     }
 
@@ -71,23 +72,19 @@ trait LeafTrait
      * @param static|null $parent
      * @return $this
      */
-    public function setParent(LeafInterface $parent = null)
+    public function setParent(?LeafInterface $parent = null): static
     {
         if ($parent === $this) {
             throw new \InvalidArgumentException('An entity cannot have itself as a parent.');
         }
 
         $this->parent = $parent;
-        if (null !== $this->parent) {
-            $this->parent->addChild($this);
-        }
+        $this->parent?->addChild($this);
 
         return $this;
     }
 
     /**
-     * Return every tag’s parents.
-     *
      * @return static[]
      */
     public function getParents(): array
@@ -99,8 +96,6 @@ trait LeafTrait
             $parent = $parent->getParent();
             if ($parent !== null) {
                 $parentsArray[] = $parent;
-            } else {
-                break;
             }
         } while ($parent !== null);
 
@@ -108,7 +103,7 @@ trait LeafTrait
     }
 
     /**
-     * Gets the nodes depth.
+     * Gets the nodes' depth.
      *
      * @return int
      */
