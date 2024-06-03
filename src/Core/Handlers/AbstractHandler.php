@@ -8,6 +8,8 @@ use Doctrine\Persistence\ObjectManager;
 
 abstract class AbstractHandler
 {
+    protected ObjectManager $objectManager;
+
     /**
      * @return ObjectManager
      */
@@ -16,9 +18,22 @@ abstract class AbstractHandler
         return $this->objectManager;
     }
 
-    public function __construct(
-        protected readonly ObjectManager $objectManager
-    ) {
+    /**
+     * @param ObjectManager $objectManager
+     * @return static
+     */
+    public function setObjectManager(ObjectManager $objectManager)
+    {
+        $this->objectManager = $objectManager;
+        return $this;
+    }
+
+    /**
+     * @param ObjectManager $objectManager
+     */
+    public function __construct(ObjectManager $objectManager)
+    {
+        $this->objectManager = $objectManager;
     }
 
     /**
