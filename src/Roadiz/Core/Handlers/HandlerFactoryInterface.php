@@ -8,5 +8,9 @@ use RZ\Roadiz\Core\AbstractEntities\AbstractEntity;
 
 interface HandlerFactoryInterface
 {
+    /**
+     * @param AbstractEntity $entity
+     * @return AbstractHandler
+     */
     public function getHandler(AbstractEntity $entity): AbstractHandler;
 }
