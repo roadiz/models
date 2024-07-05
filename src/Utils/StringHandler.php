@@ -99,7 +99,6 @@ class StringHandler
 
         return (new UnicodeString($string))
             ->ascii()
-            ->replaceMatches('#([^a-zA-Z0-9]+)#', '_')
             ->snake()
             ->lower()
             ->trim('-')
