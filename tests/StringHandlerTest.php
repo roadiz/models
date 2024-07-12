@@ -1,6 +1,6 @@
 <?php
 
-namespace RZ\Roadiz\Test;
+namespace RZ\Roadiz\Tests;
 
 use PHPUnit\Framework\TestCase;
 use RZ\Roadiz\Utils\StringHandler;
