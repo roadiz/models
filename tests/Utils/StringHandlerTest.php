@@ -1,21 +1,52 @@
 <?php
-
-namespace RZ\Roadiz\Tests;
+/**
+ * Copyright (c) 2017. Ambroise Maupate and Julien Blanchet
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is furnished
+ * to do so, subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
+ *
+ * Except as contained in this notice, the name of the ROADIZ shall not
+ * be used in advertising or otherwise to promote the sale, use or other dealings
+ * in this Software without prior written authorization from Ambroise Maupate and Julien Blanchet.
+ *
+ * @file StringHandlerTest.php
+ * @author Ambroise Maupate <ambroise@rezo-zero.com>
+ */
 
 use PHPUnit\Framework\TestCase;
 use RZ\Roadiz\Utils\StringHandler;
 
+/**
+ * Class StringHandlerTest
+ */
 class StringHandlerTest extends TestCase
 {
+
     /**
      * @dataProvider cleanForFilenameProvider
+     * @param $input
+     * @param $expected
      */
-    public function testCleanForFilename(string $input, string $expected): void
+    public function testCleanForFilename($input, $expected)
     {
         $this->assertEquals($expected, StringHandler::cleanForFilename($input));
     }
 
-    public function cleanForFilenameProvider(): array
+    public function cleanForFilenameProvider()
     {
         return [
             [
@@ -43,13 +74,16 @@ class StringHandlerTest extends TestCase
 
     /**
      * @dataProvider endsWithProvider
+     * @param $input
+     * @param $wanted
+     * @param $expected
      */
-    public function testEndsWith(string $input, string $wanted, bool $expected): void
+    public function testEndsWith($input, $wanted, $expected)
     {
         $this->assertEquals($expected, StringHandler::endsWith($input, $wanted));
     }
 
-    public function endsWithProvider(): array
+    public function endsWithProvider()
     {
         return [
             ["  ", "Locale", false],
@@ -69,8 +103,11 @@ class StringHandlerTest extends TestCase
 
     /**
      * @dataProvider replaceLastProvider
+     * @param $input
+     * @param $wanted
+     * @param $expected
      */
-    public function testReplaceLast(string $input, string $wanted, string $expected): void
+    public function testReplaceLast($input, $wanted, $expected)
     {
         $this->assertEquals($expected, StringHandler::replaceLast($wanted, "", $input));
     }
@@ -78,7 +115,7 @@ class StringHandlerTest extends TestCase
     /**
      * @return array
      */
-    public function replaceLastProvider(): array
+    public function replaceLastProvider()
     {
         return [
             ["testPage", "Locale", "testPage"],
@@ -94,8 +131,10 @@ class StringHandlerTest extends TestCase
 
     /**
      * @dataProvider removeDiacriticsProvider
+     * @param $input
+     * @param $expected
      */
-    public function testRemoveDiacritics(string $input, string $expected): void
+    public function testRemoveDiacritics($input, $expected)
     {
         // Assert
         $this->assertEquals($expected, StringHandler::removeDiacritics($input));
@@ -104,7 +143,7 @@ class StringHandlerTest extends TestCase
     /**
      * @return array
      */
-    public function removeDiacriticsProvider(): array
+    public function removeDiacriticsProvider()
     {
         return [
             ["à", "a"],
@@ -124,8 +163,10 @@ class StringHandlerTest extends TestCase
 
     /**
      * @dataProvider variablizeProvider
+     * @param $input
+     * @param $expected
      */
-    public function testVariablize(string $input, string $expected): void
+    public function testVariablize($input, $expected)
     {
         // Assert
         $this->assertEquals($expected, StringHandler::variablize($input));
@@ -134,7 +175,7 @@ class StringHandlerTest extends TestCase
     /**
      * @return array
      */
-    public function variablizeProvider(): array
+    public function variablizeProvider()
     {
         return [
             ["à", "a"],
@@ -152,6 +193,7 @@ class StringHandlerTest extends TestCase
             ["J'aime les\n sushis!\t\n", "j_aime_les_sushis"],
             ["?header_image", "header_image"],
             ["JAime les_sushis", "j_aime_les_sushis"],
+            ["Répétitions publiques à la maison de l'Orchestre", "repetitions_publiques_a_la_maison_de_l_orchestre"],
             ["Ébène", "ebene"],
             ["ébène", "ebene"],
         ];
@@ -159,8 +201,10 @@ class StringHandlerTest extends TestCase
 
     /**
      * @dataProvider classifyProvider
+     * @param $input
+     * @param $expected
      */
-    public function testClassify(string $input, string $expected): void
+    public function testClassify($input, $expected)
     {
         // Assert
         $this->assertEquals($expected, StringHandler::classify($input));
@@ -169,7 +213,7 @@ class StringHandlerTest extends TestCase
     /**
      * @return array
      */
-    public function classifyProvider(): array
+    public function classifyProvider()
     {
         return [
             ["Ligula  $* _--Egestas Mattis Nullam", "LigulaEgestasMattisNullam"],
@@ -182,8 +226,10 @@ class StringHandlerTest extends TestCase
 
     /**
      * @dataProvider camelCaseProvider
+     * @param $input
+     * @param $expected
      */
-    public function testCamelCase(string $input, string $expected): void
+    public function testCamelCase($input, $expected)
     {
         // Assert
         $this->assertEquals($expected, StringHandler::camelcase($input));
@@ -192,7 +238,7 @@ class StringHandlerTest extends TestCase
     /**
      * @return array
      */
-    public function camelCaseProvider(): array
+    public function camelCaseProvider()
     {
         return [
             ["Ligula  $* _--Egestas Mattis Nullam", "ligulaEgestasMattisNullam"],
@@ -205,8 +251,10 @@ class StringHandlerTest extends TestCase
 
     /**
      * @dataProvider slugifyProvider
+     * @param $input
+     * @param $expected
      */
-    public function testSlugify(string $input, string $expected): void
+    public function testSlugify($input, $expected)
     {
         // Assert
         $this->assertEquals($expected, StringHandler::slugify($input));
@@ -215,7 +263,7 @@ class StringHandlerTest extends TestCase
     /**
      * @return array
      */
-    public function slugifyProvider(): array
+    public function slugifyProvider()
     {
         return [
             ["Ligula  $* _--Egestas Mattis Nullam$* _  ", "ligula-egestas-mattis-nullam"],
@@ -239,8 +287,10 @@ class StringHandlerTest extends TestCase
 
     /**
      * @dataProvider encodeWithSecretProvider
+     * @param $input
+     * @param $secret
      */
-    public function testEncodeWithSecret(string $input, string $secret): void
+    public function testEncodeWithSecret($input, $secret)
     {
         $code = StringHandler::encodeWithSecret($input, $secret);
 
@@ -251,7 +301,7 @@ class StringHandlerTest extends TestCase
     /**
      * @return array
      */
-    public function encodeWithSecretProvider(): array
+    public function encodeWithSecretProvider()
     {
         return [
             ["Ligula  $* _--Egestas Mattis Nullam", "Commodo Pellentesque Sem Fusce Quam"],
@@ -264,8 +314,10 @@ class StringHandlerTest extends TestCase
 
     /**
      * @dataProvider encodeWithSecretNoSaltProvider
+     * @param $input
+     * @param $secret
      */
-    public function testEncodeWithSecretNoSalt(string $input, string $secret): void
+    public function testEncodeWithSecretNoSalt($input, $secret)
     {
         $this->expectException('\\InvalidArgumentException');
 
@@ -278,7 +330,7 @@ class StringHandlerTest extends TestCase
     /**
      * @return array
      */
-    public function encodeWithSecretNoSaltProvider(): array
+    public function encodeWithSecretNoSaltProvider()
     {
         return [
             ["Ligula  $* _--Egestas Mattis Nullam", ""],
