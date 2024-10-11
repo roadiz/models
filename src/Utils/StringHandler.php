@@ -99,7 +99,7 @@ class StringHandler
 
         return (new UnicodeString($string))
             ->ascii()
-            ->replaceMatches('#([^a-zA-Z0-9]+)#', '_')
+            ->replaceMatches('#([^a-zA-Z0-9\.]+)#', ' ')
             ->snake()
             ->lower()
             ->trim('-')
@@ -122,13 +122,14 @@ class StringHandler
             return '';
         }
 
-        return mb_lcfirst((new UnicodeString($string))
+        return (new UnicodeString($string))
             ->ascii()
+            ->camel()
             ->trim('-')
             ->trim('_')
             ->trim()
-            ->camel()
-            ->toString());
+            ->toString()
+        ;
     }
 
 
