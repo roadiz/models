@@ -13,14 +13,12 @@ interface LeafInterface extends PositionedInterface, Comparable
 
     /**
      * @param static $child
-     *
      * @return $this
      */
     public function addChild(LeafInterface $child): static;
 
     /**
      * @param static $child
-     *
      * @return $this
      */
     public function removeChild(LeafInterface $child): static;
@@ -38,12 +36,15 @@ interface LeafInterface extends PositionedInterface, Comparable
     public function getParents(): array;
 
     /**
+     * @param LeafInterface|null $parent
      * @return $this
      */
     public function setParent(?LeafInterface $parent = null): static;
 
     /**
      * Gets the leaf depth.
+     *
+     * @return int
      */
     public function getDepth(): int;
 }
