@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace RZ\Roadiz\Core\AbstractEntities;
 
-use Doctrine\Common\Comparable;
-
-interface PositionedInterface extends Comparable
+interface PositionedInterface
 {
+    /**
+     * @return float
+     */
     public function getPosition(): float;
 
     /**
      * Set position as a float to enable increment and decrement by O.5
      * to insert an entity between two others.
      *
-     * @return $this
+     * @param float $newPosition
+     * @return PositionedInterface
      */
-    public function setPosition(float $newPosition): PositionedInterface;
+    public function setPosition(float $newPosition);
 }
