@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace RZ\Roadiz\Core\AbstractEntities;
 
-use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
-use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
-use ApiPlatform\Metadata\ApiFilter;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Attribute as Serializer;
+use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Serializer\Annotation as SymfonySerializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -21,20 +19,17 @@ use Symfony\Component\Validator\Constraints as Assert;
     ORM\Table,
     ORM\HasLifecycleCallbacks
 ]
-abstract class AbstractHuman implements DateTimedInterface, PersistableInterface
+abstract class AbstractHuman extends AbstractDateTimed
 {
-    use SequentialIdTrait;
-    use DateTimedTrait;
-
-    #[ORM\Column(type: 'string', length: 200, unique: true, nullable: false)]
-    #[Serializer\Groups(['user_personal', 'human'])]
-    #[Assert\NotNull]
-    #[Assert\NotBlank]
-    #[Assert\Length(max: 200)]
-    #[Assert\Email]
-    #[ApiFilter(OrderFilter::class)]
-    #[ApiFilter(SearchFilter::class)]
-    // @phpstan-ignore-next-line
+    #[
+        ORM\Column(type: 'string', length: 200, unique: true),
+        Serializer\Groups(['user_personal', 'human']),
+        SymfonySerializer\Groups(['user_personal', 'human']),
+        Assert\NotNull(),
+        Assert\NotBlank(),
+        Assert\Length(max: 200),
+        Assert\Email()
+    ]
     protected ?string $email = null;
 
     /**
@@ -43,6 +38,7 @@ abstract class AbstractHuman implements DateTimedInterface, PersistableInterface
     #[
         ORM\Column(name: 'publicName', type: 'string', length: 250, nullable: true),
         Serializer\Groups(['user_public', 'human']),
+        SymfonySerializer\Groups(['user_public', 'human']),
         Assert\Length(max: 250)
     ]
     protected ?string $publicName = null;
@@ -50,6 +46,7 @@ abstract class AbstractHuman implements DateTimedInterface, PersistableInterface
     #[
         ORM\Column(name: 'firstName', type: 'string', length: 250, nullable: true),
         Serializer\Groups(['user_personal', 'human']),
+        SymfonySerializer\Groups(['user_personal', 'human']),
         Assert\Length(max: 250)
     ]
     protected ?string $firstName = null;
@@ -57,6 +54,7 @@ abstract class AbstractHuman implements DateTimedInterface, PersistableInterface
     #[
         ORM\Column(name: 'lastName', type: 'string', length: 250, nullable: true),
         Serializer\Groups(['user_personal', 'human']),
+        SymfonySerializer\Groups(['user_personal', 'human']),
         Assert\Length(max: 250)
     ]
     protected ?string $lastName = null;
@@ -64,6 +62,7 @@ abstract class AbstractHuman implements DateTimedInterface, PersistableInterface
     #[
         ORM\Column(type: 'string', length: 250, nullable: true),
         Serializer\Groups(['user_personal', 'human']),
+        SymfonySerializer\Groups(['user_personal', 'human']),
         Assert\Length(max: 250)
     ]
     protected ?string $company = null;
