@@ -12,6 +12,8 @@ class StringHandler
     /**
      * Remove diacritics characters and replace them with their basic alpha letter.
      *
+     * @param string|null $string
+     * @return string
      * @deprecated Use Symfony\Component\String\UnicodeString::ascii()
      */
     public static function removeDiacritics(?string $string): string
@@ -28,6 +30,9 @@ class StringHandler
 
     /**
      * Transform to lowercase and replace every non-alpha character with a dash.
+     *
+     * @param string|null $string
+     * @return string
      */
     public static function slugify(?string $string): string
     {
@@ -35,12 +40,12 @@ class StringHandler
             return '';
         }
         $slugger = new AsciiSlugger();
-
         return $slugger->slug($string)->lower()->toString();
     }
-
     /**
      * Transform a string for use as a classname.
+     *
+     * @param string|null $string
      *
      * @return string Classified string
      */
@@ -57,9 +62,12 @@ class StringHandler
             ->toString()
         ;
     }
-
     /**
      * Transform to lowercase and replace every non-alpha character with an underscore.
+     *
+     * @param string|null $string
+     *
+     * @return string
      */
     public static function cleanForFilename(?string $string): string
     {
@@ -78,6 +86,10 @@ class StringHandler
 
     /**
      * Transform to lowercase and replace every non-alpha character with an underscore.
+     *
+     * @param string|null $string
+     *
+     * @return string
      */
     public static function variablize(?string $string): string
     {
@@ -98,7 +110,11 @@ class StringHandler
     }
 
     /**
-     * Transform to lower camelCase.
+     * Transform to camelcase.
+     *
+     * @param string|null $string
+     *
+     * @return string
      */
     public static function camelCase(?string $string): string
     {
@@ -115,12 +131,14 @@ class StringHandler
             ->toString());
     }
 
+
     /**
      * Encode a string using website security secret.
      *
-     * @param string|null $value  String to encode
+     * @param string|null $value String to encode
      * @param string|null $secret Secret salt
      *
+     * @return string
      * @throws \InvalidArgumentException
      */
     public static function encodeWithSecret(?string $value, ?string $secret): string
@@ -129,19 +147,19 @@ class StringHandler
 
         if (!empty($secret)) {
             $secret = crypt($secret, $secret);
-
-            return base64_encode($secret.base64_encode(strip_tags($value ?? '')));
+            return base64_encode($secret . base64_encode(strip_tags($value ?? '')));
         } else {
-            throw new \InvalidArgumentException('You cannot encode with an empty salt. Did you enter a secret security phrase in your conf/config.json file?', 1);
+            throw new \InvalidArgumentException("You cannot encode with an empty salt. Did you enter a secret security phrase in your conf/config.json file?", 1);
         }
     }
 
     /**
      * Decode a string using website security secret.
      *
-     * @param string|null $value  Salted base64 string
+     * @param string|null $value Salted base64 string
      * @param string|null $secret Secret salt
      *
+     * @return string
      * @throws \InvalidArgumentException
      */
     public static function decodeWithSecret(?string $value, ?string $secret): string
@@ -152,20 +170,23 @@ class StringHandler
             $secret = crypt($secret, $secret);
             $salted = base64_decode($value ?? '');
 
-            $nonSalted = str_replace($secret, '', $salted);
+            $nonSalted = str_replace($secret, "", $salted);
 
             return base64_decode($nonSalted);
         } else {
-            throw new \InvalidArgumentException('You cannot encode with an empty salt. Did you enter a secret security phrase in your conf/config.json file?', 1);
+            throw new \InvalidArgumentException("You cannot encode with an empty salt. Did you enter a secret security phrase in your conf/config.json file?", 1);
         }
     }
 
     /**
+     * @param string $haystack
+     * @param string $needle
+     * @return bool
      * @deprecated Use UnicodeString::endsWith($needle)
      */
     public static function endsWith(string $haystack, string $needle): bool
     {
-        if ('' === $needle) {
+        if ($needle === '') {
             return true;
         }
 
@@ -174,11 +195,17 @@ class StringHandler
         ;
     }
 
+    /**
+     * @param string $search
+     * @param string $replace
+     * @param string $subject
+     * @return string
+     */
     public static function replaceLast(string $search, string $replace, string $subject): string
     {
         $pos = strrpos($subject, $search);
 
-        if (false !== $pos) {
+        if ($pos !== false) {
             $subject = \substr_replace($subject, $replace, $pos, \mb_strlen($search));
         }
 
