@@ -12,8 +12,6 @@ class StringHandler
     /**
      * Remove diacritics characters and replace them with their basic alpha letter.
      *
-     * @param string|null $string
-     * @return string
      * @deprecated Use Symfony\Component\String\UnicodeString::ascii()
      */
     public static function removeDiacritics(?string $string): string
@@ -30,9 +28,6 @@ class StringHandler
 
     /**
      * Transform to lowercase and replace every non-alpha character with a dash.
-     *
-     * @param string|null $string
-     * @return string
      */
     public static function slugify(?string $string): string
     {
@@ -40,12 +35,12 @@ class StringHandler
             return '';
         }
         $slugger = new AsciiSlugger();
+
         return $slugger->slug($string)->lower()->toString();
     }
+
     /**
      * Transform a string for use as a classname.
-     *
-     * @param string|null $string
      *
      * @return string Classified string
      */
@@ -62,17 +57,28 @@ class StringHandler
             ->toString()
         ;
     }
+
     /**
      * Transform to lowercase and replace every non-alpha character with an underscore.
-     *
-     * @param string|null $string
-     *
-     * @return string
      */
     public static function cleanForFilename(?string $string): string
     {
         if (null === $string) {
             return '';
+        }
+
+        // Remove images double extensions
+        // for compatibility with intervention-request
+        // and only keep the last one.
+        // example: my.image.jpg.webp => my_image_jpg.webp
+        $parts = explode('.', $string);
+        if (count($parts) > 2) {
+            $extension = array_pop($parts);
+            // Keep double extension for zip, gz, xz and bz
+            if (!\in_array($extension, ['zip', 'gz', 'xz', 'bz', 'bz2', '7z', 'tgz'], true)) {
+                $filename = implode('_', $parts);
+                $string = $filename.'.'.$extension;
+            }
         }
 
         return (new UnicodeString($string))
@@ -86,10 +92,6 @@ class StringHandler
 
     /**
      * Transform to lowercase and replace every non-alpha character with an underscore.
-     *
-     * @param string|null $string
-     *
-     * @return string
      */
     public static function variablize(?string $string): string
     {
@@ -110,11 +112,7 @@ class StringHandler
     }
 
     /**
-     * Transform to camelcase.
-     *
-     * @param string|null $string
-     *
-     * @return string
+     * Transform to lower camelCase.
      */
     public static function camelCase(?string $string): string
     {
@@ -131,14 +129,12 @@ class StringHandler
             ->toString());
     }
 
-
     /**
      * Encode a string using website security secret.
      *
-     * @param string|null $value String to encode
+     * @param string|null $value  String to encode
      * @param string|null $secret Secret salt
      *
-     * @return string
      * @throws \InvalidArgumentException
      */
     public static function encodeWithSecret(?string $value, ?string $secret): string
@@ -147,19 +143,19 @@ class StringHandler
 
         if (!empty($secret)) {
             $secret = crypt($secret, $secret);
-            return base64_encode($secret . base64_encode(strip_tags($value ?? '')));
+
+            return base64_encode($secret.base64_encode(strip_tags($value ?? '')));
         } else {
-            throw new \InvalidArgumentException("You cannot encode with an empty salt. Did you enter a secret security phrase in your conf/config.json file?", 1);
+            throw new \InvalidArgumentException('You cannot encode with an empty salt. Did you enter a secret security phrase in your conf/config.json file?', 1);
         }
     }
 
     /**
      * Decode a string using website security secret.
      *
-     * @param string|null $value Salted base64 string
+     * @param string|null $value  Salted base64 string
      * @param string|null $secret Secret salt
      *
-     * @return string
      * @throws \InvalidArgumentException
      */
     public static function decodeWithSecret(?string $value, ?string $secret): string
@@ -170,23 +166,20 @@ class StringHandler
             $secret = crypt($secret, $secret);
             $salted = base64_decode($value ?? '');
 
-            $nonSalted = str_replace($secret, "", $salted);
+            $nonSalted = str_replace($secret, '', $salted);
 
             return base64_decode($nonSalted);
         } else {
-            throw new \InvalidArgumentException("You cannot encode with an empty salt. Did you enter a secret security phrase in your conf/config.json file?", 1);
+            throw new \InvalidArgumentException('You cannot encode with an empty salt. Did you enter a secret security phrase in your conf/config.json file?', 1);
         }
     }
 
     /**
-     * @param string $haystack
-     * @param string $needle
-     * @return bool
      * @deprecated Use UnicodeString::endsWith($needle)
      */
     public static function endsWith(string $haystack, string $needle): bool
     {
-        if ($needle === '') {
+        if ('' === $needle) {
             return true;
         }
 
@@ -195,17 +188,11 @@ class StringHandler
         ;
     }
 
-    /**
-     * @param string $search
-     * @param string $replace
-     * @param string $subject
-     * @return string
-     */
     public static function replaceLast(string $search, string $replace, string $subject): string
     {
         $pos = strrpos($subject, $search);
 
-        if ($pos !== false) {
+        if (false !== $pos) {
             $subject = \substr_replace($subject, $replace, $pos, \mb_strlen($search));
         }
 
