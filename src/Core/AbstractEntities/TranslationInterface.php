@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace RZ\Roadiz\Core\AbstractEntities;
 
-interface TranslationInterface extends DateTimedInterface, PersistableInterface, \Stringable
+interface TranslationInterface extends PersistableInterface
 {
     public function getName(): string;
 
