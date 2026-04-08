@@ -25,7 +25,7 @@ trait DateTimedTrait
     /**
      * @return $this
      */
-    public function setCreatedAt(?\DateTime $createdAt): self
+    public function setCreatedAt(?\DateTime $createdAt): static
     {
         $this->createdAt = $createdAt;
 
@@ -40,7 +40,7 @@ trait DateTimedTrait
     /**
      * @return $this
      */
-    public function setUpdatedAt(?\DateTime $updatedAt): self
+    public function setUpdatedAt(?\DateTime $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
 
@@ -71,7 +71,7 @@ trait DateTimedTrait
      *
      * @return $this
      */
-    public function resetDates(): self
+    public function resetDates(): static
     {
         $this->setCreatedAt(new \DateTime('now'));
         $this->setUpdatedAt(new \DateTime('now'));
