@@ -18,10 +18,9 @@
         }
     ],
     "require": {
-        "php": ">=8.2",
-        "doctrine/orm": "~2.20.0",
-        "jms/serializer": "^3.32.3",
-        "roadiz/nodetype-contracts": "^2.0.0",
+        "php": ">=8.1",
+        "doctrine/orm": "~2.19.0",
+        "jms/serializer": "^3.9.0",
         "symfony/string": "6.4.*",
         "symfony/translation-contracts": "^3.0",
         "symfony/http-foundation": "6.4.*",
@@ -29,11 +28,10 @@
         "symfony/validator": "6.4.*"
     },
     "require-dev": {
-        "doctrine/doctrine-bundle": "^2.8.1",
+        "phpunit/phpunit": "^9.5",
         "php-coveralls/php-coveralls": "^2.4",
-        "phpstan/phpstan": "^1.5.3",
-        "phpstan/phpdoc-parser": "<2",
-        "phpunit/phpunit": "^9.5"
+        "squizlabs/php_codesniffer": "^3.5",
+        "phpstan/phpstan": "^1.5.3"
     },
     "autoload": {
         "psr-4": {
@@ -53,8 +51,8 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.5.x-dev",
-            "dev-develop": "2.6.x-dev"
+            "dev-master": "2.3.x-dev",
+            "dev-develop": "2.4.x-dev"
         }
     }
 }
