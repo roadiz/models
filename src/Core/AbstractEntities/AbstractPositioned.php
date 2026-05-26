@@ -4,23 +4,25 @@ declare(strict_types=1);
 
 namespace RZ\Roadiz\Core\AbstractEntities;
 
+use Doctrine\Common\Comparable;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Attribute as Serializer;
+use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Serializer\Annotation as SymfonySerializer;
 
 /**
  * Combined AbstractEntity and PositionedTrait.
- *
- * @deprecated since 2.6, use composition with PositionedTrait and PositionedInterface instead.
  */
 #[ORM\MappedSuperclass,
     ORM\HasLifecycleCallbacks,
     ORM\Table,
     ORM\Index(columns: ['position'])]
-abstract class AbstractPositioned extends AbstractEntity implements PositionedInterface
+abstract class AbstractPositioned extends AbstractEntity implements PositionedInterface, Comparable
 {
     use PositionedTrait;
 
     #[ORM\Column(type: 'float'),
-        Serializer\Groups(['position']),]
+        Serializer\Groups(['position']),
+        SymfonySerializer\Groups(['position']),
+        Serializer\Type('float')]
     protected float $position = 0.0;
 }
