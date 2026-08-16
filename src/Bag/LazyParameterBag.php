@@ -19,11 +19,10 @@ abstract class LazyParameterBag extends ParameterBag
     }
 
     /**
+     * @param string $key
      * @param mixed|null $default
-     *
      * @return mixed|null
      */
-    #[\Override]
     public function get(string $key, $default = null): mixed
     {
         if (!$this->ready) {
@@ -33,8 +32,11 @@ abstract class LazyParameterBag extends ParameterBag
         return parent::get($key, $default);
     }
 
-    #[\Override]
-    public function all(?string $key = null): array
+    /**
+     * @param string|null $key
+     * @return array
+     */
+    public function all(string $key = null): array
     {
         if (!$this->ready) {
             $this->populateParameters();
@@ -43,7 +45,11 @@ abstract class LazyParameterBag extends ParameterBag
         return parent::all();
     }
 
-    #[\Override]
+    /**
+     * @param string $key
+     *
+     * @return bool
+     */
     public function has(string $key): bool
     {
         if (!$this->ready) {
@@ -53,7 +59,9 @@ abstract class LazyParameterBag extends ParameterBag
         return parent::has($key);
     }
 
-    #[\Override]
+    /**
+     * @return array
+     */
     public function keys(): array
     {
         if (!$this->ready) {
@@ -63,8 +71,10 @@ abstract class LazyParameterBag extends ParameterBag
         return parent::keys();
     }
 
+    /**
+     * @return \ArrayIterator
+     */
     #[\ReturnTypeWillChange]
-    #[\Override]
     public function getIterator(): \ArrayIterator
     {
         if (!$this->ready) {
@@ -74,8 +84,10 @@ abstract class LazyParameterBag extends ParameterBag
         return parent::getIterator();
     }
 
+    /**
+     * @return int
+     */
     #[\ReturnTypeWillChange]
-    #[\Override]
     public function count(): int
     {
         if (!$this->ready) {
@@ -86,10 +98,13 @@ abstract class LazyParameterBag extends ParameterBag
     }
 
     /**
-     * @param null  $default
-     * @param array $options
+     * @param string $key
+     * @param null   $default
+     * @param int    $filter
+     * @param array  $options
+     *
+     * @return mixed
      */
-    #[\Override]
     public function filter(string $key, $default = null, int $filter = \FILTER_DEFAULT, $options = []): mixed
     {
         if (!$this->ready) {
