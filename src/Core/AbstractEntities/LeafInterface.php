@@ -5,26 +5,21 @@ declare(strict_types=1);
 namespace RZ\Roadiz\Core\AbstractEntities;
 
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Comparable;
 
-/**
- * @template TSelf of LeafInterface
- */
-interface LeafInterface extends PositionedInterface
+interface LeafInterface extends PositionedInterface, Comparable
 {
-    /**
-     * @return Collection<int, TSelf>
-     */
     public function getChildren(): Collection;
 
     /**
-     * @param TSelf $child
+     * @param static $child
      *
      * @return $this
      */
     public function addChild(LeafInterface $child): static;
 
     /**
-     * @param TSelf $child
+     * @param static $child
      *
      * @return $this
      */
@@ -33,18 +28,16 @@ interface LeafInterface extends PositionedInterface
     /**
      * Do not add static return type because of Doctrine Proxy.
      *
-     * @return TSelf|null
+     * @return static|null
      */
     public function getParent(): ?LeafInterface;
 
     /**
-     * @return TSelf[]
+     * @return static[]
      */
     public function getParents(): array;
 
     /**
-     * @param TSelf|null $parent
-     *
      * @return $this
      */
     public function setParent(?LeafInterface $parent = null): static;
