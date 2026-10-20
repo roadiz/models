@@ -5,20 +5,27 @@ declare(strict_types=1);
 namespace RZ\Roadiz\Core\AbstractEntities;
 
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Comparable;
 
-interface LeafInterface extends PositionedInterface, Comparable
+/**
+ * @template TSelf of LeafInterface
+ */
+interface LeafInterface extends PositionedInterface
 {
+    /**
+     * @return Collection<int, TSelf>
+     */
     public function getChildren(): Collection;
 
     /**
-     * @param static $child
+     * @param TSelf $child
+     *
      * @return $this
      */
     public function addChild(LeafInterface $child): static;
 
     /**
-     * @param static $child
+     * @param TSelf $child
+     *
      * @return $this
      */
     public function removeChild(LeafInterface $child): static;
@@ -26,25 +33,24 @@ interface LeafInterface extends PositionedInterface, Comparable
     /**
      * Do not add static return type because of Doctrine Proxy.
      *
-     * @return static|null
+     * @return TSelf|null
      */
     public function getParent(): ?LeafInterface;
 
     /**
-     * @return static[]
+     * @return TSelf[]
      */
     public function getParents(): array;
 
     /**
-     * @param LeafInterface|null $parent
+     * @param TSelf|null $parent
+     *
      * @return $this
      */
     public function setParent(?LeafInterface $parent = null): static;
 
     /**
      * Gets the leaf depth.
-     *
-     * @return int
      */
     public function getDepth(): int;
 }
